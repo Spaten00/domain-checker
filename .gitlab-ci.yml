@@ -15,7 +15,6 @@ install_composer:
   stage: install
 
   before_script:
-    - cp .env.gitlab .env
     - apt-get update -yqq
     - pecl install xdebug
     - docker-php-ext-enable xdebug
@@ -51,6 +50,8 @@ variables:
 test:
   image: php:latest
   stage: test
+  before_script:
+    - cp .env.gitlab .env
   script:
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
 
