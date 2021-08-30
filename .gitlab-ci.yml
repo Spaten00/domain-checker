@@ -43,7 +43,7 @@ compile_node:
 phpunit:
   stage: test
   script:
-    - composer install
+    - php composer.phar install
     - vendor/bin/phpunit --log-junit report.xml
   artifacts:
     when: always
