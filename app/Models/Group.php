@@ -38,6 +38,11 @@ class Group extends Model
     // SCOPES
 
     // RELATIONS
+    /**
+     * Get the users for the group.
+     *
+     * @return HasMany
+     */
     public function users(): HasMany
     {
         return $this->hasMany(User::class);

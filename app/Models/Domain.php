@@ -39,6 +39,11 @@ class Domain extends Model
     // SCOPES
 
     // RELATIONS
+    /**
+     * Get the contract for the domain.
+     *
+     * @return BelongsTo
+     */
     public function contract(): BelongsTo
     {
         return $this->belongsTo(Contract::class);

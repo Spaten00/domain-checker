@@ -38,6 +38,11 @@ class Customer extends Model
     // SCOPES
 
     // RELATIONS
+    /**
+     * Get contracts for the customer.
+     *
+     * @return HasMany
+     */
     public function contracts(): HasMany
     {
         return $this->hasMany(Contract::class);

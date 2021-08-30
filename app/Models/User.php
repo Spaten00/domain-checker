@@ -47,6 +47,11 @@ class User extends Authenticatable
     // SCOPES
 
     // RELATIONS
+    /**
+     * Get the group for the user.
+     *
+     * @return BelongsTo
+     */
     public function group(): BelongsTo
     {
         return $this->belongsTo(Group::class);

@@ -39,6 +39,11 @@ class Hosting extends Model
     // SCOPES
 
     // RELATIONS
+    /**
+     * Get the contract for the hosting.
+     *
+     * @return BelongsTo
+     */
     public function contract(): BelongsTo
     {
         return $this->belongsTo(Contract::class);

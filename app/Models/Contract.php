@@ -45,15 +45,26 @@ class Contract extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    //TODO maybe change to HasOneOrMany???
+    /**
+     * Get the domains for the contract.
+     *
+     * @return HasMany
+     */
     public function domains(): HasMany
     {
+    // TODO maybe change to HasOneOrMany???
         return $this->hasMany(Domain::class);
     }
 
+    /**
+     * Get the hostings for the contract.
+     *
+     * @return HasMany
+     */
     public function hostings(): HasMany
     {
         return $this->hasMany(Hosting::class);
     }
+
     // OTHER METHODS
 }
