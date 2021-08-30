@@ -10,7 +10,7 @@ cache:
 
 
 install_composer:
-  image: chialab/php:7.3
+  image: chialab/php:8.0
   stage: install
   before_script:
     - apt-get update
@@ -24,7 +24,7 @@ install_composer:
     - master
 
 install_node:
-  image: node:12.22.1
+  image: node:14.17.5
   stage: install
   script:
     - npm install
