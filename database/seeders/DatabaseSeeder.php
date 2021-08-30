@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             GroupSeeder::class,
+            UserSeeder::class,
         ]);
 
         // TODO delete factories before deploy
