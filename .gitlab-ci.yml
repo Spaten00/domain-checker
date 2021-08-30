@@ -49,6 +49,7 @@ variables:
   MYSQL_ROOT_PASSWORD: mysql_strong_password
 
 test:
+  image: php:latest
   stage: test
   script:
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
