@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Contract;
 use App\Models\Hosting;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,8 @@ class HostingFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'contract_id' => $this->faker->randomElement(Contract::all()->pluck('id')->toArray()),
+            'hosting_type' => $this->faker->mimeType(),
         ];
     }
 }

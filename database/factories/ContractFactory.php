@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Contract;
+use App\Models\Customer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class ContractFactory extends Factory
@@ -22,7 +23,8 @@ class ContractFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'customer_id' => $this->faker->randomElement(Customer::all()->pluck('id')->toArray()),
+            'contract_number' => $this->faker->numberBetween(),
         ];
     }
 }

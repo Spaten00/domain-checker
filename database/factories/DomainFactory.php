@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Contract;
 use App\Models\Domain;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,8 @@ class DomainFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'contract_id' => $this->faker->randomElement(Contract::all()->pluck('id')->toArray()),
+            'domain_name' => $this->faker->domainWord(),
         ];
     }
 }

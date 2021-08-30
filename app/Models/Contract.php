@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property string|null $deleted_at
  * @property int $user_id
  * @property string $contract_number
- * @property-read \App\Models\Customer $customer
+ * @property-read Customer $customer
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Domain[] $domains
  * @property-read int|null $domains_count
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Hosting[] $hostings

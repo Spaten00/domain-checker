@@ -2,6 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Contract;
+use App\Models\Customer;
+use App\Models\Domain;
+use App\Models\Group;
+use App\Models\Hosting;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +25,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // TODO delete factories before deploy
-        // \App\Models\User::factory(10)->create();
+        Group::factory(10)->create();
+        User::factory(10)->create();
+        Customer::factory(10)->create();
+        Contract::factory(10)->create();
+        Domain::factory(10)->create();
+        Hosting::factory(10)->create();
     }
 }

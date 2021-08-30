@@ -18,12 +18,12 @@ class CreateContractsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('customer_id');
 
             $table->string('contract_number');
 
             // foreign keys
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('customer_id')->references('id')->on('users');
         });
     }
 
