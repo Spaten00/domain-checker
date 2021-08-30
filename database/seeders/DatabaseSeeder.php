@@ -16,6 +16,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             GroupSeeder::class,
         ]);
+
+        // TODO delete factories before deploy
         // \App\Models\User::factory(10)->create();
     }
 }

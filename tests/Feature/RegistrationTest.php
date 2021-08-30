@@ -23,7 +23,8 @@ class RegistrationTest extends TestCase
         $this->seed(GroupSeeder::class);
         $response = $this->post('/register', [
             'group_id' => 1,
-            'name' => 'Test User',
+            'first_name' => 'Test',
+            'last_name' => 'User',
             'email' => 'test@example.com',
             'password' => 'password',
             'password_confirmation' => 'password',
