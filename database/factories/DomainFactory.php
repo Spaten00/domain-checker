@@ -24,7 +24,7 @@ class DomainFactory extends Factory
     {
         return [
             'contract_id' => $this->faker->randomElement(Contract::all()->pluck('id')->toArray()),
-            'domain_name' => $this->faker->domainWord(),
+            'domain_name' => $this->faker->domainName(),
         ];
     }
 }

@@ -1,6 +1,7 @@
 stages:
   - install
   - build
+  - test
   - deploy
 cache:
   paths:
@@ -38,6 +39,16 @@ compile_node:
     - npm run prod
   only:
     - master
+
+phpunit:
+  stage: test
+  script:
+    - composer install
+    - vendor/bin/phpunit --log-junit report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
 
 deploy_live:
   image: chialab/php:8.0
