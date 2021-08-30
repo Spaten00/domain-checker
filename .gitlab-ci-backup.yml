@@ -1,0 +1,71 @@
+stages:
+  - install
+  - build
+  - test
+  - deploy
+cache:
+  paths:
+    - vendor/ # Node modules and dependencies
+    - node_modules/
+    - public/
+
+
+install_composer:
+  image: chialab/php:8.0
+  stage: install
+  before_script:
+    - apt-get update
+    - apt-get install zip unzip git -y
+    - php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+    - php composer-setup.php
+    - php -r "unlink('composer-setup.php');"
+  script:
+    - php composer.phar install
+  only:
+    - master
+
+install_node:
+  image: node:14.17.5
+  stage: install
+  script:
+    - npm install
+  only:
+    - master
+
+compile_node:
+  image: node:14.17.5
+  stage: build
+  script:
+    - npm run prod
+  only:
+    - master
+
+phpunit:
+  stage: test
+  script:
+    - php composer.phar install
+    - vendor/bin/phpunit --log-junit report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+
+deploy_live:
+  image: chialab/php:8.0
+  stage: deploy
+  before_script:
+    - source .envC/.${CI_COMMIT_REF_NAME//\//\-}.env
+    - 'which rsync || (apt-get update -y && apt-get install openssh-client rsync -y)'
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh-add <(echo "$STAGING_PRIVATE_KEY")
+  script:
+    - rsync --exclude=.env --exclude=.git -rltvzu -e 'ssh' . "$U_USER@$U_HOST:$U_PATH"
+    - ssh $U_USER@$U_HOST "cd /var/www/verpackung && php artisan migrate --force"
+  environment:
+    name: Domain-Checker Live
+    url: http://192.168.210.32/
+  only:
+    - master
+  when: manual
