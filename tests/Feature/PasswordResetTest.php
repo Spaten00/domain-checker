@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\User;
+use Database\Seeders\GroupSeeder;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
@@ -23,6 +24,7 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
+        $this->seed(GroupSeeder::class);
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
@@ -34,12 +36,13 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
+        $this->seed(GroupSeeder::class);
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);
 
         Notification::assertSentTo($user, ResetPassword::class, function ($notification) {
-            $response = $this->get('/reset-password/'.$notification->token);
+            $response = $this->get('/reset-password/' . $notification->token);
 
             $response->assertStatus(200);
 
@@ -51,6 +54,7 @@ class PasswordResetTest extends TestCase
     {
         Notification::fake();
 
+        $this->seed(GroupSeeder::class);
         $user = User::factory()->create();
 
         $this->post('/forgot-password', ['email' => $user->email]);

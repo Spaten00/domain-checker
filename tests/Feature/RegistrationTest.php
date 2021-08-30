@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Providers\RouteServiceProvider;
+use Database\Seeders\GroupSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -19,7 +20,9 @@ class RegistrationTest extends TestCase
 
     public function test_new_users_can_register()
     {
+        $this->seed(GroupSeeder::class);
         $response = $this->post('/register', [
+            'group_id' => 1,
             'name' => 'Test User',
             'email' => 'test@example.com',
             'password' => 'password',
