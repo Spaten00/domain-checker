@@ -32,6 +32,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder|Contract whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Contract whereUserId($value)
  * @mixin \Eloquent
+ * @property int $customer_id
+ * @method static \Illuminate\Database\Eloquent\Builder|Contract whereCustomerId($value)
  */
 class Contract extends Model
 {

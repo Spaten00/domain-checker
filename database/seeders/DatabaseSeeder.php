@@ -9,6 +9,7 @@ use App\Models\Group;
 use App\Models\Hosting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DatabaseSeeder extends Seeder
 {

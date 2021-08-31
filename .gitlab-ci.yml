@@ -9,6 +9,7 @@ cache:
     - vendor/
     - node_modules/
     - public/
+    - composer-cache/
 
 install_composer:
   image: php:latest
@@ -52,6 +53,7 @@ test:
   stage: test
   before_script:
     - cp .env.gitlab .env
+    - php artisan key:generate
   script:
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
 

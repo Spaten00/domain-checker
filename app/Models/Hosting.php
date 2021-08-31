@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $hosting_type
+ * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereHostingType($value)
  */
 class Hosting extends Model
 {

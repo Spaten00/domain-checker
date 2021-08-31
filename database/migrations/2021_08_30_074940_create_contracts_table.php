@@ -23,7 +23,7 @@ class CreateContractsTable extends Migration
             $table->string('contract_number');
 
             // foreign keys
-            $table->foreign('customer_id')->references('id')->on('users');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 
