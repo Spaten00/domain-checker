@@ -58,7 +58,7 @@ test:
     - vendor/bin/phpunit --configuration phpunit.xml --coverage-text --colors=never
 
 deploy_live:
-  image: chialab/php:8.0
+  image: php:latest
   stage: deploy
   before_script:
     - source .envC/.${CI_COMMIT_REF_NAME//\//\-}.env
