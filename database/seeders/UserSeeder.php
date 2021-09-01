@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'group_id' => 1,
             'first_name' => 'Tino',
             'last_name' => 'Linzenich',
-            'email' => 'tn@aks-service.de',
+            'email' => 'tl@aks-service.de',
             'password' => password_hash('12345678', 1),
             'remember_token' => null,
             'created_at' => now(),
