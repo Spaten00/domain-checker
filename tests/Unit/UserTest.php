@@ -45,4 +45,10 @@ class UserTest extends TestCase
         $this->assertEquals(1, $user->group->count());
         $this->assertInstanceOf(Group::class, $user->group);
     }
+
+    /** @test */
+    public function a_user_can_be_deleted()
+    {
+        // TODO
+    }
 }

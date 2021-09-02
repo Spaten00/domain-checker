@@ -42,6 +42,20 @@ return [
             'visibility' => 'public',
         ],
 
+        'ftp' => [
+            'driver' => 'ftp',
+            'host' => '192.168.100.136',
+            'username' => 'coolernutyer123',
+            'password' => 'abcABC123',
+
+            // Optional FTP Settings...
+            // 'port' => 21,
+            // 'root' => '',
+            // 'passive' => true,
+            // 'ssl' => true,
+            // 'timeout' => 30,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
