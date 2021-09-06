@@ -14,7 +14,7 @@ class ImportTanssCommand extends Command
      *
      * @var string
      */
-    protected $signature = 'tanss:import';
+    protected $signature = 'tanss:import {--testing}';
 
     /**
      * The console command description.
@@ -44,14 +44,17 @@ class ImportTanssCommand extends Command
     public function handle(): void
     {
         try {
-            echo "NOICE";
+            if ($this->option('testing')) {
+                throw new ConnectionRuntimeException();
+            }
             $ftpPath = Storage::disk('ftp')->get('/export/tanssexport.json');
             Storage::put('/tanssexports/tanssexport_' . date('Y_m_d') . '.json', $ftpPath);
+            Storage::append('log.txt', now() . ': TANSS-Export-Datei importiert.');
         } catch (ConnectionRuntimeException $e) {
-            echo "Connection could not be established";
+            Storage::append('log.txt', now() . ': Verbindung zum TANSS-Server konnte nicht erstellt werden.');
             throw new ConnectionRuntimeException();
         } catch (FileNotFoundException $e) {
-            echo "File not found";
+            Storage::append('log.txt', now() . ': TANSS-Export-Datei existiert nicht auf Server.');
             throw new FileNotFoundException();
         }
     }
