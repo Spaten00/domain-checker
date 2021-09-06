@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // TODO change to daily in production
         $schedule->command('tanss:import')->everyMinute();
     }
 

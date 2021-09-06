@@ -3,7 +3,9 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
+use League\Flysystem\ConnectionRuntimeException;
 
 class ImportTanssCommand extends Command
 {
@@ -33,13 +35,24 @@ class ImportTanssCommand extends Command
 
     /**
      * Execute the console command.
-     * Copy the tanss-export from the server to the local directory via FTP.
+     * Copy the tanss-export from the server to the local directory via FTP with the date as a filename.
      *
-     * @return int
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @return void
+     * @throws ConnectionRuntimeException
+     * @throws FileNotFoundException
      */
     public function handle(): void
     {
-        Storage::put('/tanssexport.json', Storage::disk('ftp')->get('/export/tanssexport.json'));
+        try {
+            echo "NOICE";
+            $ftpPath = Storage::disk('ftp')->get('/export/tanssexport.json');
+            Storage::put('/tanssexports/tanssexport_' . date('Y_m_d') . '.json', $ftpPath);
+        } catch (ConnectionRuntimeException $e) {
+            echo "Connection could not be established";
+            throw new ConnectionRuntimeException();
+        } catch (FileNotFoundException $e) {
+            echo "File not found";
+            throw new FileNotFoundException();
+        }
     }
 }
