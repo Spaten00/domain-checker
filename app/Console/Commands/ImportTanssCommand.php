@@ -9,6 +9,7 @@ use League\Flysystem\ConnectionRuntimeException;
 
 class ImportTanssCommand extends Command
 {
+    const FTP_FILE_PATH = '/export/tanssexport.json';
     const MAX_FILES = 5;
 
     /**
@@ -58,7 +59,7 @@ class ImportTanssCommand extends Command
             if ($this->option('testing')) {
                 throw new ConnectionRuntimeException();
             }
-            $ftpContent = Storage::disk('ftp')->get('/export/tanssexport.json');
+            $ftpContent = Storage::disk('ftp')->get(self::FTP_FILE_PATH);
             Storage::put('/tanssexports/tanssexport_' . date('Y_m_d') . '.json', $ftpContent);
             Storage::append('log.txt', now() . ': TANSS-Export-Datei importiert.');
         } catch (ConnectionRuntimeException $e) {
