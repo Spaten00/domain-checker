@@ -76,6 +76,7 @@ class ImportTanssCommand extends Command
     public function deleteOldFiles(): void
     {
         while (count($files = Storage::allFiles('/tanssexports')) > self::MAX_FILES) {
+            Storage::append('log.txt', now() . ': Alte Datei ' . $files[0] . ' wurde gelöscht.');
             Storage::delete($files[0]);
         }
     }
