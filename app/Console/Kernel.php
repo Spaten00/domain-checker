@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         Commands\ImportTanssCommand::class,
+        Commands\ImportRrpproxyCommand::class,
     ];
 
     /**
@@ -26,6 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // TODO change to daily in production
         $schedule->command('tanss:import')->everyMinute();
+        $schedule->command('rrpproxy:import')->everyMinute();
     }
 
     /**

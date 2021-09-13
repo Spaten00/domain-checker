@@ -24,7 +24,7 @@ class ImportTanssCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Copy the tanss-export from the server to the local directory via FTP';
+    protected $description = 'Copy the tanss-export-file from the server to the local directory via FTP and import into the database.';
 
     /**
      * Create a new command instance.
