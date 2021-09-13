@@ -51,7 +51,7 @@ class ImportTanssCommand extends Command
             Storage::put('/tanssexports/tanssexport_' . date('Y_m_d') . '.json', $ftpPath);
             Storage::append('log.txt', now() . ': TANSS-Export-Datei importiert.');
         } catch (ConnectionRuntimeException $e) {
-            Storage::append('log.txt', now() . ': Verbindung zum TANSS-Server konnte nicht erstellt werden.');
+            Storage::append('log.txt', now() . ': Verbindung zum TANSS-Server konnte nicht hergestellt werden.');
             throw new ConnectionRuntimeException();
         } catch (FileNotFoundException $e) {
             Storage::append('log.txt', now() . ': TANSS-Export-Datei existiert nicht auf Server.');

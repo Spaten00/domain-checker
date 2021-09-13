@@ -36,7 +36,7 @@ class ImportTest extends TestCase
             Artisan::call('tanss:import', ['--testing' => true]);
         } finally {
             Storage::disk('local')->assertExists('log.txt');
-            $this->assertEquals(now() . ': Verbindung zum TANSS-Server konnte nicht erstellt werden.', Storage::disk('local')->get('log.txt'));
+            $this->assertEquals(now() . ': Verbindung zum TANSS-Server konnte nicht hergestellt werden.', Storage::disk('local')->get('log.txt'));
         }
 
     }
