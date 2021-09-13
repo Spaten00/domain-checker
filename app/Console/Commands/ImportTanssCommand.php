@@ -9,6 +9,8 @@ use League\Flysystem\ConnectionRuntimeException;
 
 class ImportTanssCommand extends Command
 {
+    const MAX_FILES = 5;
+
     /**
      * The name and signature of the console command.
      *
@@ -35,20 +37,29 @@ class ImportTanssCommand extends Command
 
     /**
      * Execute the console command.
-     * Copy the tanss-export from the server to the local directory via FTP with the date as a filename.
      *
      * @return void
-     * @throws ConnectionRuntimeException
-     * @throws FileNotFoundException
+     * @throws ConnectionRuntimeException|FileNotFoundException
      */
     public function handle(): void
+    {
+        $this->importTanssFile();
+        $this->deleteOldFiles();
+    }
+
+    /**
+     * Copy the tanss-export-file from the server to the local directory via FTP with the date as a filename.
+     *
+     * @throws FileNotFoundException
+     */
+    public function importTanssFile(): void
     {
         try {
             if ($this->option('testing')) {
                 throw new ConnectionRuntimeException();
             }
-            $ftpPath = Storage::disk('ftp')->get('/export/tanssexport.json');
-            Storage::put('/tanssexports/tanssexport_' . date('Y_m_d') . '.json', $ftpPath);
+            $ftpContent = Storage::disk('ftp')->get('/export/tanssexport.json');
+            Storage::put('/tanssexports/tanssexport_' . date('Y_m_d') . '.json', $ftpContent);
             Storage::append('log.txt', now() . ': TANSS-Export-Datei importiert.');
         } catch (ConnectionRuntimeException $e) {
             Storage::append('log.txt', now() . ': Verbindung zum TANSS-Server konnte nicht hergestellt werden.');
@@ -58,4 +69,15 @@ class ImportTanssCommand extends Command
             throw new FileNotFoundException();
         }
     }
+
+    /**
+     * Delete the oldest files if there are more files than <var>MAX_FILES</var>.
+     */
+    public function deleteOldFiles(): void
+    {
+        while (count($files = Storage::allFiles('/tanssexports')) > self::MAX_FILES) {
+            Storage::delete($files[0]);
+        }
+    }
+
 }

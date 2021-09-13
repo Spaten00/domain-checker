@@ -16,7 +16,7 @@ class ImportTest extends TestCase
         Storage::fake('ftp');
         Storage::fake('local');
 
-        Storage::disk('ftp')->put('/export/tanssexport.json', 'LOL');
+        Storage::disk('ftp')->put('/export/tanssexport.json', 'test');
         Storage::disk('ftp')->assertExists('/export/tanssexport.json');
 
         Artisan::call('tanss:import');
@@ -54,5 +54,32 @@ class ImportTest extends TestCase
             Storage::disk('local')->assertExists('log.txt');
             $this->assertEquals(now() . ': TANSS-Export-Datei existiert nicht auf Server.', Storage::disk('local')->get('log.txt'));
         }
+    }
+
+    /** @test */
+    public function old_files_get_deleted()
+    {
+        Storage::fake('ftp');
+        Storage::fake('local');
+
+        Storage::disk('ftp')->put('/export/tanssexport.json', 'test');
+        Artisan::call('tanss:import');
+        $this->assertEquals(1, count(Storage::disk('local')->allFiles('/tanssexports')));
+
+        Storage::put('/tanssexports/tanssexport_2010_01_01.json', 'test');
+        Storage::put('/tanssexports/tanssexport_2009_12_31.json', 'test');
+        Storage::put('/tanssexports/tanssexport_2010_01_02.json', 'test');
+        Storage::put('/tanssexports/tanssexport_2010_01_03.json', 'test');
+        Storage::put('/tanssexports/tanssexport_2010_01_04.json', 'test');
+        $this->assertEquals(6, count(Storage::disk('local')->allFiles('/tanssexports')));
+
+        Artisan::call('tanss:import');
+        $this->assertEquals(5, count(Storage::disk('local')->allFiles('/tanssexports')));
+
+        Storage::disk('local')->assertMissing('/tanssexports/tanssexport_2009_12_31.json');
+        Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_01.json');
+        Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_02.json');
+        Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_03.json');
+        Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_04.json');
     }
 }
