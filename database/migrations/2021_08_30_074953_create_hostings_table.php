@@ -18,12 +18,7 @@ class CreateHostingsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('contract_id');
-
             $table->string('type');
-
-            // foreign keys
-            $table->foreign('contract_id')->references('id')->on('contracts');
         });
     }
 

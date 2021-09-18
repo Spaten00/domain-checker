@@ -23,6 +23,7 @@ class CustomerFactory extends Factory
     {
         return [
             'name' => $this->faker->company(),
+            'number' => $this->faker->swiftBicNumber(),
         ];
     }
 }

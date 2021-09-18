@@ -23,8 +23,7 @@ class DomainFactory extends Factory
     public function definition()
     {
         return [
-            'contract_id' => $this->faker->randomElement(Contract::all()->pluck('id')->toArray()),
-            'domain_name' => $this->faker->domainName(),
+            'name' => $this->faker->domainName(),
         ];
     }
 }

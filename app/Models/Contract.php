@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
 
@@ -81,21 +82,21 @@ class Contract extends Model
     /**
      * Get the domains for the contract.
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function domains(): HasMany
+    public function domains(): BelongsToMany
     {
-        return $this->hasMany(Domain::class);
+        return $this->belongsToMany(Domain::class);
     }
 
     /**
      * Get the hostings for the contract.
      *
-     * @return HasMany
+     * @return BelongsToMany
      */
-    public function hostings(): HasMany
+    public function hostings(): BelongsToMany
     {
-        return $this->hasMany(Hosting::class);
+        return $this->belongsToMany(Hosting::class);
     }
 
     // OTHER METHODS

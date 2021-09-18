@@ -5,9 +5,10 @@ namespace App\Models;
 use Database\Factories\DomainFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -19,7 +20,7 @@ use Illuminate\Support\Carbon;
  * @property string|null $deleted_at
  * @property int $contract_id
  * @property string $domain_name
- * @property-read Contract $contract
+ * @property-read Collection|Contract[] $contracts
  * @method static DomainFactory factory(...$parameters)
  * @method static Builder|Domain newModelQuery()
  * @method static Builder|Domain newQuery()
@@ -44,7 +45,6 @@ class Domain extends Model
      * @var string[]
      */
     protected $fillable = [
-        'contract_id',
         'name',
     ];
 
@@ -68,11 +68,11 @@ class Domain extends Model
     /**
      * Get the contract for the domain.
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function contract(): BelongsTo
+    public function contracts(): BelongsToMany
     {
-        return $this->belongsTo(Contract::class);
+        return $this->belongsToMany(Contract::class);
     }
 
     // OTHER METHODS

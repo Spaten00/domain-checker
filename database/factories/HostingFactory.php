@@ -23,8 +23,7 @@ class HostingFactory extends Factory
     public function definition()
     {
         return [
-            'contract_id' => $this->faker->randomElement(Contract::all()->pluck('id')->toArray()),
-            'hosting_type' => $this->faker->mimeType(),
+            'type' => $this->faker->mimeType(),
         ];
     }
 }

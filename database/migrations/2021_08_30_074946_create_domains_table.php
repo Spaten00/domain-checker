@@ -18,12 +18,7 @@ class CreateDomainsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->unsignedBigInteger('contract_id');
-
             $table->string('name');
-
-            // foreign keys
-            $table->foreign('contract_id')->references('id')->on('contracts');
         });
     }
 

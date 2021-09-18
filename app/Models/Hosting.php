@@ -5,9 +5,10 @@ namespace App\Models;
 use Database\Factories\HostingFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Carbon;
 
 /**
@@ -19,7 +20,7 @@ use Illuminate\Support\Carbon;
  * @property string|null $deleted_at
  * @property int $contract_id
  * @property string $domain_name
- * @property-read Contract $contract
+ * @property-read Collection|Contract[] $contracts
  * @method static HostingFactory factory(...$parameters)
  * @method static Builder|Hosting newModelQuery()
  * @method static Builder|Hosting newQuery()
@@ -46,7 +47,6 @@ class Hosting extends Model
      * @var string[]
      */
     protected $fillable = [
-        'contract_id',
         'type',
     ];
 
@@ -70,11 +70,11 @@ class Hosting extends Model
     /**
      * Get the contract for the hosting.
      *
-     * @return BelongsTo
+     * @return BelongsToMany
      */
-    public function contract(): BelongsTo
+    public function contracts(): BelongsToMany
     {
-        return $this->belongsTo(Contract::class);
+        return $this->belongsToMany(Contract::class);
     }
 
     // OTHER METHODS
