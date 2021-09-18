@@ -20,7 +20,7 @@ class CreateHostingsTable extends Migration
 
             $table->unsignedBigInteger('contract_id');
 
-            $table->string('hosting_type');
+            $table->string('type');
 
             // foreign keys
             $table->foreign('contract_id')->references('id')->on('contracts');

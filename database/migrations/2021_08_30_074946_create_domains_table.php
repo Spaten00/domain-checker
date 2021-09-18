@@ -20,7 +20,7 @@ class CreateDomainsTable extends Migration
 
             $table->unsignedBigInteger('contract_id');
 
-            $table->string('domain_name');
+            $table->string('name');
 
             // foreign keys
             $table->foreign('contract_id')->references('id')->on('contracts');

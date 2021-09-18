@@ -2,30 +2,35 @@
 
 namespace App\Models;
 
+use Database\Factories\CustomerFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Customer
  *
  * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property string $name
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Contract[] $contracts
+ * @property-read Collection|Contract[] $contracts
  * @property-read int|null $contracts_count
- * @method static \Database\Factories\CustomerFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Customer newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Customer newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Customer query()
- * @method static \Illuminate\Database\Eloquent\Builder|Customer whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Customer whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Customer whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Customer whereName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Customer whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @method static CustomerFactory factory(...$parameters)
+ * @method static Builder|Customer newModelQuery()
+ * @method static Builder|Customer newQuery()
+ * @method static Builder|Customer query()
+ * @method static Builder|Customer whereCreatedAt($value)
+ * @method static Builder|Customer whereDeletedAt($value)
+ * @method static Builder|Customer whereId($value)
+ * @method static Builder|Customer whereName($value)
+ * @method static Builder|Customer whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Customer extends Model
 {
@@ -40,6 +45,7 @@ class Customer extends Model
      */
     protected $fillable = [
         'name',
+        'number',
     ];
 
     /**

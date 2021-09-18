@@ -2,38 +2,43 @@
 
 namespace App\Models;
 
+use Database\Factories\ContractFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Contract
  *
  * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int $user_id
  * @property string $contract_number
  * @property-read Customer $customer
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Domain[] $domains
+ * @property-read Collection|Domain[] $domains
  * @property-read int|null $domains_count
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Hosting[] $hostings
+ * @property-read Collection|Hosting[] $hostings
  * @property-read int|null $hostings_count
- * @method static \Database\Factories\ContractFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Contract newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Contract newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Contract query()
- * @method static \Illuminate\Database\Eloquent\Builder|Contract whereContractNumber($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Contract whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Contract whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Contract whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Contract whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Contract whereUserId($value)
- * @mixin \Eloquent
+ * @method static ContractFactory factory(...$parameters)
+ * @method static Builder|Contract newModelQuery()
+ * @method static Builder|Contract newQuery()
+ * @method static Builder|Contract query()
+ * @method static Builder|Contract whereContractNumber($value)
+ * @method static Builder|Contract whereCreatedAt($value)
+ * @method static Builder|Contract whereDeletedAt($value)
+ * @method static Builder|Contract whereId($value)
+ * @method static Builder|Contract whereUpdatedAt($value)
+ * @method static Builder|Contract whereUserId($value)
+ * @mixin Eloquent
  * @property int $customer_id
- * @method static \Illuminate\Database\Eloquent\Builder|Contract whereCustomerId($value)
+ * @method static Builder|Contract whereCustomerId($value)
  */
 class Contract extends Model
 {
@@ -80,7 +85,6 @@ class Contract extends Model
      */
     public function domains(): HasMany
     {
-    // TODO maybe change to HasOneOrMany???
         return $this->hasMany(Domain::class);
     }
 

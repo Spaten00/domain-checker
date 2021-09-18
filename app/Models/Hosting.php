@@ -2,33 +2,37 @@
 
 namespace App\Models;
 
+use Database\Factories\HostingFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Hosting
  *
  * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int $contract_id
  * @property string $domain_name
- * @property-read \App\Models\Contract $contract
- * @method static \Database\Factories\HostingFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting query()
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereContractId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereDomainName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property-read Contract $contract
+ * @method static HostingFactory factory(...$parameters)
+ * @method static Builder|Hosting newModelQuery()
+ * @method static Builder|Hosting newQuery()
+ * @method static Builder|Hosting query()
+ * @method static Builder|Hosting whereContractId($value)
+ * @method static Builder|Hosting whereCreatedAt($value)
+ * @method static Builder|Hosting whereDeletedAt($value)
+ * @method static Builder|Hosting whereDomainName($value)
+ * @method static Builder|Hosting whereId($value)
+ * @method static Builder|Hosting whereUpdatedAt($value)
+ * @mixin Eloquent
  * @property string $hosting_type
- * @method static \Illuminate\Database\Eloquent\Builder|Hosting whereHostingType($value)
+ * @method static Builder|Hosting whereHostingType($value)
  */
 class Hosting extends Model
 {
@@ -43,7 +47,7 @@ class Hosting extends Model
      */
     protected $fillable = [
         'contract_id',
-        'domain_name',
+        'type',
     ];
 
     /**

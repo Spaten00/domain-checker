@@ -2,31 +2,35 @@
 
 namespace App\Models;
 
+use Database\Factories\DomainFactory;
+use Eloquent;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\Domain
  *
  * @property int $id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int $contract_id
  * @property string $domain_name
- * @property-read \App\Models\Contract $contract
- * @method static \Database\Factories\DomainFactory factory(...$parameters)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Domain newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|Domain query()
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereContractId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereDeletedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereDomainName($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|Domain whereUpdatedAt($value)
- * @mixin \Eloquent
+ * @property-read Contract $contract
+ * @method static DomainFactory factory(...$parameters)
+ * @method static Builder|Domain newModelQuery()
+ * @method static Builder|Domain newQuery()
+ * @method static Builder|Domain query()
+ * @method static Builder|Domain whereContractId($value)
+ * @method static Builder|Domain whereCreatedAt($value)
+ * @method static Builder|Domain whereDeletedAt($value)
+ * @method static Builder|Domain whereDomainName($value)
+ * @method static Builder|Domain whereId($value)
+ * @method static Builder|Domain whereUpdatedAt($value)
+ * @mixin Eloquent
  */
 class Domain extends Model
 {
@@ -41,7 +45,7 @@ class Domain extends Model
      */
     protected $fillable = [
         'contract_id',
-        'domain_name',
+        'name',
     ];
 
     /**
