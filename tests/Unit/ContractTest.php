@@ -44,18 +44,22 @@ class ContractTest extends TestCase
     }
 
     /** @test */
-    public function a_contract_has_many_domains()
+    public function a_contract_belongs_to_many_domains()
     {
         /** @var Customer $customer */
         $customer = Customer::factory()->create();
         /** @var Contract $contract */
         $contract = Contract::factory()->create(['customer_id' => $customer->id]);
         /** @var Domain $domain */
-        $domain = Domain::factory()->create(['contract_id' => $contract->id]);
+        $domain = Domain::factory()->create();
+        $contract->domains()->attach($domain);
 
         $this->assertTrue($contract->domains->contains($domain));
-        $this->assertEquals(1, $contract->domains->count());
+        $this->assertEquals(1, $contract->domains()->count());
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $contract->domains);
+
+        $contract->domains()->attach(Domain::factory()->create());
+        $this->assertEquals(2, $contract->domains()->count());
     }
 
     /** @test */
@@ -66,10 +70,14 @@ class ContractTest extends TestCase
         /** @var Contract $contract */
         $contract = Contract::factory()->create(['customer_id' => $customer->id]);
         /** @var Hosting $hosting */
-        $hosting = Hosting::factory()->create(['contract_id' => $contract->id]);
+        $hosting = Hosting::factory()->create();
+        $contract->hostings()->attach($hosting);
 
         $this->assertTrue($contract->hostings->contains($hosting));
-        $this->assertEquals(1, $contract->hostings->count());
+        $this->assertEquals(1, $contract->hostings()->count());
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $contract->hostings);
+
+        $contract->hostings()->attach(Hosting::factory()->create());
+        $this->assertEquals(2, $contract->hostings()->count());
     }
 }

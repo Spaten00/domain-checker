@@ -21,8 +21,7 @@ class DomainTest extends TestCase
             'created_at',
             'updated_at',
             'deleted_at',
-            'contract_id',
-            'domain_name',
+            'name',
         ];
 
         $this->assertTrue(Schema::hasColumns('domains', $expectedColumns));
@@ -31,16 +30,22 @@ class DomainTest extends TestCase
     }
 
     /** @test */
-    public function a_domain_belongs_to_a_contract()
+    public function a_domain_belongs_to_many_contracts()
     {
         /** @var Customer $customer */
         $customer = Customer::factory()->create();
         /** @var Contract $contract */
         $contract = Contract::factory()->create(['customer_id' => $customer->id]);
         /** @var Domain $domain */
-        $domain = Domain::factory()->create(['contract_id' => $contract->id]);
+        $domain = Domain::factory()->create();
+        $domain->contracts()->attach($contract);
 
-        $this->assertEquals(1, $domain->contract->count());
-        $this->assertInstanceOf(Contract::class, $domain->contract);
+        $this->assertTrue($domain->contracts->contains($contract));
+        $this->assertEquals(1, $domain->contracts()->count());
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $domain->contracts);
+
+        $domain->contracts()->attach(Contract::factory()->create(['customer_id' => $customer->id]));
+        $this->assertEquals(2, $domain->contracts()->count());
+
     }
 }

@@ -21,8 +21,7 @@ class HostingTest extends TestCase
             'created_at',
             'updated_at',
             'deleted_at',
-            'contract_id',
-            'hosting_type',
+            'type',
         ];
 
         $this->assertTrue(Schema::hasColumns('hostings', $expectedColumns));
@@ -38,9 +37,14 @@ class HostingTest extends TestCase
         /** @var Contract $contract */
         $contract = Contract::factory()->create(['customer_id' => $customer->id]);
         /** @var Hosting $hosting */
-        $hosting = Hosting::factory()->create(['contract_id' => $contract->id]);
+        $hosting = Hosting::factory()->create();
+        $hosting->contracts()->attach($contract);
 
-        $this->assertEquals(1, $hosting->contract->count());
-        $this->assertInstanceOf(Contract::class, $hosting->contract);
+        $this->assertTrue($hosting->contracts->contains($contract));
+        $this->assertEquals(1, $hosting->contracts()->count());
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $hosting->contracts);
+
+        $hosting->contracts()->attach(Contract::factory()->create(['customer_id' => $customer->id]));
+        $this->assertEquals(2, $hosting->contracts()->count());
     }
 }
