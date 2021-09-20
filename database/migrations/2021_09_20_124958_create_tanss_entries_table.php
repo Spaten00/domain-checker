@@ -22,9 +22,13 @@ class CreateTanssEntriesTable extends Migration
             $table->unsignedBigInteger('customer_id');
 
             $table->string('tanss_number');
-            $table->string('provider_name');
-            $table->timestamps('contract_start');
-            $table->timestamps('contract_end');
+            $table->string('provider_name')->nullable();
+            $table->timestamp('contract_start')->nullable();
+            $table->timestamp('contract_end')->nullable();
+
+            // foreign keys
+            $table->foreign('domain_id')->references('id')->on('domains');
+            $table->foreign('customer_id')->references('id')->on('customers');
         });
     }
 

@@ -19,9 +19,12 @@ class CreateRrpproxyEntriesTable extends Migration
 
             $table->unsignedBigInteger('domain_id');
 
-            $table->timestamps('contract_start');
-            $table->timestamps('contract_end');
-            $table->timestamps('contract_renewal');
+            $table->timestamp('contract_start')->nullable();
+            $table->timestamp('contract_end')->nullable();
+            $table->timestamp('contract_renewal')->nullable();
+
+            // foreign keys
+            $table->foreign('domain_id')->references('id')->on('domains');
         });
     }
 
