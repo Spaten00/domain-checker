@@ -46,6 +46,7 @@ class ImportTanssCommand extends Command
     {
         $this->importTanssFile();
         $this->deleteOldFiles();
+        $this->addToDatabase();
     }
 
     /**
@@ -80,6 +81,14 @@ class ImportTanssCommand extends Command
             Storage::append('log.txt', now() . ': Alte Datei ' . $files[0] . ' wurde gelöscht.');
             Storage::delete($files[0]);
         }
+    }
+
+    /**
+     * Add all new entries from the tanss-export-file to the database.
+     */
+    private function addToDatabase(): void
+    {
+
     }
 
 }

@@ -40,6 +40,8 @@ use Illuminate\Support\Carbon;
  * @mixin Eloquent
  * @property int $customer_id
  * @method static Builder|Contract whereCustomerId($value)
+ * @property-read Collection|Bill[] $bills
+ * @property-read int|null $bills_count
  */
 class Contract extends Model
 {
@@ -74,6 +76,21 @@ class Contract extends Model
     // SCOPES
 
     // RELATIONS
+    /**
+     * Get the bills for the contract.
+     *
+     * @return HasMany
+     */
+    public function bills(): HasMany
+    {
+        return $this->hasMany(Bill::class);
+    }
+
+    /**
+     * Get the customer for the contract.
+     *
+     * @return BelongsTo
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);

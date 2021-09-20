@@ -31,6 +31,8 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Customer whereName($value)
  * @method static Builder|Customer whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property string $number
+ * @method static Builder|Customer whereNumber($value)
  */
 class Customer extends Model
 {

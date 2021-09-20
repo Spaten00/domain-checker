@@ -34,6 +34,9 @@ use Illuminate\Support\Carbon;
  * @mixin Eloquent
  * @property string $hosting_type
  * @method static Builder|Hosting whereHostingType($value)
+ * @property string $type
+ * @property-read int|null $contracts_count
+ * @method static Builder|Hosting whereType($value)
  */
 class Hosting extends Model
 {

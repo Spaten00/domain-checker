@@ -49,6 +49,8 @@ use Laravel\Sanctum\PersonalAccessToken;
  * @method static Builder|User whereRememberToken($value)
  * @method static Builder|User whereUpdatedAt($value)
  * @mixin Eloquent
+ * @property string|null $deleted_at
+ * @method static Builder|User whereDeletedAt($value)
  */
 class User extends Authenticatable
 {
