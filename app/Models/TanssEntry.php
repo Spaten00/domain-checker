@@ -78,4 +78,29 @@ class TanssEntry extends Model
     }
 
     // OTHER METHODS
+
+    /**
+     * Create a new tanssEntry if it does not exist yet.
+     *
+     * @param $entry
+     * @param Customer $customer
+     * @param Domain $domain
+     * @return TanssEntry
+     */
+    public static function createTanssEntry($entry, Customer $customer, Domain $domain): TanssEntry
+    {
+        $tanssEntry = TanssEntry::find($entry['tanssId']);
+        if (!$tanssEntry) {
+            $tanssEntry = new TanssEntry;
+            $tanssEntry->provider_name = $entry['providerName'];
+            // TODO catch invalid datetime format
+            $tanssEntry->contract_start = $entry['tanssContractStart'];
+            $tanssEntry->contract_end = $entry['tanssContractEnd'];
+            $tanssEntry->customer()->associate($customer);
+            $tanssEntry->domain()->associate($domain);
+            $tanssEntry->save();
+        }
+
+        return $tanssEntry;
+    }
 }

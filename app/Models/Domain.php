@@ -104,4 +104,21 @@ class Domain extends Model
     }
 
     // OTHER METHODS
+
+    /**
+     * Create a new domain with the desired name if it does not exist yet.
+     *
+     * @param string $domainName
+     * @return Domain
+     */
+    public static function createDomain(string $domainName): Domain
+    {
+        $domain = Domain::where('name', 'domainName')->first();
+        if (!$domain) {
+            $domain = new Domain;
+            $domain->name = $domainName;
+            $domain->save();
+        }
+        return $domain;
+    }
 }

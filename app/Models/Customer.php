@@ -77,4 +77,23 @@ class Customer extends Model
     }
 
     // OTHER METHODS
+
+    /**
+     * Create a new user with the desired id and name if it does not exist yet.
+     *
+     * @param int $id
+     * @param string $name
+     * @return Customer
+     */
+    public static function createCustomer(int $id, string $name): Customer
+    {
+        $customer = Customer::find($id);
+        if (!$customer) {
+            $customer = new Customer;
+            $customer->id = $id;
+            $customer->name = $name;
+            $customer->save();
+        }
+        return $customer;
+    }
 }

@@ -2,6 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Models\Customer;
+use App\Models\Domain;
+use App\Models\TanssEntry;
 use Illuminate\Console\Command;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +14,7 @@ class ImportTanssCommand extends Command
 {
     const FTP_FILE_PATH = '/export/tanssexport.json';
     const MAX_FILES = 5;
+    const TANSSEXPORTS_FOLDER = '/tanssexports/';
 
     /**
      * The name and signature of the console command.
@@ -44,9 +48,9 @@ class ImportTanssCommand extends Command
      */
     public function handle(): void
     {
-        $this->importTanssFile();
+        $newFile = $this->importTanssFile();
         $this->deleteOldFiles();
-        $this->addToDatabase();
+        $this->addNewEntriesToDatabase($newFile);
     }
 
     /**
@@ -54,15 +58,17 @@ class ImportTanssCommand extends Command
      *
      * @throws FileNotFoundException
      */
-    public function importTanssFile(): void
+    public function importTanssFile(): string
     {
         try {
             if ($this->option('testing')) {
                 throw new ConnectionRuntimeException();
             }
             $ftpContent = Storage::disk('ftp')->get(self::FTP_FILE_PATH);
-            Storage::put('/tanssexports/tanssexport_' . date('Y_m_d') . '.json', $ftpContent);
+            $newFile = self::TANSSEXPORTS_FOLDER . 'tanssexport_' . date('Y_m_d') . '.json';
+            Storage::put($newFile, $ftpContent);
             Storage::append('log.txt', now() . ': TANSS-Export-Datei importiert.');
+            return $newFile;
         } catch (ConnectionRuntimeException $e) {
             Storage::append('log.txt', now() . ': Verbindung zum TANSS-Server konnte nicht hergestellt werden.');
             throw new ConnectionRuntimeException();
@@ -77,7 +83,7 @@ class ImportTanssCommand extends Command
      */
     public function deleteOldFiles(): void
     {
-        while (count($files = Storage::allFiles('/tanssexports')) > self::MAX_FILES) {
+        while (count($files = Storage::allFiles(self::TANSSEXPORTS_FOLDER)) > self::MAX_FILES) {
             Storage::append('log.txt', now() . ': Alte Datei ' . $files[0] . ' wurde gelöscht.');
             Storage::delete($files[0]);
         }
@@ -85,10 +91,70 @@ class ImportTanssCommand extends Command
 
     /**
      * Add all new entries from the tanss-export-file to the database.
+     *
+     * @throws FileNotFoundException
      */
-    private function addToDatabase(): void
+    private function addNewEntriesToDatabase($filePath): void
     {
+        $processedEntries = $this->processTanssEntries($filePath);
 
+        foreach ($processedEntries as $entry) {
+            $customer = Customer::createCustomer($entry['customerId'], $entry['customerName']);
+            $domain = Domain::createDomain($entry['domain']);
+            TanssEntry::createTanssEntry($entry, $customer, $domain);
+        }
+    }
+
+    /**
+     * Process all entries of the given file and returns an array containing the content.
+     *
+     * @param $filePath
+     * @return array
+     * @throws FileNotFoundException
+     */
+    private function processTanssEntries($filePath): array
+    {
+        $json = json_decode(Storage::get($filePath));
+        $processedEntries = [];
+
+        foreach ($json as $entry) {
+            $rootDomain = $this->getRootDomain($entry->domain);
+            $attributes = [
+                'tanssId' => $entry->id,
+                'customerId' => $entry->kdnr,
+                'customerName' => $entry->name,
+                'domain' => $rootDomain,
+                'providerName' => $entry->provider_name,
+                'tanssContractStart' => $entry->contract_duration_start,
+                'tanssContractEnd' => $entry->contract_duration_end,
+            ];
+            $processedEntries[$rootDomain] = $attributes;
+        }
+
+        return $processedEntries;
+    }
+
+    /**
+     * Cleans the domain name and gives it back as a string.
+     *
+     * @param $uncleanDomainName
+     * @return string
+     */
+    private function getRootDomain($uncleanDomainName): string
+    {
+        $prefixExploded = explode('//', trim($uncleanDomainName));
+        $fqdn = trim(end($prefixExploded));
+
+        $fqdnExploded = explode('.', $fqdn);
+
+        // check if at least two parts exists
+        if (count($fqdnExploded) >= 2) {
+            $rootDomainParts = array_slice($fqdnExploded, -2, 2);
+        } else {
+            $rootDomainParts = $fqdnExploded;
+        }
+
+        return implode('.', [trim($rootDomainParts[0]), trim($rootDomainParts[1])]);
     }
 
 }
