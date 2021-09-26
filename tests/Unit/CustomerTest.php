@@ -21,7 +21,6 @@ class CustomerTest extends TestCase
             'updated_at',
             'deleted_at',
             'name',
-            'number',
         ];
 
         $this->assertTrue(Schema::hasColumns('customers', $expectedColumns));

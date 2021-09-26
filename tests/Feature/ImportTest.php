@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Storage;
 use League\Flysystem\ConnectionRuntimeException;
@@ -10,13 +11,24 @@ use Tests\TestCase;
 
 class ImportTest extends TestCase
 {
+    use RefreshDatabase;
+
     /** @test */
     public function tanss_export_file_can_be_imported()
     {
         Storage::fake('ftp');
         Storage::fake('local');
 
-        Storage::disk('ftp')->put('/export/tanssexport.json', 'test');
+        Storage::disk('ftp')->put('/export/tanssexport.json',
+            '[{
+            "id":"1",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service.de",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"2013-07-20",
+            "contract_duration_end":"2015-05-21"
+            }]');
         Storage::disk('ftp')->assertExists('/export/tanssexport.json');
 
         Artisan::call('tanss:import');
@@ -62,7 +74,16 @@ class ImportTest extends TestCase
         Storage::fake('ftp');
         Storage::fake('local');
 
-        Storage::disk('ftp')->put('/export/tanssexport.json', 'test');
+        Storage::disk('ftp')->put('/export/tanssexport.json',
+            '[{
+            "id":"1",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service.de",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"2013-07-20",
+            "contract_duration_end":"2015-05-21"
+            }]');
         Artisan::call('tanss:import');
         $this->assertEquals(1, count(Storage::disk('local')->allFiles('/tanssexports')));
 

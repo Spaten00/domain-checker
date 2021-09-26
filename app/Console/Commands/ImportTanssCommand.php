@@ -106,7 +106,7 @@ class ImportTanssCommand extends Command
     }
 
     /**
-     * Process all entries of the given file and returns an array containing the content.
+     * Process all entries of the given file and return an array containing the content.
      *
      * @param $filePath
      * @return array
@@ -130,7 +130,6 @@ class ImportTanssCommand extends Command
             ];
             $processedEntries[$rootDomain] = $attributes;
         }
-
         return $processedEntries;
     }
 
