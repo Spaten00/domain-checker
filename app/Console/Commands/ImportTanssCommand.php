@@ -48,9 +48,9 @@ class ImportTanssCommand extends Command
      */
     public function handle(): void
     {
-        $newFile = $this->importTanssFile();
+        $newFilePath = $this->importTanssFile();
         $this->deleteOldFiles();
-        $this->addNewEntriesToDatabase($newFile);
+        $this->addNewEntriesToDatabase($newFilePath);
     }
 
     /**
@@ -65,10 +65,10 @@ class ImportTanssCommand extends Command
                 throw new ConnectionRuntimeException();
             }
             $ftpContent = Storage::disk('ftp')->get(self::FTP_FILE_PATH);
-            $newFile = self::TANSSEXPORTS_FOLDER . 'tanssexport_' . date('Y_m_d') . '.json';
-            Storage::put($newFile, $ftpContent);
+            $newFilePath = self::TANSSEXPORTS_FOLDER . 'tanssexport_' . date('Y_m_d') . '.json';
+            Storage::put($newFilePath, $ftpContent);
             Storage::append('log.txt', now() . ': TANSS-Export-Datei importiert.');
-            return $newFile;
+            return $newFilePath;
         } catch (ConnectionRuntimeException $e) {
             Storage::append('log.txt', now() . ': Verbindung zum TANSS-Server konnte nicht hergestellt werden.');
             throw new ConnectionRuntimeException();
