@@ -150,7 +150,7 @@ class ImportTanssCommand extends Command
         if (count($fqdnExploded) >= 2) {
             $rootDomainParts = array_slice($fqdnExploded, -2, 2);
         } else {
-            $rootDomainParts = $fqdnExploded;
+            return $fqdnExploded[0];
         }
 
         return implode('.', [trim($rootDomainParts[0]), trim($rootDomainParts[1])]);
