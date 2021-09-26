@@ -28,6 +28,14 @@ class ImportTest extends TestCase
             "provider_name":"aks Service GmbH",
             "contract_duration_start":"2013-07-20",
             "contract_duration_end":"2015-05-21"
+            },
+            {"id":"2",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"0000-07-20",
+            "contract_duration_end":"0000-00-00"
             }]');
         Storage::disk('ftp')->assertExists('/export/tanssexport.json');
 

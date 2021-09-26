@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Database\Factories\TanssEntryFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,6 +24,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class TanssEntry extends Model
 {
     use HasFactory;
+
+    private mixed $provider_name;
+    /**
+     * @var mixed|string|null
+     */
+    private mixed $contract_start;
+    /**
+     * @var mixed|string|null
+     */
+    private mixed $contract_end;
 
     protected $table = 'tanss_entries';
 
@@ -93,14 +104,27 @@ class TanssEntry extends Model
         if (!$tanssEntry) {
             $tanssEntry = new TanssEntry;
             $tanssEntry->provider_name = $entry['providerName'];
-            // TODO catch invalid datetime format
-            $tanssEntry->contract_start = $entry['tanssContractStart'];
-            $tanssEntry->contract_end = $entry['tanssContractEnd'];
+            $tanssEntry->contract_start = self::getValidDate($entry['tanssContractStart']);
+            $tanssEntry->contract_end = self::getValidDate($entry['tanssContractEnd']);
             $tanssEntry->customer()->associate($customer);
             $tanssEntry->domain()->associate($domain);
             $tanssEntry->save();
         }
 
         return $tanssEntry;
+    }
+
+    /**
+     * Check if the date is valid.
+     *
+     * @param $dateToCheck
+     * @return string|null
+     */
+    private static function getValidDate($dateToCheck): string|null
+    {
+        if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
+            return $dateToCheck;
+        }
+        return null;
     }
 }
