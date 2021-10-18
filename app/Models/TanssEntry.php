@@ -25,6 +25,7 @@ class TanssEntry extends Model
 {
     use HasFactory;
 
+    private mixed $id;
     private mixed $provider_name;
     /**
      * @var mixed|string|null
@@ -68,6 +69,7 @@ class TanssEntry extends Model
     // SCOPES
 
     // RELATIONS
+
     /**
      * Get the domain for the tanssEntry.
      *
@@ -93,16 +95,17 @@ class TanssEntry extends Model
     /**
      * Create a new tanssEntry if it does not exist yet.
      *
-     * @param $entry
+     * @param array $entry
      * @param Customer $customer
      * @param Domain $domain
      * @return TanssEntry
      */
-    public static function createTanssEntry($entry, Customer $customer, Domain $domain): TanssEntry
+    public static function createTanssEntry(array $entry, Customer $customer, Domain $domain): TanssEntry
     {
         $tanssEntry = TanssEntry::find($entry['tanssId']);
         if (!$tanssEntry) {
             $tanssEntry = new TanssEntry;
+            $tanssEntry->id = $entry['tanssId'];
             $tanssEntry->provider_name = $entry['providerName'];
             $tanssEntry->contract_start = self::getValidDate($entry['tanssContractStart']);
             $tanssEntry->contract_end = self::getValidDate($entry['tanssContractEnd']);
@@ -110,6 +113,8 @@ class TanssEntry extends Model
             $tanssEntry->domain()->associate($domain);
             $tanssEntry->save();
         }
+
+        // TODO function for updating entries
 
         return $tanssEntry;
     }

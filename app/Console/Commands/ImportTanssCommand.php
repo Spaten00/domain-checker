@@ -58,7 +58,7 @@ class ImportTanssCommand extends Command
      *
      * @throws FileNotFoundException
      */
-    public function importTanssFile(): string
+    private function importTanssFile(): string
     {
         try {
             if ($this->option('testing')) {
@@ -70,7 +70,7 @@ class ImportTanssCommand extends Command
             Storage::append('log.txt', now() . ': TANSS-Export-Datei importiert.');
             return $newFilePath;
         } catch (ConnectionRuntimeException $e) {
-            Storage::append('log.txt', now() . ': Verbindung zum TANSS-Server konnte nicht hergestellt werden.');
+            Storage::append('log.txt', now() . ': Verbindung zum Server konnte nicht hergestellt werden.');
             throw new ConnectionRuntimeException();
         } catch (FileNotFoundException $e) {
             Storage::append('log.txt', now() . ': TANSS-Export-Datei existiert nicht auf Server.');
@@ -81,7 +81,7 @@ class ImportTanssCommand extends Command
     /**
      * Delete the oldest files if there are more files than <var>MAX_FILES</var>.
      */
-    public function deleteOldFiles(): void
+    private function deleteOldFiles(): void
     {
         while (count($files = Storage::allFiles(self::TANSSEXPORTS_FOLDER)) > self::MAX_FILES) {
             Storage::append('log.txt', now() . ': Alte Datei ' . $files[0] . ' wurde gelöscht.');
@@ -94,7 +94,7 @@ class ImportTanssCommand extends Command
      *
      * @throws FileNotFoundException
      */
-    private function addNewEntriesToDatabase($filePath): void
+    private function addNewEntriesToDatabase(string $filePath): void
     {
         $processedEntries = $this->processTanssEntries($filePath);
 
@@ -112,7 +112,7 @@ class ImportTanssCommand extends Command
      * @return array
      * @throws FileNotFoundException
      */
-    private function processTanssEntries($filePath): array
+    private function processTanssEntries(string $filePath): array
     {
         $json = json_decode(Storage::get($filePath));
         $processedEntries = [];
@@ -128,6 +128,7 @@ class ImportTanssCommand extends Command
                 'tanssContractStart' => $entry->contract_duration_start,
                 'tanssContractEnd' => $entry->contract_duration_end,
             ];
+            // TODO just push into array, no need of key?
             $processedEntries[$rootDomain] = $attributes;
         }
         return $processedEntries;

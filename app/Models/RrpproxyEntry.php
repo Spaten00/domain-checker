@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Database\Factories\RrpproxyEntryFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
@@ -54,6 +55,8 @@ class RrpproxyEntry extends Model
     // SCOPES
 
     // RELATIONS
+
+
     /**
      * Get the domain for the rrpproxyEntry.
      *
@@ -65,4 +68,30 @@ class RrpproxyEntry extends Model
     }
 
     // OTHER METHODS
+    public static function createRrpproxyEntry(array $entry, Domain $domain): RRPProxyEntry
+    {
+        $rrpproxyEntry = RRPProxyEntry::whereHas('domain', function (Builder $query) use ($entry) {
+            $query->where('name', 'like', $entry['domain']);
+        })->first();
+
+        if (!$rrpproxyEntry) {
+            var_dump("Gibbet noch nicht");
+            $rrpproxyEntry = new RRPProxyEntry;
+            $rrpproxyEntry->contract_start = self::getValidDate($entry['rrpproxyContractStart']);
+            $rrpproxyEntry->contract_end = self::getValidDate($entry['rrpproxyContractEnd']);
+            $rrpproxyEntry->domain()->associate($domain);
+            $rrpproxyEntry->save();
+        }
+        var_dump($rrpproxyEntry);
+        return $rrpproxyEntry;
+    }
+
+    //TODO refactor
+    private static function getValidDate(mixed $dateToCheck): string|null
+    {
+        if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
+            return $dateToCheck;
+        }
+        return null;
+    }
 }

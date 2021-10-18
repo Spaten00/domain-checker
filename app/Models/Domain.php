@@ -113,7 +113,7 @@ class Domain extends Model
      */
     public static function createDomain(string $domainName): Domain
     {
-        $domain = Domain::where('name', 'domainName')->first();
+        $domain = Domain::where('name', $domainName)->first();
         if (!$domain) {
             $domain = new Domain;
             $domain->name = $domainName;
