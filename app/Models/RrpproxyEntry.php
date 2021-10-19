@@ -19,6 +19,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|RrpproxyEntry query()
  * @mixin Eloquent
  * @property-read Domain $domain
+ * @property mixed|string|null $contract_start
+ * @property mixed|string|null $contract_end
  */
 class RrpproxyEntry extends Model
 {
@@ -75,14 +77,15 @@ class RrpproxyEntry extends Model
         })->first();
 
         if (!$rrpproxyEntry) {
-            var_dump("Gibbet noch nicht");
+//            var_dump("Gibbet noch nicht");
             $rrpproxyEntry = new RRPProxyEntry;
             $rrpproxyEntry->contract_start = self::getValidDate($entry['rrpproxyContractStart']);
             $rrpproxyEntry->contract_end = self::getValidDate($entry['rrpproxyContractEnd']);
+            $rrpproxyEntry->contract_renewal =self::getValidDate($entry['rrpproxyContractRenewal']);
             $rrpproxyEntry->domain()->associate($domain);
             $rrpproxyEntry->save();
         }
-        var_dump($rrpproxyEntry);
+//        var_dump($rrpproxyEntry);
         return $rrpproxyEntry;
     }
 

@@ -108,7 +108,7 @@ class ImportTanssCommand extends Command
     /**
      * Process all entries of the given file and return an array containing the content.
      *
-     * @param $filePath
+     * @param string $filePath
      * @return array
      * @throws FileNotFoundException
      */
@@ -120,7 +120,7 @@ class ImportTanssCommand extends Command
         foreach ($json as $entry) {
             $rootDomain = $this->getRootDomain($entry->domain);
             $attributes = [
-                'tanssId' => $entry->id,
+                'externalId' => $entry->id,
                 'customerId' => $entry->kdnr,
                 'customerName' => $entry->name,
                 'domain' => $rootDomain,

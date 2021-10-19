@@ -54,6 +54,7 @@ class ImportRrpproxyCommand extends Command
     }
 
     /**
+     * @return string
      * @throws FileNotFoundException
      */
     private function importRrpproxyFile(): string
@@ -107,6 +108,7 @@ class ImportRrpproxyCommand extends Command
                 'domain' => $entry->IDN,
                 'rrpproxyContractStart' => $entry->{'Domain created date'},
                 'rrpproxyContractEnd' => $entry->{'Domain registration expiration date'},
+                'rrpproxyContractRenewal' => $entry->{'Domain renewal date'},
             ];
             $processedEntries[$entry->IDN] = $attributes;
         }

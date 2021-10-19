@@ -21,7 +21,7 @@ class CreateTanssEntriesTable extends Migration
             $table->unsignedBigInteger('domain_id');
             $table->unsignedBigInteger('customer_id');
 
-//            $table->string('tanss_number');
+            $table->string('external_id');
             $table->string('provider_name')->nullable();
             $table->timestamp('contract_start')->nullable();
             $table->timestamp('contract_end')->nullable();

@@ -20,21 +20,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @mixin Eloquent
  * @property-read Customer $customer
  * @property-read Domain $domain
+ * @property mixed|string|null $contract_start
+ * @property mixed|string|null $contract_end
+ * @property mixed $external_id
+ * @property mixed $provider_name
  */
 class TanssEntry extends Model
 {
     use HasFactory;
 
-    private mixed $id;
-    private mixed $provider_name;
-    /**
-     * @var mixed|string|null
-     */
-    private mixed $contract_start;
-    /**
-     * @var mixed|string|null
-     */
-    private mixed $contract_end;
+//    private mixed $provider_name;
+//    /**
+//     * @var mixed|string|null
+//     */
+//    private mixed $contract_start;
+//    /**
+//     * @var mixed|string|null
+//     */
+//    private mixed $contract_end;
 
     protected $table = 'tanss_entries';
 
@@ -44,6 +47,7 @@ class TanssEntry extends Model
      * @var string[]
      */
     protected $fillable = [
+        'external_id',
         'domain_id',
         'customer_id',
         'tanss_number',
@@ -102,10 +106,10 @@ class TanssEntry extends Model
      */
     public static function createTanssEntry(array $entry, Customer $customer, Domain $domain): TanssEntry
     {
-        $tanssEntry = TanssEntry::find($entry['tanssId']);
+        $tanssEntry = TanssEntry::where('external_id', '=', $entry['externalId'])->first();
         if (!$tanssEntry) {
             $tanssEntry = new TanssEntry;
-            $tanssEntry->id = $entry['tanssId'];
+            $tanssEntry->external_id = $entry['externalId'];
             $tanssEntry->provider_name = $entry['providerName'];
             $tanssEntry->contract_start = self::getValidDate($entry['tanssContractStart']);
             $tanssEntry->contract_end = self::getValidDate($entry['tanssContractEnd']);
