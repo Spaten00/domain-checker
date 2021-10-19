@@ -46,7 +46,7 @@
                         {{ __('Forgot your password?') }}
                     </a>
                 @endif
-
+                <button class="btn btn-primary">asd</button>
                 <x-button class="ml-3">
                     {{ __('Log in') }}
                 </x-button>
