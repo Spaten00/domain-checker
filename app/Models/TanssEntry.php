@@ -29,16 +29,6 @@ class TanssEntry extends Model
 {
     use HasFactory;
 
-//    private mixed $provider_name;
-//    /**
-//     * @var mixed|string|null
-//     */
-//    private mixed $contract_start;
-//    /**
-//     * @var mixed|string|null
-//     */
-//    private mixed $contract_end;
-
     protected $table = 'tanss_entries';
 
     /**

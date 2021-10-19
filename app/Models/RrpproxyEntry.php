@@ -77,7 +77,6 @@ class RrpproxyEntry extends Model
         })->first();
 
         if (!$rrpproxyEntry) {
-//            var_dump("Gibbet noch nicht");
             $rrpproxyEntry = new RRPProxyEntry;
             $rrpproxyEntry->contract_start = self::getValidDate($entry['rrpproxyContractStart']);
             $rrpproxyEntry->contract_end = self::getValidDate($entry['rrpproxyContractEnd']);
@@ -85,7 +84,7 @@ class RrpproxyEntry extends Model
             $rrpproxyEntry->domain()->associate($domain);
             $rrpproxyEntry->save();
         }
-//        var_dump($rrpproxyEntry);
+
         return $rrpproxyEntry;
     }
 
