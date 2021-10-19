@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * App\Models\RrpproxyEntry
@@ -80,7 +81,7 @@ class RrpproxyEntry extends Model
             $rrpproxyEntry = new RRPProxyEntry;
             $rrpproxyEntry->contract_start = self::getValidDate($entry['rrpproxyContractStart']);
             $rrpproxyEntry->contract_end = self::getValidDate($entry['rrpproxyContractEnd']);
-            $rrpproxyEntry->contract_renewal =self::getValidDate($entry['rrpproxyContractRenewal']);
+            $rrpproxyEntry->contract_renewal = self::getValidDate($entry['rrpproxyContractRenewal']);
             $rrpproxyEntry->domain()->associate($domain);
             $rrpproxyEntry->save();
         }

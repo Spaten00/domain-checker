@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Carbon;
 
 /**
@@ -36,9 +36,9 @@ use Illuminate\Support\Carbon;
  * @property string $name
  * @property-read int|null $contracts_count
  * @method static Builder|Domain whereName($value)
- * @property-read Collection|RrpproxyEntry[] $rrpproxyEntries
+ * @property-read RrpproxyEntry $rrpproxyEntry
  * @property-read int|null $rrpproxy_entries_count
- * @property-read Collection|TanssEntry[] $tanssEntries
+ * @property-read TanssEntry $tanssEntry
  * @property-read int|null $tanss_entries_count
  */
 class Domain extends Model
@@ -86,21 +86,21 @@ class Domain extends Model
     /**
      * Get the tanssEntries for the Domain.
      *
-     * @return HasMany
+     * @return HasOne
      */
-    public function tanssEntries(): HasMany
+    public function tanssEntry(): HasOne
     {
-        return $this->hasMany(TanssEntry::class);
+        return $this->hasOne(TanssEntry::class);
     }
 
     /**
      * Get the rrpproxyEntries for the Domain.
      *
-     * @return HasMany
+     * @return HasOne
      */
-    public function rrpproxyEntries(): HasMany
+    public function rrpproxyEntry(): HasOne
     {
-        return $this->hasMany(RrpproxyEntry::class);
+        return $this->hasOne(RrpproxyEntry::class);
     }
 
     // OTHER METHODS

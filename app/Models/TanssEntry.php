@@ -119,9 +119,10 @@ class TanssEntry extends Model
      * @param $dateToCheck
      * @return string|null
      */
-    private static function getValidDate($dateToCheck): string|null
+    public static function getValidDate($dateToCheck): string|null
     {
         if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
+            var_dump($dateToCheck);
             return $dateToCheck;
         }
         return null;
