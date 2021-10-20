@@ -20296,3 +20296,7 @@ thead {
   top: 76.2px;
   z-index: 2;
 }
+
+.badge {
+  font-size: 100%;
+}

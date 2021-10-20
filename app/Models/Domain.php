@@ -121,4 +121,70 @@ class Domain extends Model
         }
         return $domain;
     }
+
+    /**
+     * @return string
+     */
+    public function getStatusClass(): string
+    {
+//        // expired in TANSS
+//        if ($this->tanssEntry->isExpired()) {
+//            return "badge bg-danger";
+//        }
+
+        // missing TANSS and RRPproxy is running
+        // bad
+        if (!$this->tanssEntry && !$this->rrpproxyEntry->isExpired()) {
+            return "badge bg-danger";
+        }
+
+        // missing RRPproxy and TANSS is running
+        // bad
+
+        // missing TANSS and RRPproxy is not running
+        //ok
+
+        // missing RRPproxy and TANSS is not running
+        // ok
+
+        // expired in TANSS and RRPproxy running
+        // bad
+
+        // expired in RRPproxy and TANSS running
+        // bad
+
+        // expired in both
+        // ok
+
+        if ($this->tanssEntry->willExpireSoon()) {
+            return "badge bg-warning";
+        }
+        return "badge bg-success";
+    }
+
+    public function getStatusText(): string
+    {
+        if (!$this->tanssEntry) {
+            return "Kein TANSS Eintrag vorhanden";
+        }
+
+        if (!$this->rrpproxyEntry) {
+            return "Kein RRPproxy Eintrag vorhanden";
+        }
+
+        if ($this->tanssEntry->isExpired()) {
+            return "TANSS-Vertrag abgelaufen";
+        }
+
+        if ($this->tanssEntry->willExpireSoon()) {
+            return "TANSS-Vertrag läuft bald aus";
+        }
+
+        return "OK";
+    }
+
+    public function getStatus(): string
+    {
+        return '<span class="' . $this->getStatusClass() . '">' . $this->getStatusText() . '</span>';
+    }
 }

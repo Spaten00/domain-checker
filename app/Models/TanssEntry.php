@@ -29,6 +29,8 @@ class TanssEntry extends Model
 {
     use HasFactory;
 
+    const SOON = 30;
+
     protected $table = 'tanss_entries';
 
     /**
@@ -126,5 +128,31 @@ class TanssEntry extends Model
             return $dateToCheck;
         }
         return null;
+    }
+
+    /**
+     * Check if entry is already expired.
+     *
+     * @return bool
+     */
+    public function isExpired(): bool
+    {
+        if ($this->contract_end > now()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if the entry will expire soon.
+     *
+     * @return bool
+     */
+    public function willExpireSoon(): bool
+    {
+        if ($this->contract_end > now()->addDays(self::SOON)) {
+            return false;
+        }
+        return true;
     }
 }

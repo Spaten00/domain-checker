@@ -15,10 +15,11 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($domains = \App\Models\Domain::paginate(15) as $domain)
+            @foreach ($domains = \App\Models\Domain::paginate(15)->withQueryString() as $domain)
                 <tr>
                     <td>{{$domain->name}}</td>
-                    <td><span class="badge bg-success">OK</span></td>
+                    <td>{!! $domain->getStatus() !!}</td>
+                    {{--                    <td><span class="{{$domain->getStatusClass()}}">{{$domain->getStatus()}}</span></td>--}}
                     <td>{{$domain->tanssEntry ? $domain->tanssEntry->customer->name : ''}}</td>
                     <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>
                     <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_end)->toDateString() : ''}}</td>
@@ -31,7 +32,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            {!! $domains->links() !!}
+            {{ $domains->links() }}
         </div>
     </div>
 </x-app-layout>
