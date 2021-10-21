@@ -68,8 +68,6 @@ class RrpproxyEntry extends Entry
     // SCOPES
 
     // RELATIONS
-
-
     /**
      * Get the domain for the rrpproxyEntry.
      *

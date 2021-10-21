@@ -31,7 +31,7 @@ class UserTest extends TestCase
 
         $this->assertTrue(Schema::hasColumns('users', $expectedColumns));
         // check that no other columns are created
-        $this->assertTrue(Schema::getColumnListing('users') === $expectedColumns);
+        $this->assertSame(Schema::getColumnListing('users'), $expectedColumns);
     }
 
     /** @test */

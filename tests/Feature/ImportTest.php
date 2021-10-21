@@ -18,7 +18,6 @@ class ImportTest extends TestCase
     {
         Storage::fake('ftp');
         Storage::fake('local');
-
         Storage::disk('ftp')->put('/export/tanssexport.json',
             '[{
             "id":"1",
@@ -93,17 +92,17 @@ class ImportTest extends TestCase
             "contract_duration_end":"2015-05-21"
             }]');
         Artisan::call('tanss:import');
-        $this->assertEquals(1, count(Storage::disk('local')->allFiles('/tanssexports')));
+        $this->assertCount(1, Storage::disk('local')->allFiles('/tanssexports'));
 
         Storage::put('/tanssexports/tanssexport_2010_01_01.json', 'test');
         Storage::put('/tanssexports/tanssexport_2009_12_31.json', 'test');
         Storage::put('/tanssexports/tanssexport_2010_01_02.json', 'test');
         Storage::put('/tanssexports/tanssexport_2010_01_03.json', 'test');
         Storage::put('/tanssexports/tanssexport_2010_01_04.json', 'test');
-        $this->assertEquals(6, count(Storage::disk('local')->allFiles('/tanssexports')));
+        $this->assertCount(6, Storage::disk('local')->allFiles('/tanssexports'));
 
         Artisan::call('tanss:import');
-        $this->assertEquals(5, count(Storage::disk('local')->allFiles('/tanssexports')));
+        $this->assertCount(5, Storage::disk('local')->allFiles('/tanssexports'));
 
         Storage::disk('local')->assertMissing('/tanssexports/tanssexport_2009_12_31.json');
         Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_01.json');

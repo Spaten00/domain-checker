@@ -18,9 +18,9 @@ class SeederTest extends TestCase
     {
         $this->seed(DatabaseSeeder::class);
 
-        $this->assertTrue(Group::find(1)->name === 'user');
-        $this->assertTrue(Group::find(2)->name === 'administrator');
+        $this->assertSame(Group::find(1)->name, 'user');
+        $this->assertSame(Group::find(2)->name, 'administrator');
 
-        $this->assertTrue(User::count() === 3);
+        $this->assertSame(User::count(), 3);
     }
 }

@@ -31,16 +31,6 @@ class ImportTanssCommand extends Command
     protected $description = 'Copy the tanss-export-file from the server to the local directory via FTP and import into the database.';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    /**
      * Execute the console command.
      *
      * @return void

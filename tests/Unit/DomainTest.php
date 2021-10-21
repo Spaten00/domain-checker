@@ -8,6 +8,7 @@ use App\Models\Domain;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 
 class DomainTest extends TestCase
 {
@@ -26,7 +27,7 @@ class DomainTest extends TestCase
 
         $this->assertTrue(Schema::hasColumns('domains', $expectedColumns));
         // check that no other columns are created
-        $this->assertTrue(Schema::getColumnListing('domains') === $expectedColumns);
+        $this->assertSame(Schema::getColumnListing('domains'), $expectedColumns);
     }
 
     /** @test */
@@ -42,7 +43,7 @@ class DomainTest extends TestCase
 
         $this->assertTrue($domain->contracts->contains($contract));
         $this->assertEquals(1, $domain->contracts()->count());
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $domain->contracts);
+        $this->assertInstanceOf(Collection::class, $domain->contracts);
 
         $domain->contracts()->attach(Contract::factory()->create(['customer_id' => $customer->id]));
         $this->assertEquals(2, $domain->contracts()->count());

@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 
 class GroupTest extends TestCase
 {
@@ -24,7 +25,7 @@ class GroupTest extends TestCase
         ];
         $this->assertTrue(Schema::hasColumns('groups', $expectedColumns));
         // check that no other columns are created
-        $this->assertTrue(Schema::getColumnListing('groups') === $expectedColumns);
+        $this->assertSame(Schema::getColumnListing('groups'), $expectedColumns);
     }
 
     /** @test */
@@ -36,6 +37,6 @@ class GroupTest extends TestCase
 
         $this->assertTrue($group->users->contains($user));
         $this->assertEquals(1, $group->users->count());
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $group->users);
+        $this->assertInstanceOf(Collection::class, $group->users);
     }
 }

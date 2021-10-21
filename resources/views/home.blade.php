@@ -19,8 +19,9 @@
                 <tr>
                     <td>{{$domain->name}}</td>
                     <td>{!! $domain->getStatus() !!}</td>
-                    {{--                    <td><span class="{{$domain->getStatusClass()}}">{{$domain->getStatus()}}</span></td>--}}
                     <td>{{$domain->tanssEntry ? $domain->tanssEntry->customer->name : ''}}</td>
+                    {{--                    <td>{{$domain->customer}}</td>--}}
+                    <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>
                     <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>
                     <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_end)->toDateString() : ''}}</td>
                     <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_renewal)->toDateString() : ''}}</td>

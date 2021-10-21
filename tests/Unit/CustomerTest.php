@@ -7,6 +7,7 @@ use App\Models\Customer;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 
 class CustomerTest extends TestCase
 {
@@ -25,7 +26,7 @@ class CustomerTest extends TestCase
 
         $this->assertTrue(Schema::hasColumns('customers', $expectedColumns));
         // check that no other columns are created
-        $this->assertTrue(Schema::getColumnListing('customers') === $expectedColumns);
+        $this->assertSame(Schema::getColumnListing('customers'), $expectedColumns);
     }
 
     /** @test */
@@ -37,6 +38,6 @@ class CustomerTest extends TestCase
 
         $this->assertTrue($customer->contracts->contains($contract));
         $this->assertEquals(1, $customer->contracts->count());
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $customer->contracts);
+        $this->assertInstanceOf(Collection::class, $customer->contracts);
     }
 }

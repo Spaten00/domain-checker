@@ -57,7 +57,6 @@ abstract class Entry extends Model
     public static function getValidDate($dateToCheck): string|null
     {
         if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
-            var_dump($dateToCheck);
             return $dateToCheck;
         }
         return null;
@@ -70,10 +69,7 @@ abstract class Entry extends Model
      */
     public function isExpired(): bool
     {
-        if ($this->contract_end > now()) {
-            return false;
-        }
-        return true;
+        return !($this->contract_end > now());
     }
 
     /**
@@ -83,9 +79,6 @@ abstract class Entry extends Model
      */
     public function willExpireSoon(): bool
     {
-        if ($this->contract_end > now()->addDays(self::SOON)) {
-            return false;
-        }
-        return true;
+        return !($this->contract_end > now()->addDays(self::SOON));
     }
 }

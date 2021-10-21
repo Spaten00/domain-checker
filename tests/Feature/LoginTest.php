@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\Group;
 use App\Models\User;
+use Exception;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
 use Tests\TestCase;
@@ -88,7 +89,9 @@ class LoginTest extends TestCase
         $this->assertGuest();
     }
 
-    /** @test */
+    /** @test
+     * @throws Exception
+     */
     public function remember_me_functionality()
     {
         /** @var Group $group */
@@ -96,7 +99,7 @@ class LoginTest extends TestCase
         /** @var User $user */
         $user = User::factory()->create([
             'group_id' => $group->id,
-            'id' => rand(1, 100),
+            'id' => random_int(1, 100),
             'password' => bcrypt($password = 'supersecretpassword'),
         ]);
 

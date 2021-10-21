@@ -8,6 +8,7 @@ use App\Models\Hosting;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
+use Illuminate\Database\Eloquent\Collection;
 
 class HostingTest extends TestCase
 {
@@ -26,7 +27,7 @@ class HostingTest extends TestCase
 
         $this->assertTrue(Schema::hasColumns('hostings', $expectedColumns));
         // check that no other columns are created
-        $this->assertTrue(Schema::getColumnListing('hostings') === $expectedColumns);
+        $this->assertSame(Schema::getColumnListing('hostings'), $expectedColumns);
     }
 
     /** @test */
@@ -42,7 +43,7 @@ class HostingTest extends TestCase
 
         $this->assertTrue($hosting->contracts->contains($contract));
         $this->assertEquals(1, $hosting->contracts()->count());
-        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $hosting->contracts);
+        $this->assertInstanceOf(Collection::class, $hosting->contracts);
 
         $hosting->contracts()->attach(Contract::factory()->create(['customer_id' => $customer->id]));
         $this->assertEquals(2, $hosting->contracts()->count());

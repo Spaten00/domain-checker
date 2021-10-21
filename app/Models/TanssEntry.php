@@ -111,7 +111,7 @@ class TanssEntry extends Entry
      */
     public static function createTanssEntry(array $entry, Customer $customer, Domain $domain): TanssEntry
     {
-        $tanssEntry = TanssEntry::where('external_id', '=', $entry['externalId'])->first();
+        $tanssEntry = self::where('external_id', '=', $entry['externalId'])->first();
         if (!$tanssEntry) {
             $tanssEntry = new TanssEntry;
             $tanssEntry->external_id = $entry['externalId'];
