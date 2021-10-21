@@ -18,13 +18,15 @@
             @foreach ($domains as $domain)
                 <tr>
                     <td>{{$domain->name}}</td>
-                    <td>{!! $domain->getBadge() !!}</td>
-                    <td>{{$domain->tanssEntry ? $domain->tanssEntry->customer->name : ''}}</td>
-                    {{--                    <td>{{$domain->customer}}</td>--}}
-                    <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>
-                    <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>
-                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_end)->toDateString() : ''}}</td>
-                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_renewal)->toDateString() : ''}}</td>
+                    <td>{!! $domain->getStatusBadge() !!}</td>
+                    <td>{!! $domain->tanssEntry ? $domain->tanssEntry->customer->name : '<span class="badge bg-danger">Kunde fehlt</span>' !!}</td>
+                    {{--                    <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>--}}
+                    {{--                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_end)->toDateString() : ''}}</td>--}}
+                    {{--                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_renewal)->toDateString() : ''}}</td>--}}
+                    <td>{{$domain->getTanssEnd()}}</td>
+                    <td>{{$domain->getRrpproxyEnd()}}</td>
+                    <td>{{$domain->getRrpproxyRenewal()}}</td>
+
                     <td><input type="text" placeholder="asd" disabled></td>
                     <td><input type="text" placeholder="alte Rechnung" disabled></td>
                     <td><i class="fas fa-pencil-alt"></i></td>

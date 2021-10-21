@@ -165,9 +165,36 @@ class Domain extends Model
         return ['badge bg-success', 'OK'];
     }
 
-    public function getBadge(): string
+    public function getStatusBadge(): string
     {
         [$statusClass, $statusText] = $this->getStatusAndText();
         return '<span class="' . $statusClass . '">' . $statusText . '</span>';
+    }
+
+    public function getTanssEnd(): string
+    {
+        if ($this->tanssEntry) {
+            return Carbon::parse($this->tanssEntry->contract_end)->toDateString();
+        }
+        // TODO color and message if missing and stuff
+        return '';
+    }
+
+    public function getRrpproxyEnd(): string
+    {
+        if ($this->rrpproxyEntry) {
+            return Carbon::parse($this->rrpproxyEntry->contract_end)->toDateString();
+        }
+        // TODO color and message if missing and stuff
+        return '';
+    }
+
+    public function getRrpproxyRenewal(): string
+    {
+        if ($this->rrpproxyEntry) {
+            return Carbon::parse($this->rrpproxyEntry->contract_renewal)->toDateString();
+        }
+        // TODO color and message if missing and stuff
+        return '';
     }
 }
