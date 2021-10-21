@@ -113,7 +113,7 @@ class Domain extends Model
      */
     public static function createDomain(string $domainName): Domain
     {
-        $domain = Domain::where('name', $domainName)->first();
+        $domain = self::where('name', $domainName)->first();
         if (!$domain) {
             $domain = new Domain;
             $domain->name = $domainName;
@@ -123,85 +123,51 @@ class Domain extends Model
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getStatusClass(): string
+    public function getStatusAndText(): array
     {
-//        // expired in TANSS
-//        if ($this->tanssEntry->isExpired()) {
-//            return "badge bg-danger";
-//        }
-
         // missing TANSS and RRPproxy is running
-        // bad
         if (!$this->tanssEntry && !$this->rrpproxyEntry->isExpired()) {
-            return "badge bg-danger";
+            return ['badge bg-danger', 'TANSS fehlt'];
         }
 
         // missing TANSS and RRPproxy is not running
-        // ok
         if (!$this->tanssEntry && $this->rrpproxyEntry->isExpired()) {
-            return "badge bg-success";
+            return ['badge bg-success', 'OK'];
         }
 
         // missing RRPproxy and TANSS is running
-        // bad
         if (!$this->rrpproxyEntry && !$this->tanssEntry->isExpired()) {
-            return "badge bg-danger";
+            return ['badge bg-danger', 'RRPproxy fehlt'];
         }
 
         // missing RRPproxy and TANSS is not running
-        // ok
         if (!$this->rrpproxyEntry && $this->tanssEntry->isExpired()) {
-            return "badge bg-success";
+            return ['badge bg-success', 'OK'];
         }
 
         // expired in both
-        // ok
         if ($this->tanssEntry->isExpired() && $this->rrpproxyEntry->isExpired()) {
-            return "badge bg-success";
+            return ['badge bg-success', 'OK'];
         }
 
         // expired in TANSS or RRPproxy
-        // bad
         if ($this->tanssEntry->isExpired() || $this->rrpproxyEntry->isExpired()) {
-            return "badge bg-danger";
+            return ['badge bg-danger', 'Vertrag ausgelaufen'];
         }
 
         // will expire soon
-        // warn
         if ($this->tanssEntry->willExpireSoon() || $this->rrpproxyEntry->willExpireSoon()) {
-            return "badge bg-warning";
+            return ['badge bg-warning', 'Vertrag läuft aus'];
         }
 
-        return "badge bg-success";
+        return ['badge bg-success', 'OK'];
     }
 
-    public function getStatusText(): string
+    public function getBadge(): string
     {
-        if (!$this->tanssEntry) {
-            return "Kein TANSS Eintrag vorhanden";
-        }
-
-        if (!$this->rrpproxyEntry) {
-            return "Kein RRPproxy Eintrag vorhanden";
-        }
-
-        if ($this->tanssEntry->isExpired()) {
-            return "TANSS-Vertrag abgelaufen";
-        }
-
-        if ($this->tanssEntry->willExpireSoon()) {
-            return "TANSS-Vertrag läuft bald aus";
-        }
-
-        return "OK";
-    }
-
-    public function getStatus(): string
-    {
-//        $statusClass =
-//        $statusText =
-        return '<span class="' . $this->getStatusClass() . '">' . $this->getStatusText() . '</span>';
+        [$statusClass, $statusText] = $this->getStatusAndText();
+        return '<span class="' . $statusClass . '">' . $statusText . '</span>';
     }
 }

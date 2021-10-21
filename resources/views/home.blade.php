@@ -18,7 +18,7 @@
             @foreach ($domains as $domain)
                 <tr>
                     <td>{{$domain->name}}</td>
-                    <td>{!! $domain->getStatus() !!}</td>
+                    <td>{!! $domain->getBadge() !!}</td>
                     <td>{{$domain->tanssEntry ? $domain->tanssEntry->customer->name : ''}}</td>
                     {{--                    <td>{{$domain->customer}}</td>--}}
                     <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>
