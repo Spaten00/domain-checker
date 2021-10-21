@@ -138,27 +138,42 @@ class Domain extends Model
             return "badge bg-danger";
         }
 
+        // missing TANSS and RRPproxy is not running
+        // ok
+        if (!$this->tanssEntry && $this->rrpproxyEntry->isExpired()) {
+            return "badge bg-success";
+        }
+
         // missing RRPproxy and TANSS is running
         // bad
-
-        // missing TANSS and RRPproxy is not running
-        //ok
+        if (!$this->rrpproxyEntry && !$this->tanssEntry->isExpired()) {
+            return "badge bg-danger";
+        }
 
         // missing RRPproxy and TANSS is not running
         // ok
-
-        // expired in TANSS and RRPproxy running
-        // bad
-
-        // expired in RRPproxy and TANSS running
-        // bad
+        if (!$this->rrpproxyEntry && $this->tanssEntry->isExpired()) {
+            return "badge bg-success";
+        }
 
         // expired in both
         // ok
+        if ($this->tanssEntry->isExpired() && $this->rrpproxyEntry->isExpired()) {
+            return "badge bg-success";
+        }
 
-        if ($this->tanssEntry->willExpireSoon()) {
+        // expired in TANSS or RRPproxy
+        // bad
+        if ($this->tanssEntry->isExpired() || $this->rrpproxyEntry->isExpired()) {
+            return "badge bg-danger";
+        }
+
+        // will expire soon
+        // warn
+        if ($this->tanssEntry->willExpireSoon() || $this->rrpproxyEntry->willExpireSoon()) {
             return "badge bg-warning";
         }
+
         return "badge bg-success";
     }
 
@@ -185,6 +200,8 @@ class Domain extends Model
 
     public function getStatus(): string
     {
+//        $statusClass =
+//        $statusText =
         return '<span class="' . $this->getStatusClass() . '">' . $this->getStatusText() . '</span>';
     }
 }

@@ -27,6 +27,7 @@ class RrpproxyEntry extends Model
 {
     use HasFactory;
 
+    const SOON = 30;
     protected $table = 'rrpproxy_entries';
 
     /**
@@ -89,12 +90,38 @@ class RrpproxyEntry extends Model
         return $rrpproxyEntry;
     }
 
-    //TODO refactor
+    //TODO refactor to a new parent class which rrpproxy and tanss can inherit from
     private static function getValidDate(mixed $dateToCheck): string|null
     {
         if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
             return $dateToCheck;
         }
         return null;
+    }
+
+    /**
+     * Check if entry is already expired.
+     *
+     * @return bool
+     */
+    public function isExpired(): bool
+    {
+        if ($this->contract_end > now()) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Check if the entry will expire soon.
+     *
+     * @return bool
+     */
+    public function willExpireSoon(): bool
+    {
+        if ($this->contract_end > now()->addDays(self::SOON)) {
+            return false;
+        }
+        return true;
     }
 }
