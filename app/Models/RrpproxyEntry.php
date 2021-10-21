@@ -2,14 +2,12 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Database\Factories\RrpproxyEntryFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\RrpproxyEntry
@@ -22,25 +20,36 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property-read Domain $domain
  * @property mixed|string|null $contract_start
  * @property mixed|string|null $contract_end
+ * @property int $id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property int $domain_id
+ * @property string|null $contract_renewal
+ * @method static Builder|RrpproxyEntry whereContractEnd($value)
+ * @method static Builder|RrpproxyEntry whereContractRenewal($value)
+ * @method static Builder|RrpproxyEntry whereContractStart($value)
+ * @method static Builder|RrpproxyEntry whereCreatedAt($value)
+ * @method static Builder|RrpproxyEntry whereDomainId($value)
+ * @method static Builder|RrpproxyEntry whereId($value)
+ * @method static Builder|RrpproxyEntry whereUpdatedAt($value)
  */
-class RrpproxyEntry extends Model
+class RrpproxyEntry extends Entry
 {
     use HasFactory;
 
-    const SOON = 30;
     protected $table = 'rrpproxy_entries';
 
     /**
-     * The attributes that are mass assignable.
+     * Create a new Eloquent Model instance and merges the fillable.
      *
-     * @var string[]
+     * @param array $attributes
      */
-    protected $fillable = [
-        'domain_id',
-        'contract_start',
-        'contract_end',
-        'contract_renewal',
-    ];
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+
+        $this->mergeFillable(['contract_renewal']);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -87,41 +96,8 @@ class RrpproxyEntry extends Model
             $rrpproxyEntry->save();
         }
 
+        // TODO function for updating entries
+
         return $rrpproxyEntry;
-    }
-
-    //TODO refactor to a new parent class which rrpproxy and tanss can inherit from
-    private static function getValidDate(mixed $dateToCheck): string|null
-    {
-        if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
-            return $dateToCheck;
-        }
-        return null;
-    }
-
-    /**
-     * Check if entry is already expired.
-     *
-     * @return bool
-     */
-    public function isExpired(): bool
-    {
-        if ($this->contract_end > now()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Check if the entry will expire soon.
-     *
-     * @return bool
-     */
-    public function willExpireSoon(): bool
-    {
-        if ($this->contract_end > now()->addDays(self::SOON)) {
-            return false;
-        }
-        return true;
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Domain;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('home')->with('domains', Domain::paginate(15)->withQueryString());
 })->name('home');
 
 //Route::get('/dashboard', function () {

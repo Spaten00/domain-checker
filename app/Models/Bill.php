@@ -18,6 +18,20 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static Builder|Bill query()
  * @mixin Eloquent
  * @property-read Contract $contract
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int $contract_id
+ * @property string $bill_number
+ * @property int $sent
+ * @method static Builder|Bill whereBillNumber($value)
+ * @method static Builder|Bill whereContractId($value)
+ * @method static Builder|Bill whereCreatedAt($value)
+ * @method static Builder|Bill whereDeletedAt($value)
+ * @method static Builder|Bill whereId($value)
+ * @method static Builder|Bill whereSent($value)
+ * @method static Builder|Bill whereUpdatedAt($value)
  */
 class Bill extends Model
 {

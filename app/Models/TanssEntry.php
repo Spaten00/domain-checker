@@ -2,13 +2,12 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
 use Database\Factories\TanssEntryFactory;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Carbon;
 
 /**
  * App\Models\TanssEntry
@@ -24,29 +23,43 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property mixed|string|null $contract_end
  * @property mixed $external_id
  * @property mixed $provider_name
+ * @property int $id
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property string|null $deleted_at
+ * @property int $domain_id
+ * @property int $customer_id
+ * @method static Builder|TanssEntry whereContractEnd($value)
+ * @method static Builder|TanssEntry whereContractStart($value)
+ * @method static Builder|TanssEntry whereCreatedAt($value)
+ * @method static Builder|TanssEntry whereCustomerId($value)
+ * @method static Builder|TanssEntry whereDeletedAt($value)
+ * @method static Builder|TanssEntry whereDomainId($value)
+ * @method static Builder|TanssEntry whereExternalId($value)
+ * @method static Builder|TanssEntry whereId($value)
+ * @method static Builder|TanssEntry whereProviderName($value)
+ * @method static Builder|TanssEntry whereUpdatedAt($value)
  */
-class TanssEntry extends Model
+class TanssEntry extends Entry
 {
     use HasFactory;
-
-    const SOON = 30;
 
     protected $table = 'tanss_entries';
 
     /**
-     * The attributes that are mass assignable.
+     * Create a new Eloquent Model instance and merges the fillable.
      *
-     * @var string[]
+     * @param array $attributes
      */
-    protected $fillable = [
-        'external_id',
-        'domain_id',
-        'customer_id',
-        'tanss_number',
-        'provider_name',
-        'contract_start',
-        'contract_end',
-    ];
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+
+        $this->mergeFillable(['external_id',
+            'customer_id',
+            'tanss_number',
+            'provider_name']);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -113,46 +126,5 @@ class TanssEntry extends Model
         // TODO function for updating entries
 
         return $tanssEntry;
-    }
-
-    /**
-     * Check if the date is valid.
-     *
-     * @param $dateToCheck
-     * @return string|null
-     */
-    public static function getValidDate($dateToCheck): string|null
-    {
-        if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
-            var_dump($dateToCheck);
-            return $dateToCheck;
-        }
-        return null;
-    }
-
-    /**
-     * Check if entry is already expired.
-     *
-     * @return bool
-     */
-    public function isExpired(): bool
-    {
-        if ($this->contract_end > now()) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Check if the entry will expire soon.
-     *
-     * @return bool
-     */
-    public function willExpireSoon(): bool
-    {
-        if ($this->contract_end > now()->addDays(self::SOON)) {
-            return false;
-        }
-        return true;
     }
 }

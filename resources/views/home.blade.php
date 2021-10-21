@@ -15,7 +15,7 @@
             </tr>
             </thead>
             <tbody>
-            @foreach ($domains = \App\Models\Domain::paginate(15)->withQueryString() as $domain)
+            @foreach ($domains as $domain)
                 <tr>
                     <td>{{$domain->name}}</td>
                     <td>{!! $domain->getStatus() !!}</td>
