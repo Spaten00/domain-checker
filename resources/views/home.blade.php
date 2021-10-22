@@ -10,8 +10,10 @@
                 <th>Vertragsende RRPproxy</th>
                 <th>Verlängerung RRPproxy</th>
                 <th>Vertragsnummer</th>
-                <th>letzte Rechnung</th>
+                <th>letzte Rechnungsnummer</th>
                 <th>bearbeiten</th>
+                <th>letzte Rechnung am</th>
+                <th>neue Rechnung</th>
             </tr>
             </thead>
             <tbody>
@@ -26,10 +28,11 @@
                     <td>{{$domain->getTanssEnd()}}</td>
                     <td>{{$domain->getRrpproxyEnd()}}</td>
                     <td>{{$domain->getRrpproxyRenewal()}}</td>
-
                     <td><input type="text" placeholder="asd" disabled></td>
                     <td><input type="text" placeholder="alte Rechnung" disabled></td>
                     <td><i class="fas fa-pencil-alt"></i></td>
+                    <td>{{$domain->getLastBillDate()}}</td>
+                    <td><button type="button" class="btn btn-primary">erstellen</button></td>
                 </tr>
             @endforeach
             </tbody>

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Bill;
+use App\Models\Contract;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class BillFactory extends Factory
@@ -22,7 +23,9 @@ class BillFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'contract_id' => $this->faker->randomElement(Contract::all()->pluck('id')->toArray()),
+            'bill_number' => $this->faker->numberBetween(),
+            'date' => $this->faker->dateTime(),
         ];
     }
 }

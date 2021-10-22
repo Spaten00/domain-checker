@@ -127,6 +127,11 @@ class Domain extends Model
      */
     public function getStatusAndText(): array
     {
+        // no entries
+        if (!$this->tanssEntry && !$this->rrpproxyEntry) {
+            return ['badge bg-info', 'Keine Einträge'];
+        }
+
         // missing TANSS and RRPproxy is running
         if (!$this->tanssEntry && !$this->rrpproxyEntry->isExpired()) {
             return ['badge bg-danger', 'TANSS fehlt'];
@@ -198,5 +203,9 @@ class Domain extends Model
         return '';
     }
 
-
+    public function getLastBillDate()
+    {
+        $lastBill = $this->contracts->last()->bills->last();
+        return $lastBill->date ?? '';
+    }
 }
