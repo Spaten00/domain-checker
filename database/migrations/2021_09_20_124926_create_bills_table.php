@@ -21,7 +21,7 @@ class CreateBillsTable extends Migration
             $table->unsignedBigInteger('contract_id');
 
             $table->string('bill_number');
-            $table->boolean('sent');
+            $table->timestamp('date')->nullable();
 
             // foreign keys
             $table->foreign('contract_id')->references('id')->on('contracts');

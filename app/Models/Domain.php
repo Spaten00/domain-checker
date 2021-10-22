@@ -197,4 +197,6 @@ class Domain extends Model
         // TODO color and message if missing and stuff
         return '';
     }
+
+
 }
