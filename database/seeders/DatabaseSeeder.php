@@ -21,10 +21,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-//        $this->call([
-//            GroupSeeder::class,
-//            UserSeeder::class,
-//        ]);
+        $this->call([
+            GroupSeeder::class,
+            UserSeeder::class,
+        ]);
 
         // TODO delete factories before deploy
 //        Group::factory(10)->create();

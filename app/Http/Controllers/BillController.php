@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreBillRequest;
 use App\Models\Bill;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class BillController extends Controller
@@ -30,18 +32,19 @@ class BillController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreBillRequest $request
+     * @return RedirectResponse
      */
-    public function store(Request $request)
+    public function store(StoreBillRequest $request)
     {
-        //
+        dump("asdf");
+        return redirect()->back()->with('message', 'Eintrag wurde erstellt!');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Bill  $bill
+     * @param \App\Models\Bill $bill
      * @return \Illuminate\Http\Response
      */
     public function show(Bill $bill)
@@ -52,7 +55,7 @@ class BillController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Bill  $bill
+     * @param \App\Models\Bill $bill
      * @return \Illuminate\Http\Response
      */
     public function edit(Bill $bill)
@@ -63,8 +66,8 @@ class BillController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Bill  $bill
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Models\Bill $bill
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Bill $bill)
@@ -75,7 +78,7 @@ class BillController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Bill  $bill
+     * @param \App\Models\Bill $bill
      * @return \Illuminate\Http\Response
      */
     public function destroy(Bill $bill)

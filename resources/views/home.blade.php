@@ -18,6 +18,34 @@
             </thead>
             <tbody>
             @foreach ($domains as $domain)
+                {{--Modal--}}
+                <div class="modal fade" id="bill-number-modal-{{$domain->id}}" tabindex="-1" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Neue Rechnungsnummer
+                                    für {{$domain->name}} eingeben</h5>
+                                <button type="button" class="btn-close" data-dismiss="modal"
+                                        aria-label="Close">X
+                                </button>
+                            </div>
+                            <form method="POST" action="{{route('new-bill.store')}}">
+                                <div class="modal-body">
+                                    @csrf
+                                    <input type="text" name="bill_number">
+                                    <input type="text" name="date">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">Speichern</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                {{--Table data--}}
                 <tr>
                     <td>{{$domain->name}}</td>
                     <td>{!! $domain->getStatusBadge() !!}</td>
@@ -32,7 +60,11 @@
                     <td><input type="text" placeholder="alte Rechnung" disabled></td>
                     <td><i class="fas fa-pencil-alt"></i></td>
                     <td>{{$domain->getLastBillDate()}}</td>
-                    <td><button type="button" class="btn btn-primary">erstellen</button></td>
+                    <td>
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#bill-number-modal-{{$domain->id}}">erstellen
+                        </button>
+                    </td>
                 </tr>
             @endforeach
             </tbody>

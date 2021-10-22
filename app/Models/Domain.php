@@ -206,6 +206,9 @@ class Domain extends Model
     public function getLastBillDate()
     {
         $lastBill = $this->contracts->last()->bills->last();
-        return $lastBill->date ?? '';
+        if (!$lastBill) {
+            return '';
+        }
+        return Carbon::parse($lastBill->date)->toDateString();
     }
 }

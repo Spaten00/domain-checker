@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BillController;
 use App\Models\Domain;
 use Illuminate\Support\Facades\Route;
 
@@ -18,11 +19,16 @@ Route::get('/', function () {
     return view('home')->with('domains', Domain::paginate(15)->withQueryString());
 })->name('home');
 
-//Route::get('/dashboard', function () {
-//    return view('dashboard');
-//})->middleware(['auth'])->name('dashboard');
+Route::middleware(['auth'])->group(function () {
+    Route::post('create-bill', [BillController::class, 'store'])
+        ->name('new-bill.store');
+});
 
-require __DIR__.'/auth.php';
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');
+
+require __DIR__ . '/auth.php';
 
 Auth::routes();
 
