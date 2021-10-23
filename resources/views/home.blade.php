@@ -60,9 +60,9 @@
                     {{--                    <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>--}}
                     {{--                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_end)->toDateString() : ''}}</td>--}}
                     {{--                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_renewal)->toDateString() : ''}}</td>--}}
-                    <td>{{$domain->getTanssEnd()}}</td>
-                    <td>{{$domain->getRrpproxyEnd()}}</td>
-                    <td>{{$domain->getRrpproxyRenewal()}}</td>
+                    <td>{!! $domain->getTanssEnd() !!}</td>
+                    <td>{!! $domain->getRrpproxyEnd() !!}</td>
+                    <td>{!! $domain->getRrpproxyRenewal() !!}</td>
                     <td><input type="text" value="{{$domain->getContractNumber()}}"></td>
                     <td><input type="text" value="{{$domain->getLastBillNumber()}}"></td>
                     {{--TODO put modal here to ask the user if he is sure to change the number--}}

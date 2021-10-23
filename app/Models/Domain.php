@@ -122,13 +122,17 @@ class Domain extends Model
         return $domain;
     }
 
+    private function hasNoEntries(): bool
+    {
+        return !$this->tanssEntry && !$this->rrpproxyEntry;
+    }
+
     /**
      * @return array
      */
-    public function getStatusAndText(): array
+    private function getStatusAndText(): array
     {
-        // no entries
-        if (!$this->tanssEntry && !$this->rrpproxyEntry) {
+        if ($this->hasNoEntries()) {
             return ['badge bg-info', 'Keine Einträge'];
         }
 
@@ -181,8 +185,7 @@ class Domain extends Model
         if ($this->tanssEntry) {
             return Carbon::parse($this->tanssEntry->contract_end)->toDateString();
         }
-        // TODO color and message if missing and stuff
-        return '';
+        return '<span class="badge bg-danger">fehlt</span>';
     }
 
     public function getRrpproxyEnd(): string
@@ -190,8 +193,7 @@ class Domain extends Model
         if ($this->rrpproxyEntry) {
             return Carbon::parse($this->rrpproxyEntry->contract_end)->toDateString();
         }
-        // TODO color and message if missing and stuff
-        return '';
+        return '<span class="badge bg-danger">fehlt</span>';
     }
 
     public function getRrpproxyRenewal(): string
@@ -199,8 +201,7 @@ class Domain extends Model
         if ($this->rrpproxyEntry) {
             return Carbon::parse($this->rrpproxyEntry->contract_renewal)->toDateString();
         }
-        // TODO color and message if missing and stuff
-        return '';
+        return '<span class="badge bg-danger">fehlt</span>';
     }
 
     public function getContractNumber(): string
