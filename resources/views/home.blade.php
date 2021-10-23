@@ -70,7 +70,7 @@
             </tbody>
         </table>
         <div class="d-flex justify-content-center">
-            {{ $domains->links() }}
+            {{ $domains ?? ''->links() }}
         </div>
     </div>
 </x-app-layout>
