@@ -203,12 +203,20 @@ class Domain extends Model
         return '';
     }
 
-    public function getLastBillDate()
+    /**
+     * Get the date of the last bill for the domain or an empty string if it does not exist.
+     *
+     * @return string
+     */
+    public function getLastBillDate(): string
     {
-        $lastBill = $this->contracts->last()->bills->last();
-        if (!$lastBill) {
-            return '';
+        $lastContract = $this->contracts->last();
+        if ($lastContract) {
+            $lastBill = $lastContract->bills->last();
+            if ($lastBill) {
+                return Carbon::parse($lastBill->date)->toDateString();
+            }
         }
-        return Carbon::parse($lastBill->date)->toDateString();
+        return '';
     }
 }
