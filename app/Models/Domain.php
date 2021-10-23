@@ -122,50 +122,92 @@ class Domain extends Model
         return $domain;
     }
 
+    /**
+     * Returns true if the domain has no TANSS-entry and no RRPproxy-entry.
+     *
+     * @return bool
+     */
     private function hasNoEntries(): bool
     {
-        return !$this->tanssEntry && !$this->rrpproxyEntry;
+        return $this->hasNoTanss() && $this->hasNoRrpproxy();
     }
 
+    /**
+     * Returns true if the domain has no TANSS-entry.
+     *
+     * @return bool
+     */
     private function hasNoTanss(): bool
     {
         return !$this->tanssEntry;
     }
 
+    /**
+     * Returns true if the domain has no RRPproxy-entry.
+     *
+     * @return bool
+     */
     private function hasNoRrpproxy(): bool
     {
         return !$this->rrpproxyEntry;
     }
 
-    private function hasRrpproxyExpired(): bool
-    {
-        return $this->rrpproxyEntry->isExpired();
-    }
-
+    /**
+     * Returns true if the domain has an expired TANSS-entry.
+     *
+     * @return bool
+     */
     private function hasTanssExpired(): bool
     {
         return $this->tanssEntry->isExpired();
     }
 
+    /**
+     * Returns true if the domain has an expired RRPproxy-entry.
+     *
+     * @return bool
+     */
+    private function hasRrpproxyExpired(): bool
+    {
+        return $this->rrpproxyEntry->isExpired();
+    }
+
+    /**
+     * Returns true if the domain has an expired RRPproxy-entry and an expired TANSS-entry.
+     *
+     * @return bool
+     */
     private function hasBothExpired(): bool
     {
         return $this->hasTanssExpired() && $this->hasRrpproxyExpired();
     }
 
+    /**
+     * Returns true if the domain has an expired RRPproxy-entry or an expired TANSS-entry.
+     *
+     * @return bool
+     */
     private function hasEitherExpired(): bool
     {
         return $this->hasTanssExpired() || $this->hasRrpproxyExpired();
     }
 
+    /**
+     * Returns true if the domain has an expired RRPproxy-entry and an expired TANSS-entry.
+     *
+     * @return bool
+     */
     private function hasEitherExpireSoon(): bool
     {
         return $this->tanssEntry->willExpireSoon() || $this->rrpproxyEntry->willExpireSoon();
     }
 
     /**
+     * Returns an array containing two strings. The first string is the CSS-class and the second string is the text.
+     *
      * @return array
      */
-    private function getStatusAndText(): array
+    private function getClassAndText(): array
     {
         if ($this->hasNoEntries()) {
             return ['badge bg-info', 'Keine Einträge'];
@@ -200,12 +242,23 @@ class Domain extends Model
         return ['badge bg-success', 'OK'];
     }
 
+    /**
+     * Returns a string which builds an HTML-span element to be shown as a badge in the calling blade.
+     *
+     * @return string
+     */
     public function getStatusBadge(): string
     {
-        [$statusClass, $statusText] = $this->getStatusAndText();
+        [$statusClass, $statusText] = $this->getClassAndText();
         return '<span class="' . $statusClass . '">' . $statusText . '</span>';
     }
 
+    /**
+     * Returns a string containing the customer of the domain or an HTML-span element with a badge class in the
+     * calling blade if there is no customer.
+     *
+     * @return string
+     */
     public function getCustomer(): string
     {
         if ($this->tanssEntry && $this->tanssEntry->customer) {
@@ -214,6 +267,12 @@ class Domain extends Model
         return '<span class="badge bg-danger">Kunde fehlt</span>';
     }
 
+    /**
+     * Returns a string containing the date on which the contract of the TANSS-entry will end. If there is no
+     * TANSS-entry the method returns an HTML-span element with a badge class.
+     *
+     * @return string
+     */
     public function getTanssEnd(): string
     {
         if ($this->tanssEntry) {
@@ -222,6 +281,12 @@ class Domain extends Model
         return '<span class="badge bg-danger">fehlt</span>';
     }
 
+    /**
+     * Returns a string containing the date on which the contract of the RRPproxy-entry will end. If there is no
+     * RRPproxy-entry the method returns an HTML-span element with a badge class.
+     *
+     * @return string
+     */
     public function getRrpproxyEnd(): string
     {
         if ($this->rrpproxyEntry) {
@@ -230,6 +295,12 @@ class Domain extends Model
         return '<span class="badge bg-danger">fehlt</span>';
     }
 
+    /**
+     * Returns a string containing the date on which the contract of the RRPproxy-entry will be renewed. If there is no
+     * RRPproxy-entry the method returns an HTML-span element with a badge class.
+     *
+     * @return string
+     */
     public function getRrpproxyRenewal(): string
     {
         if ($this->rrpproxyEntry) {
@@ -238,13 +309,18 @@ class Domain extends Model
         return '<span class="badge bg-danger">fehlt</span>';
     }
 
+    /**
+     * Returns the contract number or an empty string.
+     *
+     * @return string
+     */
     public function getContractNumber(): string
     {
         return $this->contracts->last()->contract_number ?? '';
     }
 
     /**
-     * Checks if the domain has a bill.
+     * Returns true if the domain has a bill.
      *
      * @return bool
      */

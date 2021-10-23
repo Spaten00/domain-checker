@@ -58,9 +58,6 @@
                     <td>{!! $domain->getStatusBadge() !!}</td>
                     {{--TODO create method and check if is already expired--}}
                     <td>{!! $domain->getCustomer() !!}</td>
-                    {{--                    <td>{{$domain->tanssEntry ? Carbon\Carbon::parse($domain->tanssEntry->contract_end)->toDateString() : ''}}</td>--}}
-                    {{--                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_end)->toDateString() : ''}}</td>--}}
-                    {{--                    <td>{{$domain->rrpproxyEntry ? Carbon\Carbon::parse($domain->rrpproxyEntry->contract_renewal)->toDateString() : ''}}</td>--}}
                     <td>{!! $domain->getTanssEnd() !!}</td>
                     <td>{!! $domain->getRrpproxyEnd() !!}</td>
                     <td>{!! $domain->getRrpproxyRenewal() !!}</td>
