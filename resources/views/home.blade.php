@@ -30,10 +30,17 @@
                                 </button>
                             </div>
                             <form method="POST" action="{{route('new-bill.store')}}">
+                                @csrf
                                 <div class="modal-body">
-                                    @csrf
-                                    <input type="text" name="bill_number">
-                                    <input type="text" name="date">
+                                    <div class="form-group row">
+                                        <label for="bill_number"
+                                               class="col-sm-6 col-form-label">Rechnungsnummer:</label>
+                                        <input id="bill_number" type="text" name="bill_number">
+                                    </div>
+                                    <div class="form-group row">
+                                        <label for="date" class="col-sm-6 col-form-label">Datum der Rechnung:</label>
+                                        <input id="date" type="text" name="date">
+                                    </div>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
