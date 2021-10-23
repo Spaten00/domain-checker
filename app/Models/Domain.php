@@ -203,6 +203,11 @@ class Domain extends Model
         return '';
     }
 
+    public function getContractNumber(): string
+    {
+        return $this->contracts->last()->contract_number ?? '';
+    }
+
     /**
      * Get the date of the last bill for the domain or an empty string if it does not exist.
      *
