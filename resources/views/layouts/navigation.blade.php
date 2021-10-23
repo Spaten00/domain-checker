@@ -75,9 +75,6 @@
                 <li class="nav-item text-center mx-2">
                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                 </li>
-                <li class="nav-item text-center mx-2">
-                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                </li>
             @endif
         </ul>
     </div>
