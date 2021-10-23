@@ -209,18 +209,44 @@ class Domain extends Model
     }
 
     /**
+     * Checks if the domain has a bill.
+     *
+     * @return bool
+     */
+    public function hasBill(): bool
+    {
+        $lastContract = $this->contracts->last();
+        if ($lastContract) {
+            $lastBill = $lastContract->bills->last();
+            if ($lastBill) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Get the billNumber of the latest bill for the domain or an empty string if it does not exist.
+     *
+     * @return string
+     */
+    public function getLastBillNumber(): string
+    {
+        if ($this->hasBill()) {
+            return $this->contracts->last()->bills->last()->bill_number;
+        }
+        return '';
+    }
+
+    /**
      * Get the date of the last bill for the domain or an empty string if it does not exist.
      *
      * @return string
      */
     public function getLastBillDate(): string
     {
-        $lastContract = $this->contracts->last();
-        if ($lastContract) {
-            $lastBill = $lastContract->bills->last();
-            if ($lastBill) {
-                return Carbon::parse($lastBill->date)->toDateString();
-            }
+        if ($this->hasBill()) {
+            return Carbon::parse($this->contracts->last()->bills->last()->date)->toDateString();
         }
         return '';
     }

@@ -64,7 +64,7 @@
                     <td>{{$domain->getRrpproxyEnd()}}</td>
                     <td>{{$domain->getRrpproxyRenewal()}}</td>
                     <td><input type="text" value="{{$domain->getContractNumber()}}"></td>
-                    <td><input type="text" placeholder="alte Rechnung"></td>
+                    <td><input type="text" value="{{$domain->getLastBillNumber()}}"></td>
                     {{--TODO put modal here to ask the user if he is sure to change the number--}}
                     <td><i class="fas fa-pencil-alt"></i></td>
                     <td>{{$domain->getLastBillDate()}}</td>
