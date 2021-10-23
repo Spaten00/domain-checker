@@ -1,9 +1,11 @@
-<div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100">
-    <div>
-        {{ $logo }}
-    </div>
+<div class="container-fluid d-flex justify-content-center align-items-center bg-light vh-100">
+    <div class="pb-5" style="width: 300px;">
+        <div class="text-center mb-2 pt-5">
+            {{ $logo }}
+        </div>
 
-    <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-        {{ $slot }}
+        <div class="bg-white p-4 rounded">
+            {{ $slot }}
+        </div>
     </div>
 </div>
