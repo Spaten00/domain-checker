@@ -20275,6 +20275,9 @@ h3 {
 .table {
   overflow-y: scroll;
 }
+.table .badge {
+  color: #fff;
+}
 
 thead {
   vertical-align: bottom;
