@@ -206,6 +206,14 @@ class Domain extends Model
         return '<span class="' . $statusClass . '">' . $statusText . '</span>';
     }
 
+    public function getCustomer(): string
+    {
+        if ($this->tanssEntry && $this->tanssEntry->customer) {
+            return $this->tanssEntry->customer->name;
+        }
+        return '<span class="badge bg-danger">Kunde fehlt</span>';
+    }
+
     public function getTanssEnd(): string
     {
         if ($this->tanssEntry) {
