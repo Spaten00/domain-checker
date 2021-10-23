@@ -127,6 +127,41 @@ class Domain extends Model
         return !$this->tanssEntry && !$this->rrpproxyEntry;
     }
 
+    private function hasNoTanss(): bool
+    {
+        return !$this->tanssEntry;
+    }
+
+    private function hasNoRrpproxy(): bool
+    {
+        return !$this->rrpproxyEntry;
+    }
+
+    private function hasRrpproxyExpired(): bool
+    {
+        return $this->rrpproxyEntry->isExpired();
+    }
+
+    private function hasTanssExpired(): bool
+    {
+        return $this->tanssEntry->isExpired();
+    }
+
+    private function hasBothExpired(): bool
+    {
+        return $this->hasTanssExpired() && $this->hasRrpproxyExpired();
+    }
+
+    private function hasEitherExpired(): bool
+    {
+        return $this->hasTanssExpired() || $this->hasRrpproxyExpired();
+    }
+
+    private function hasEitherExpireSoon(): bool
+    {
+        return $this->tanssEntry->willExpireSoon() || $this->rrpproxyEntry->willExpireSoon();
+    }
+
     /**
      * @return array
      */
@@ -136,38 +171,29 @@ class Domain extends Model
             return ['badge bg-info', 'Keine Einträge'];
         }
 
-        // missing TANSS and RRPproxy is running
-        if (!$this->tanssEntry && !$this->rrpproxyEntry->isExpired()) {
-            return ['badge bg-danger', 'TANSS fehlt'];
-        }
-
-        // missing TANSS and RRPproxy is not running
-        if (!$this->tanssEntry && $this->rrpproxyEntry->isExpired()) {
+        if ($this->hasNoTanss()) {
+            if (!$this->hasRrpproxyExpired()) {
+                return ['badge bg-danger', 'TANSS fehlt'];
+            }
             return ['badge bg-success', 'OK'];
         }
 
-        // missing RRPproxy and TANSS is running
-        if (!$this->rrpproxyEntry && !$this->tanssEntry->isExpired()) {
-            return ['badge bg-danger', 'RRPproxy fehlt'];
-        }
-
-        // missing RRPproxy and TANSS is not running
-        if (!$this->rrpproxyEntry && $this->tanssEntry->isExpired()) {
+        if ($this->hasNoRrpproxy()) {
+            if (!$this->hasTanssExpired()) {
+                return ['badge bg-danger', 'RRPproxy fehlt'];
+            }
             return ['badge bg-success', 'OK'];
         }
 
-        // expired in both
-        if ($this->tanssEntry->isExpired() && $this->rrpproxyEntry->isExpired()) {
+        if ($this->hasBothExpired()) {
             return ['badge bg-success', 'OK'];
         }
 
-        // expired in TANSS or RRPproxy
-        if ($this->tanssEntry->isExpired() || $this->rrpproxyEntry->isExpired()) {
+        if ($this->hasEitherExpired()) {
             return ['badge bg-danger', 'Vertrag ausgelaufen'];
         }
 
-        // will expire soon
-        if ($this->tanssEntry->willExpireSoon() || $this->rrpproxyEntry->willExpireSoon()) {
+        if ($this->hasEitherExpireSoon()) {
             return ['badge bg-warning', 'Vertrag läuft aus'];
         }
 
