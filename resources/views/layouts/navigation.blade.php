@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-md navbar-dark fixed-top">
 {{--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain"--}}
 {{--            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">--}}
 {{--        <span class="navbar-toggler-icon"></span>--}}
@@ -6,7 +6,7 @@
 
     <div class="collapse navbar-collapse d-md-flex justify-content-between align-items-center" id="navbarMain">
         <a class="navbar-brand mr-5" href="{{ route('home') }}">
-            <img class="img-fluid" src="{{ asset('/images/aks_logo.png') }}"
+            <img class="img-fluid" src="{{ asset('/images/waben.png') }}"
                  style="width: 100%; height: 100%; max-width: 200px; max-height: 50px;">
         </a>
         <ul class="navbar-nav d-md-flex justify-content-center">

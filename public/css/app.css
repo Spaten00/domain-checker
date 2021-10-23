@@ -20272,6 +20272,10 @@ h3 {
   padding-top: 76.22px;
 }
 
+.navbar {
+  background-color: #666 !important;
+}
+
 .table {
   overflow-y: scroll;
 }
