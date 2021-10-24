@@ -276,8 +276,13 @@ class Domain extends Model
     public function getTanssEnd(): string
     {
         if ($this->tanssEntry) {
-            return Carbon::parse($this->tanssEntry->contract_end)->toDateString();
+            $returnString = Carbon::parse($this->tanssEntry->contract_end)->toDateString();
+            if ($this->tanssEntry->willExpireSoon() && !$this->tanssEntry->isExpired()) {
+                $returnString = '<span class="badge bg-warning">' . $returnString . '</span>';
+            }
+            return $returnString;
         }
+
         return '<span class="badge bg-danger">fehlt</span>';
     }
 
