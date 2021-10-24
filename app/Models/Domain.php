@@ -253,6 +253,29 @@ class Domain extends Model
     }
 
     /**
+     * Returns true if the domain has a customer.
+     *
+     * @return bool
+     */
+    public function hasCustomer(): bool
+    {
+        return $this->tanssEntry && $this->tanssEntry->customer;
+    }
+
+    /**
+     * Returns the customer id or an empty string.
+     *
+     * @return string
+     */
+    public function getCustomerId(): string
+    {
+        if ($this->hasCustomer()) {
+            return $this->tanssEntry->customer->getKey();
+        }
+        return '';
+    }
+
+    /**
      * Returns a string containing the customer of the domain or an HTML-span element with a badge class in the
      * calling blade if there is no customer.
      *
@@ -260,7 +283,7 @@ class Domain extends Model
      */
     public function getCustomer(): string
     {
-        if ($this->tanssEntry && $this->tanssEntry->customer) {
+        if ($this->hasCustomer()) {
             return $this->tanssEntry->customer->name;
         }
         return '<span class="badge bg-danger">Kunde fehlt</span>';
@@ -335,19 +358,6 @@ class Domain extends Model
     public function getContractId(): string
     {
         return $this->contracts->last()->id ?? '';
-    }
-
-    /**
-     * Returns the customer id or an empty string.
-     *
-     * @return string
-     */
-    public function getCustomerId(): string
-    {
-        if ($this->tanssEntry && $this->tanssEntry->customer) {
-            return $this->tanssEntry->customer->getKey();
-        }
-        return '';
     }
 
     public function hasContract(): bool

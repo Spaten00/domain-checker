@@ -51,6 +51,18 @@
                                     </div>
                                     <input type="hidden" name="contract_id" value="{{$domain->getContractId()}}">
                                 </form>
+                            @elseif(!$domain->hasCustomer())
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Kein Kunde für {{$domain->name}} vorhanden, bitte Kunden im
+                                        TANSS hinterlegen und Importfunktion starten.</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal"
+                                            aria-label="Close">X
+                                    </button>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                    </button>
+                                </div>
                             @else
                                 <div class="modal-header">
                                     <h5 class="modal-title">Noch kein Vertrag für {{$domain->name}} vorhanden, bitte
