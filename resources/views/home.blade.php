@@ -19,7 +19,7 @@
             <tbody>
             @foreach ($domains as $domain)
                 {{--Modal--}}
-                <div class="modal fade" id="bill-number-modal-{{$domain->id}}" tabindex="-1" aria-hidden="true">
+                <div class="modal fade" id="bill-number-modal-{{$domain->getKey()}}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -69,7 +69,7 @@
                     <td>{{$domain->getLastBillDate()}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#bill-number-modal-{{$domain->id}}">erstellen
+                                data-target="#bill-number-modal-{{$domain->getKey()  }}">erstellen
                         </button>
                     </td>
                 </tr>

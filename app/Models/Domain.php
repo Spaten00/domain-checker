@@ -15,7 +15,6 @@ use Illuminate\Support\Carbon;
 /**
  * App\Models\Domain
  *
- * @property int $id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
