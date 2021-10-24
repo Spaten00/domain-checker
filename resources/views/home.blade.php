@@ -22,33 +22,61 @@
                 <div class="modal fade" id="bill-number-modal-{{$domain->getKey()}}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Neue Rechnungsnummer
-                                    für {{$domain->name}} eingeben</h5>
-                                <button type="button" class="btn-close" data-dismiss="modal"
-                                        aria-label="Close">X
-                                </button>
-                            </div>
-                            <form method="POST" action="{{route('new-bill.store')}}">
-                                @csrf
-                                <div class="modal-body">
-                                    <div class="form-group row">
-                                        <label for="bill_number"
-                                               class="col-sm-6 col-form-label">Rechnungsnummer:</label>
-                                        <input id="bill_number" type="text" name="bill_number">
-                                    </div>
-                                    <div class="form-group row">
-                                        <label for="date" class="col-sm-6 col-form-label">Datum der Rechnung:</label>
-                                        <input id="date" type="date" name="date" value="{{date("Y-m-d")}}">
-                                    </div>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                            @if($domain->hasContract())
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Neue Rechnungsnummer
+                                        für {{$domain->name}} eingeben</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal"
+                                            aria-label="Close">X
                                     </button>
-                                    <button type="submit" class="btn btn-primary">Speichern</button>
                                 </div>
-                                <input type="hidden" name="contract_id" value="{{$domain->getContractId()}}">
-                            </form>
+                                <form method="POST" action="{{route('new-bill.store')}}">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="form-group row">
+                                            <label for="bill_number"
+                                                   class="col-sm-6 col-form-label">Rechnungsnummer:</label>
+                                            <input id="bill_number" type="text" name="bill_number">
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="date" class="col-sm-6 col-form-label">Datum der
+                                                Rechnung:</label>
+                                            <input id="date" type="date" name="date" value="{{date("Y-m-d")}}">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Speichern</button>
+                                    </div>
+                                    <input type="hidden" name="contract_id" value="{{$domain->getContractId()}}">
+                                </form>
+                            @else
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Noch kein Vertrag für {{$domain->name}} vorhanden, bitte
+                                        erst Vertrag erstellen</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal"
+                                            aria-label="Close">X
+                                    </button>
+                                </div>
+                                <form method="POST" action="{{route('new-contract.store')}}">
+                                    @csrf
+                                    <div class="modal-body">
+                                        <div class="form-group row">
+                                            <label for="contract_number"
+                                                   class="col-sm-6 col-form-label">Vertragsnummer:</label>
+                                            <input id="contract_number" type="text" name="contract_number">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">Speichern</button>
+                                    </div>
+                                    <input type="hidden" name="customer_id" value="{{$domain->getCustomerId()}}">
+                                    <input type="hidden" name="domain_id" value="{{$domain->getKey()}}">
+                                </form>
+                            @endif
                         </div>
                     </div>
                 </div>

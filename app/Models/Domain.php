@@ -122,16 +122,6 @@ class Domain extends Model
     }
 
     /**
-     * Returns true if the domain has no TANSS-entry and no RRPproxy-entry.
-     *
-     * @return bool
-     */
-    private function hasNoEntries(): bool
-    {
-        return $this->hasNoTanss() && $this->hasNoRrpproxy();
-    }
-
-    /**
      * Returns true if the domain has no TANSS-entry.
      *
      * @return bool
@@ -149,6 +139,16 @@ class Domain extends Model
     private function hasNoRrpproxy(): bool
     {
         return !$this->rrpproxyEntry;
+    }
+
+    /**
+     * Returns true if the domain has no TANSS-entry and no RRPproxy-entry.
+     *
+     * @return bool
+     */
+    private function hasNoEntries(): bool
+    {
+        return $this->hasNoTanss() && $this->hasNoRrpproxy();
     }
 
     /**
@@ -275,9 +275,7 @@ class Domain extends Model
     public function getTanssEnd(): string
     {
         if ($this->tanssEntry) {
-
             $returnString = Carbon::parse($this->tanssEntry->contract_end)->toDateString();
-
 
             if ($this->tanssEntry->willExpireSoon() && !$this->tanssEntry->isExpired()) {
                 $returnString = '<span class="badge bg-warning">' . $returnString . '</span>';
@@ -337,6 +335,24 @@ class Domain extends Model
     public function getContractId(): string
     {
         return $this->contracts->last()->id ?? '';
+    }
+
+    /**
+     * Returns the customer id or an empty string.
+     *
+     * @return string
+     */
+    public function getCustomerId(): string
+    {
+        if ($this->tanssEntry && $this->tanssEntry->customer) {
+            return $this->tanssEntry->customer->getKey();
+        }
+        return '';
+    }
+
+    public function hasContract(): bool
+    {
+        return (bool)$this->contracts->last();
     }
 
     /**

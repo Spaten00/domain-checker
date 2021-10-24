@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BillController;
+use App\Http\Controllers\ContractController;
 use App\Models\Domain;
 use Illuminate\Support\Facades\Route;
 
@@ -22,6 +23,9 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('create-bill', [BillController::class, 'store'])
         ->name('new-bill.store');
+
+    Route::post('create-contract', [ContractController::class, 'store'])
+        ->name('new-contract.store');
 });
 
 Route::get('/dashboard', function () {

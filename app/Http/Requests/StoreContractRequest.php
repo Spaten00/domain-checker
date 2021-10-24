@@ -6,11 +6,11 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
 
 /**
- * @property mixed $bill_number
- * @property mixed $date
- * @property mixed $contract_id
+ * @property mixed $customer_id
+ * @property mixed $contract_number
+ * @property mixed $domain_id
  */
-class StoreBillRequest extends FormRequest
+class StoreContractRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -30,9 +30,9 @@ class StoreBillRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'contract_id' => 'required',
-            'bill_number' => 'required|max:255',
-            'date' => 'required|date',
+            'domain_id' => 'required',
+            'customer_id' => 'required',
+            'contract_number' => 'required|max:255',
         ];
     }
 }

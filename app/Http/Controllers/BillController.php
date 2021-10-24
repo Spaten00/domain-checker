@@ -35,7 +35,7 @@ class BillController extends Controller
      * @param StoreBillRequest $request
      * @return RedirectResponse
      */
-    public function store(StoreBillRequest $request)
+    public function store(StoreBillRequest $request): RedirectResponse
     {
         Bill::create([
             'contract_id' => $request->contract_id,
