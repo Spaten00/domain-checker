@@ -37,7 +37,7 @@ class BillController extends Controller
      */
     public function store(StoreBillRequest $request)
     {
-        dump("asdf");
+
         return redirect()->back()->with('message', 'Eintrag wurde erstellt!');
     }
 

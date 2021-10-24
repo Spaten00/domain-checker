@@ -39,7 +39,7 @@
                                     </div>
                                     <div class="form-group row">
                                         <label for="date" class="col-sm-6 col-form-label">Datum der Rechnung:</label>
-                                        <input id="date" type="text" name="date">
+                                        <input id="date" type="date" name="date" value="{{date("Y-m-d")}}">
                                     </div>
                                 </div>
                                 <div class="modal-footer">
