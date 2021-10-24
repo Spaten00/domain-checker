@@ -37,6 +37,11 @@ class BillController extends Controller
      */
     public function store(StoreBillRequest $request)
     {
+        Bill::create([
+            'contract_id' => $request->contract_id,
+            'bill_number' => $request->bill_number,
+            'date' => $request->date,
+        ]);
 
         return redirect()->back()->with('message', 'Eintrag wurde erstellt!');
     }

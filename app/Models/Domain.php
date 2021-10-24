@@ -325,6 +325,16 @@ class Domain extends Model
     }
 
     /**
+     * Returns the contract id or an empty string.
+     *
+     * @return string
+     */
+    public function getContractId(): string
+    {
+        return $this->contracts->last()->id ?? '';
+    }
+
+    /**
      * Returns true if the domain has a bill.
      *
      * @return bool

@@ -47,6 +47,7 @@
                                     </button>
                                     <button type="submit" class="btn btn-primary">Speichern</button>
                                 </div>
+                                <input type="hidden" name="contract_id" value="{{$domain->getContractId()}}">
                             </form>
                         </div>
                     </div>
