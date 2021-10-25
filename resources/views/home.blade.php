@@ -102,14 +102,18 @@
                     <td>{!! $domain->getTanssEnd() !!}</td>
                     <td>{!! $domain->getRrpproxyEnd() !!}</td>
                     <td>{!! $domain->getRrpproxyRenewal() !!}</td>
-                    <td><input type="text" value="{{$domain->getContractNumber()}}" disabled></td>
-                    <td><input type="text" value="{{$domain->getLastBillNumber()}}" disabled></td>
+                    <td><input id="contract-number-{{$domain->getContractId()}}" type="text"
+                               value="{{$domain->getContractNumber()}}" disabled></td>
+                    <td><input id="bill-number-{{$domain->getLastBillId()}}" type="text"
+                               value="{{$domain->getLastBillNumber()}}" disabled></td>
                     {{--TODO put modal here to ask the user if he is sure to change the number--}}
-                    <td><i class="fas fa-pencil-alt"></i></td>
+                    <td><i class="fas fa-pencil-alt" role="button"
+                           onclick="editValues([{{$domain->getContractId()}}, {{$domain->getLastBillId()}}])"></i>
+                    </td>
                     <td>{{$domain->getLastBillDate()}}</td>
                     <td>
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#bill-number-modal-{{$domain->getKey()  }}">erstellen
+                                data-target="#bill-number-modal-{{$domain->getKey()}}">erstellen
                         </button>
                     </td>
                 </tr>
@@ -120,4 +124,52 @@
             {{ $domains->links() }}
         </div>
     </div>
+    @push('footer_js')
+        <script>
+            function editValues(values) {
+                let contractId = values[0];
+                let billId = values[1];
+                if (contractId) {
+                    let contractInput = document.getElementById("contract-number-" + contractId);
+                    contractInput.disabled = !contractInput.disabled;
+                    if (contractInput.disabled) {
+                        $.ajax({
+                            url: '/contract/update/' + contractId,
+                            method: 'POST',
+                            data: {newNumber: contractInput.value},
+                            success: function (response) {
+                                if (response) {
+                                    alert(response);
+                                }
+                            },
+                            fail: function () {
+                                alert('Fehler beim Ändern');
+                            }
+                        });
+                    }
+                }
+
+                if (billId) {
+                    let billInput = document.getElementById("bill-number-" + billId);
+                    billInput.disabled = !billInput.disabled;
+                    if (billInput.disabled) {
+                        $.ajax({
+                            url: '/bill/update/' + billId,
+                            method: 'POST',
+                            data: {newNumber: billInput.value},
+                            success: function (response) {
+                                if (response) {
+                                    alert(response);
+                                }
+                            },
+                            fail: function () {
+                                alert('Fehler beim Ändern');
+                            }
+                        });
+                    }
+                }
+            }
+
+        </script>
+    @endpush
 </x-app-layout>

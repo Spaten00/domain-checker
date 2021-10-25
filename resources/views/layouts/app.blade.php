@@ -33,11 +33,6 @@
         </div>
     @endif
 </div>
-{{--@push('footer_js')--}}
-{{--    <script>--}}
-{{--        --}}
-{{--    </script>--}}
-{{--@endpush--}}
-{{--@stack('footer_js')--}}
+@stack('footer_js')
 </body>
 </html>

@@ -407,4 +407,17 @@ class Domain extends Model
         }
         return '';
     }
+
+    /**
+     * Returns the last bill id or an empty string.
+     *
+     * @return string
+     */
+    public function getLastBillId(): string
+    {
+        if ($this->hasBill()) {
+            return $this->contracts->last()->bills->last()->getKey();
+        }
+        return '';
+    }
 }

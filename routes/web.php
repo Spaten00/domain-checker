@@ -20,12 +20,19 @@ Route::get('/', function () {
     return view('home')->with('domains', Domain::paginate(20)->withQueryString());
 })->name('home');
 
+
 Route::middleware(['auth'])->group(function () {
     Route::post('create-bill', [BillController::class, 'store'])
         ->name('new-bill.store');
 
     Route::post('create-contract', [ContractController::class, 'store'])
         ->name('new-contract.store');
+
+    Route::post('/contract/update/{contract}', [ContractController::class, 'update'])
+        ->name('contract.update');
+
+    Route::post('/bill/update/{bill}', [BillController::class, 'update'])
+        ->name('bill.update');
 });
 
 Route::get('/dashboard', function () {

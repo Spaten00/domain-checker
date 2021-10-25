@@ -8,6 +8,13 @@ import './bootstrap'
 import 'bootstrap/dist/js/bootstrap.bundle'
 
 require('./bootstrap');
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
 if (document.getElementById('app')) {
     window.Vue = require('vue').default;
 

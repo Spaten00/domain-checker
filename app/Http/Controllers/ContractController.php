@@ -51,7 +51,7 @@ class ContractController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Contract $contract
+     * @param Contract $contract
      * @return Response
      */
     public function show(Contract $contract)
@@ -62,7 +62,7 @@ class ContractController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param \App\Models\Contract $contract
+     * @param Contract $contract
      * @return Response
      */
     public function edit(Contract $contract)
@@ -74,18 +74,20 @@ class ContractController extends Controller
      * Update the specified resource in storage.
      *
      * @param Request $request
-     * @param \App\Models\Contract $contract
+     * @param Contract $contract
      * @return Response
      */
     public function update(Request $request, Contract $contract)
     {
-        //
+        $contract->contract_number = $request->newNumber;
+        $contract->save();
+        return response("Vertragsnummer geändert");
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param \App\Models\Contract $contract
+     * @param Contract $contract
      * @return Response
      */
     public function destroy(Contract $contract)
