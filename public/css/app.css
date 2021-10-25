@@ -20276,6 +20276,24 @@ h3 {
   background-color: #666 !important;
 }
 
+.alert {
+  -webkit-animation: fade 2s forwards;
+          animation: fade 2s forwards;
+  -webkit-animation-delay: 2s;
+          animation-delay: 2s;
+}
+
+@-webkit-keyframes fade {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 0;
+  }
+}
 .table {
   overflow-y: scroll;
 }

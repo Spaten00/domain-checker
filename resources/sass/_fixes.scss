@@ -9,6 +9,15 @@
     background-color: #666 !important;
 }
 
+.alert {
+    animation: fade 2s forwards;
+    animation-delay: 2s;
+}
+
+@keyframes fade {
+    to { opacity: 0; }
+}
+
 .table {
     overflow-y: scroll;
 
