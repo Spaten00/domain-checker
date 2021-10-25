@@ -22,6 +22,22 @@
     <main>
         {{ $slot }}
     </main>
+    @if(session('status') || $errors->count())
+        <div style="position:fixed; z-index: 9999; top: 10px;left: 50%; transform: translate(-50%,0%)"
+             class="alert alert-{{ session('status')['class'] ?? 'danger'}} alert-dismissible fade show"
+             role="alert">
+            {{ session('status')['msg'] ?? $errors->first() }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">x</span>
+            </button>
+        </div>
+    @endif
 </div>
+{{--@push('footer_js')--}}
+{{--    <script>--}}
+{{--        --}}
+{{--    </script>--}}
+{{--@endpush--}}
+{{--@stack('footer_js')--}}
 </body>
 </html>

@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home')->with('domains', Domain::paginate(15)->withQueryString());
+    return view('home')->with('domains', Domain::paginate(20)->withQueryString());
 })->name('home');
 
 Route::middleware(['auth'])->group(function () {

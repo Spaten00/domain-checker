@@ -102,8 +102,8 @@
                     <td>{!! $domain->getTanssEnd() !!}</td>
                     <td>{!! $domain->getRrpproxyEnd() !!}</td>
                     <td>{!! $domain->getRrpproxyRenewal() !!}</td>
-                    <td><input type="text" value="{{$domain->getContractNumber()}}"></td>
-                    <td><input type="text" value="{{$domain->getLastBillNumber()}}"></td>
+                    <td><input type="text" value="{{$domain->getContractNumber()}}" disabled></td>
+                    <td><input type="text" value="{{$domain->getLastBillNumber()}}" disabled></td>
                     {{--TODO put modal here to ask the user if he is sure to change the number--}}
                     <td><i class="fas fa-pencil-alt"></i></td>
                     <td>{{$domain->getLastBillDate()}}</td>

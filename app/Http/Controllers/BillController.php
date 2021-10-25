@@ -43,7 +43,10 @@ class BillController extends Controller
             'date' => $request->date,
         ]);
 
-        return redirect()->back()->with('message', 'Eintrag wurde erstellt!');
+        return redirect()->back()->with('status', [
+            'msg' => 'Eintrag wurde erstellt!',
+            'class' => 'success'
+        class]);
     }
 
     /**

@@ -45,7 +45,7 @@ class ContractController extends Controller
 
         $contract->domains()->attach($request->domain_id);
 
-        return redirect()->back()->with('message', 'Eintrag wurde erstellt!');
+        return redirect()->back()->with('status', ['class' => 'success', 'msg' => 'Eintrag wurde erstellt!']);
     }
 
     /**
