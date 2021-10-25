@@ -45,8 +45,7 @@ class BillController extends Controller
 
         return redirect()->back()->with('status', [
             'msg' => 'Eintrag wurde erstellt!',
-            'class' => 'success'
-        class]);
+            'class' => 'success']);
     }
 
     /**
