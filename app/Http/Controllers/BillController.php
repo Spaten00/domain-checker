@@ -81,7 +81,7 @@ class BillController extends Controller
     {
         $bill->bill_number = $request->newNumber;
         $bill->save();
-        return response("Letzte Rechnungsnummer geändert");
+        return response("Letzte Rechnungsnummer geändert. ");
     }
 
     /**

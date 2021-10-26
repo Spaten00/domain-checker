@@ -81,7 +81,7 @@ class ContractController extends Controller
     {
         $contract->contract_number = $request->newNumber;
         $contract->save();
-        return response("Vertragsnummer geändert");
+        return response("Vertragsnummer geändert. ");
     }
 
     /**

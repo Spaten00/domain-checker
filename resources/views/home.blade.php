@@ -131,27 +131,21 @@
     </div>
     @push('footer_js')
         <script>
-            function editValues(values) {
-                console.log()
+            async function editValues(values) {
+                let promises = [];
                 let contractId = values[0];
                 let billId = values[1];
+                let message = '';
+
                 if (contractId) {
                     let contractInput = document.getElementById("contract-number-" + contractId);
                     contractInput.disabled = !contractInput.disabled;
                     if (contractInput.disabled) {
-                        $.ajax({
+                        promises.push($.ajax({
                             url: '/contract/update/' + contractId,
                             method: 'POST',
                             data: {newNumber: contractInput.value},
-                            success: function (response) {
-                                if (response) {
-                                    alert(response);
-                                }
-                            },
-                            fail: function () {
-                                alert('Fehler beim Ändern');
-                            }
-                        });
+                        }));
                     }
                 }
 
@@ -159,21 +153,22 @@
                     let billInput = document.getElementById("bill-number-" + billId);
                     billInput.disabled = !billInput.disabled;
                     if (billInput.disabled) {
-                        $.ajax({
+                        promises.push($.ajax({
                             url: '/bill/update/' + billId,
                             method: 'POST',
                             data: {newNumber: billInput.value},
-                            success: function (response) {
-                                if (response) {
-                                    alert(response);
-                                }
-                            },
-                            fail: function () {
-                                alert('Fehler beim Ändern');
-                            }
-                        });
+                        }))
                     }
                 }
+
+                await Promise.all(promises).then(responseList => {
+                    if (responseList.length > 0) {
+                        for (let i = 0; i < responseList.length; i++) {
+                            message += responseList[i];
+                        }
+                        alert(message);
+                    }
+                });
             }
 
         </script>
