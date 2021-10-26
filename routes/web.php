@@ -24,6 +24,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DomainController::class, 'show'])
     ->name('home');
 
+Route::get('/incomplete', [DomainController::class, 'showIncomplete'])
+    ->name('domain.incomplete');
+
 Route::get('/expiring', [DomainController::class, 'showExpiring'])
     ->name('domain.expiring');
 

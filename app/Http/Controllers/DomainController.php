@@ -67,10 +67,52 @@ class DomainController extends Controller
         return view('home')->with('domains', $domains);
     }
 
-    // TODO
-    public function showIncomplete()
+    /**
+     * Returns all domains with incomplete data, which include:
+     * 1. The domains which do not have entries in TANSS and RRPproxy.
+     * 2. The domains which do not have a TANSS entry but a running contract in RRPproxy.
+     * 3. The domains which do not have a RRPproxy entry but a running contract in TANSS.
+     * 4. The domains which have a running contract in RRPproxy but not in TANSS.
+     * 5. The domains which have a running contract in TANSS but not in RRPproxy.
+     *
+     * @return Application|Factory|View
+     */
+    public function showIncomplete(): View|Factory|Application
     {
-
+        $domains = Domain::where(function (Builder $hasNoEntries) {
+            $hasNoEntries->whereDoesntHave('tanssEntry')
+                ->whereDoesntHave('rrpproxyEntry');
+        })
+            ->orWhere(function (Builder $hasNoTanssAndRrpproxyRunning) {
+                $hasNoTanssAndRrpproxyRunning->whereDoesntHave('tanssEntry')
+                    ->whereHas('rrpproxyEntry', function (Builder $rrpproxyRunning) {
+                        $rrpproxyRunning->where('contract_end', '>', now());
+                    });
+            })
+            ->orWhere(function (Builder $hasNoRrpproxyAndTanssRunning) {
+                $hasNoRrpproxyAndTanssRunning->whereDoesntHave('rrpproxyEntry')
+                    ->whereHas('tanssEntry', function (Builder $tanssRunning) {
+                        $tanssRunning->where('contract_end', '>', now());
+                    });
+            })
+            ->orWhere(function (Builder $hasRrrpproxyRunningAndTanssExpired) {
+                $hasRrrpproxyRunningAndTanssExpired->whereHas('rrpproxyEntry', function (Builder $rrpproxyRunning) {
+                    $rrpproxyRunning->where('contract_end', '>', now());
+                })
+                    ->whereHas('tanssEntry', function (Builder $tanssExpired) {
+                        $tanssExpired->where('contract_end', '<', now());
+                    });
+            })
+            ->orWhere(function (Builder $hasTanssRunningAndRrpproxyExpired) {
+                $hasTanssRunningAndRrpproxyExpired->whereHas('rrpproxyEntry', function (Builder $rrpproxyExpired) {
+                    $rrpproxyExpired->where('contract_end', '<', now());
+                })
+                    ->whereHas('tanssEntry', function (Builder $tanssRunning) {
+                        $tanssRunning->where('contract_end', '>', now());
+                    });
+            })
+            ->paginate(20)->withQueryString();
+        return view('home')->with('domains', $domains);
     }
 
     public function showSearch(Request $request)
