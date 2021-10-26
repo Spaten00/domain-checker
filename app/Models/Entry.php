@@ -21,7 +21,7 @@ abstract class Entry extends Model
 {
     use HasFactory;
 
-    const SOON = 30;
+    public const SOON = 30;
 
     /**
      * The attributes that are mass assignable.

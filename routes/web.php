@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\DomainController;
 use App\Models\Domain;
 use Illuminate\Support\Facades\Route;
 
@@ -16,10 +17,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home')->with('domains', Domain::paginate(20)->withQueryString());
-})->name('home');
+//Route::get('/', function () {
+//    return view('home')->with('domains', Domain::paginate(20)->withQueryString());
+//})->name('home');
 
+Route::get('/', [DomainController::class, 'show'])
+    ->name('home');
+
+Route::get('/expiring', [DomainController::class, 'showExpiring'])
+    ->name('expiring');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('create-bill', [BillController::class, 'store'])

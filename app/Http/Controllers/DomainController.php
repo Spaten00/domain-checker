@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Domain;
+use App\Models\Entry;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class DomainController extends Controller
@@ -30,7 +35,7 @@ class DomainController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -39,20 +44,33 @@ class DomainController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Returns all domains as a pagination query.
      *
-     * @param  \App\Models\Domain  $domain
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|View
      */
-    public function show(Domain $domain)
+    public function show(): View|Factory|Application
     {
-        //
+        return view('home')->with('domains', Domain::paginate(20)->withQueryString());
+    }
+
+    /**
+     * Returns all domains with a TANNS-entry which will expire soon as a pagination query.
+     *
+     * @return Application|Factory|View
+     */
+    public function showExpiring(): View|Factory|Application
+    {
+        $domains = Domain::whereHas('tanssEntry', function (Builder $query) {
+            $query->where('contract_end', '<', now()->addDays(Entry::SOON))
+                ->where('contract_end', '>=', now());
+        })->paginate(20);
+        return view('home')->with('domains', $domains);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Domain  $domain
+     * @param Domain $domain
      * @return \Illuminate\Http\Response
      */
     public function edit(Domain $domain)
@@ -63,8 +81,8 @@ class DomainController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Domain  $domain
+     * @param \Illuminate\Http\Request $request
+     * @param Domain $domain
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Domain $domain)
@@ -75,7 +93,7 @@ class DomainController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Domain  $domain
+     * @param Domain $domain
      * @return \Illuminate\Http\Response
      */
     public function destroy(Domain $domain)

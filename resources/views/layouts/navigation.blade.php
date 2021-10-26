@@ -1,8 +1,8 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-{{--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain"--}}
-{{--            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">--}}
-{{--        <span class="navbar-toggler-icon"></span>--}}
-{{--    </button>--}}
+    {{--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain"--}}
+    {{--            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">--}}
+    {{--        <span class="navbar-toggler-icon"></span>--}}
+    {{--    </button>--}}
 
     <div class="collapse navbar-collapse d-md-flex justify-content-between align-items-center" id="navbarMain">
         <a class="navbar-brand mr-5" href="{{ route('home') }}">
@@ -11,19 +11,19 @@
         </a>
         <ul class="navbar-nav d-md-flex justify-content-center">
             <li class="nav-item text-center">
-                {{--                <a href="{{ route('map') }}" class="nav-link mx-0 mx-lg-3">--}}
-                {{--                    <i class="fa fa-map-marked-alt"></i> <span>{{ __('navigation.map') }}</span>--}}
-                {{--                </a>--}}
+                <a href="{{ route('home') }}" class="nav-link mx-0 mx-lg-3">
+                    <i class="fas fa-list"></i> <span>Alle Domains</span>
+                </a>
             </li>
             <li class="nav-item text-center">
-                {{--                <a href="{{ route('help-me.create') }}" class="nav-link mx-0 mx-lg-3">--}}
-                {{--                    <i class="fa fa-life-ring"></i> <span>{{ __('navigation.search_for_help') }}</span>--}}
-                {{--                </a>--}}
+                <a href="{{ route('home') }}" class="nav-link mx-0 mx-lg-3">
+                    <i class="fas fa-exclamation-triangle"></i> <span>Unvollständige Daten</span>
+                </a>
             </li>
             <li class="nav-item text-center">
-                {{--                <a href="{{ route('offer-help.create') }}" class="nav-link mx-0 mx-lg-3">--}}
-                {{--                    <i class="fa fa-hands-helping"></i> <span>{{ __('navigation.offer_help') }}</span>--}}
-                {{--                </a>--}}
+                <a href="{{ route('expiring') }}" class="nav-link mx-0 mx-lg-3">
+                    <i class="far fa-calendar-alt"></i> <span>Auslaufende Verträge</span>
+                </a>
             </li>
             <li class="nav-item text-center">
                 {{--                <a href="{{ route('privacy') }}" class="nav-link mx-0 mx-lg-3">--}}
