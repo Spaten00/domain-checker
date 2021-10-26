@@ -25,7 +25,10 @@ Route::get('/', [DomainController::class, 'show'])
     ->name('home');
 
 Route::get('/expiring', [DomainController::class, 'showExpiring'])
-    ->name('expiring');
+    ->name('domain.expiring');
+
+Route::get('/search/{searchString}', [DomainController::class, 'showSearch'])
+    ->name('domain.search');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('create-bill', [BillController::class, 'store'])

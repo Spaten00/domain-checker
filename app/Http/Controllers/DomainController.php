@@ -67,6 +67,17 @@ class DomainController extends Controller
         return view('home')->with('domains', $domains);
     }
 
+    // TODO
+    public function showIncomplete()
+    {
+
+    }
+
+    public function showSearch(string $searchString)
+    {
+
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

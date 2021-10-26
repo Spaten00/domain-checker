@@ -5,11 +5,13 @@
     {{--    </button>--}}
 
     <div class="collapse navbar-collapse d-md-flex justify-content-between align-items-center" id="navbarMain">
-        <a class="navbar-brand mr-5" href="{{ route('home') }}">
-            <img class="img-fluid" src="{{ asset('/images/waben.png') }}"
-                 style="width: 100%; height: 100%; max-width: 200px; max-height: 50px;">
-        </a>
-        <ul class="navbar-nav d-md-flex justify-content-center">
+        <ul class="navbar-nav d-flex align-items-center">
+            <li class="nav-item text-center">
+                <a class="navbar-brand mr-5" href="{{ route('home') }}">
+                    <img class="img-fluid" src="{{ asset('/images/waben.png') }}"
+                         style="width: 100%; height: 100%; max-width: 200px; max-height: 50px;">
+                </a>
+            </li>
             <li class="nav-item text-center">
                 <a href="{{ route('home') }}" class="nav-link mx-0 mx-lg-3">
                     <i class="fas fa-list"></i> <span>Alle Domains</span>
@@ -21,14 +23,20 @@
                 </a>
             </li>
             <li class="nav-item text-center">
-                <a href="{{ route('expiring') }}" class="nav-link mx-0 mx-lg-3">
+                <a href="{{ route('domain.expiring') }}" class="nav-link mx-0 mx-lg-3">
                     <i class="far fa-calendar-alt"></i> <span>Auslaufende Verträge</span>
                 </a>
             </li>
             <li class="nav-item text-center">
-                {{--                <a href="{{ route('privacy') }}" class="nav-link mx-0 mx-lg-3">--}}
-                {{--                    <i class="fas fa-lock"></i> <span>{{ __('navigation.privacy') }}</span>--}}
-                {{--                </a>--}}
+                <form method="GET" action="{{route('domain.search')}}">
+                    @csrf
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search-string" placeholder="Suche nach">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                        </div>
+                    </div>
+                </form>
             </li>
             <li class="nav-item text-center">
                 {{--                <a href="{{ route('imprint') }}" class="nav-link mx-0 mx-lg-3">--}}
