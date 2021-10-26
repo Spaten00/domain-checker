@@ -30,7 +30,7 @@
                                             aria-label="Close">X
                                     </button>
                                 </div>
-                                <form method="POST" action="{{route('new-bill.store')}}">
+                                <form method="POST" action="{{route('bill.store')}}">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group row">
@@ -71,7 +71,7 @@
                                             aria-label="Close">X
                                     </button>
                                 </div>
-                                <form method="POST" action="{{route('new-contract.store')}}">
+                                <form method="POST" action="{{route('contract.store')}}">
                                     @csrf
                                     <div class="modal-body">
                                         <div class="form-group row">
@@ -107,8 +107,13 @@
                     <td><input id="bill-number-{{$domain->getLastBillId()}}" type="text"
                                value="{{$domain->getLastBillNumber()}}" disabled></td>
                     {{--TODO put modal here to ask the user if he is sure to change the number--}}
-                    <td><i class="fas fa-pencil-alt" role="button"
-                           onclick="editValues([{{$domain->getContractId()}}, {{$domain->getLastBillId()}}])"></i>
+                    <td>
+                        @if(Auth::check())
+                            <i class="fas fa-pencil-alt" role="button"
+                               onclick="editValues([{{$domain->getContractId()}}, {{$domain->getLastBillId()}}])"></i>
+                        @else <a href="{{route('login')}}"><i class="fas fa-pencil-alt text-dark"></i></a>
+
+                        @endif
                     </td>
                     <td>{{$domain->getLastBillDate()}}</td>
                     <td>
@@ -127,6 +132,7 @@
     @push('footer_js')
         <script>
             function editValues(values) {
+                console.log()
                 let contractId = values[0];
                 let billId = values[1];
                 if (contractId) {

@@ -23,10 +23,10 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::post('create-bill', [BillController::class, 'store'])
-        ->name('new-bill.store');
+        ->name('bill.store');
 
     Route::post('create-contract', [ContractController::class, 'store'])
-        ->name('new-contract.store');
+        ->name('contract.store');
 
     Route::post('/contract/update/{contract}', [ContractController::class, 'update'])
         ->name('contract.update');

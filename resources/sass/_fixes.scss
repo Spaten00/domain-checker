@@ -15,7 +15,9 @@
 }
 
 @keyframes fade {
-    to { opacity: 0; }
+    to {
+        opacity: 0;
+    }
 }
 
 .table {
