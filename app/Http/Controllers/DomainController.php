@@ -63,7 +63,7 @@ class DomainController extends Controller
         $domains = Domain::whereHas('tanssEntry', function (Builder $query) {
             $query->where('contract_end', '<', now()->addDays(Entry::SOON))
                 ->where('contract_end', '>=', now());
-        })->paginate(20);
+        })->paginate(20)->withQueryString();
         return view('home')->with('domains', $domains);
     }
 
@@ -73,9 +73,29 @@ class DomainController extends Controller
 
     }
 
-    public function showSearch(string $searchString)
+    public function showSearch(Request $request)
     {
-
+        $search = $request->searchString;
+        $domains = Domain::where('name', 'like', '%' . $search . '%')
+            ->orWhereHas('tanssEntry', function (Builder $tanssQuery) use ($search) {
+                $tanssQuery
+//                    ->whereRaw('CAST(`contract_end` as CHAR) like "%' . $search . '%"')
+                    ->whereHas('customer', function (Builder $customerQuery) use ($search) {
+                        $customerQuery->where('name', 'like', '%' . $search . '%');
+                    });
+            })
+            ->orWhereHas('contracts', function (Builder $contractQuery) use ($search) {
+                $contractQuery->where('contract_number', 'like', '%' . $search . '%')
+                    ->orWhereHas('bills', function (Builder $billQuery) use ($search) {
+                        $billQuery->where('bill_number', 'like', '%' . $search . '%');
+                    });
+            })
+//            ->orWhereHas('rrpproxyEntry', function (Builder $rrpproxyBuilder) use ($search) {
+//                $rrpproxyBuilder->whereRaw('CAST(`contract_end` as CHAR) like "%' . $search . '%"')
+//                    ->orWhereRaw('CAST(`contract_renewal` as CHAR) like "%' . $search . '%"');
+//            })
+            ->paginate(20)->withQueryString();
+        return view('home')->with('domains', $domains);
     }
 
     /**

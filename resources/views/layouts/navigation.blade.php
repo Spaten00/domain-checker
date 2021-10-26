@@ -31,7 +31,7 @@
                 <form method="GET" action="{{route('domain.search')}}">
                     @csrf
                     <div class="input-group">
-                        <input type="text" class="form-control" name="search-string" placeholder="Suche nach">
+                        <input type="text" class="form-control" name="searchString" placeholder="Suche nach">
                         <div class="input-group-append">
                             <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
                         </div>

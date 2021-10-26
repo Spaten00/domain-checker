@@ -27,7 +27,7 @@ Route::get('/', [DomainController::class, 'show'])
 Route::get('/expiring', [DomainController::class, 'showExpiring'])
     ->name('domain.expiring');
 
-Route::get('/search/{searchString}', [DomainController::class, 'showSearch'])
+Route::get('/search/', [DomainController::class, 'showSearch'])
     ->name('domain.search');
 
 Route::middleware(['auth'])->group(function () {
