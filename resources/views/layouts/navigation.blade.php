@@ -9,7 +9,7 @@
             <li class="nav-item text-center">
                 <a class="navbar-brand mr-5" href="{{ route('home') }}">
                     <img class="img-fluid" src="{{ asset('/images/waben.png') }}"
-                         style="width: 100%; height: 100%; max-width: 200px; max-height: 50px;">
+                         style="width: 100%; height: 100%; max-width: 200px; max-height: 40px;">
                 </a>
             </li>
             <li class="nav-item text-center">
@@ -19,7 +19,7 @@
             </li>
             <li class="nav-item text-center">
                 <a href="{{ route('domain.incomplete') }}" class="nav-link mx-0 mx-lg-3">
-                    <i class="fas fa-exclamation-triangle"></i> <span>Unvollständige Daten</span>
+                    <i class="fas fa-exclamation-triangle"></i> <span>Unvollständige/Fehlerhafte Daten</span>
                 </a>
             </li>
             <li class="nav-item text-center">
@@ -81,7 +81,7 @@
                 </form>
             @else
                 <li class="nav-item text-center mx-2">
-                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                    <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-user"></i> <span>{{ __('Login') }}</span></a>
                 </li>
             @endif
         </ul>

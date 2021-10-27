@@ -4,16 +4,16 @@
             <thead>
             <tr>
                 <th>Domain</th>
-                <th>Status</th>
+                <th class="text-center">Status</th>
                 <th>Kunde</th>
-                <th>Vertragsende TANSS</th>
-                <th>Vertragsende RRPproxy</th>
-                <th>Verlängerung RRPproxy</th>
-                <th>Vertragsnummer</th>
-                <th>letzte Rechnungsnummer</th>
-                <th>bearbeiten</th>
-                <th>letzte Rechnung am</th>
-                <th>neue Rechnung</th>
+                <th class="text-center">Vertragsende TANSS</th>
+                <th class="text-center">Vertragsende RRPproxy</th>
+                <th class="text-center">Verlängerung RRPproxy</th>
+                <th class="text-center">Vertragsnummer</th>
+                <th class="text-center">letzte Rechnungsnummer</th>
+                <th class="text-center">bearbeiten</th>
+                <th class="text-center">letzte Rechnung am</th>
+                <th class="text-center">neue Rechnung</th>
             </tr>
             </thead>
             <tbody>
@@ -95,19 +95,21 @@
 
                 {{--Table data--}}
                 <tr>
-                    <td>{{$domain->name}}</td>
-                    <td>{!! $domain->getStatusBadge() !!}</td>
+                    <td class="align-middle">{{$domain->name}}</td>
+                    <td class="align-middle text-center">{!! $domain->getStatusBadge() !!}</td>
                     {{--TODO create method and check if is already expired--}}
-                    <td>{!! $domain->getCustomer() !!}</td>
-                    <td>{!! $domain->getTanssEnd() !!}</td>
-                    <td>{!! $domain->getRrpproxyEnd() !!}</td>
-                    <td>{!! $domain->getRrpproxyRenewal() !!}</td>
-                    <td><input id="contract-number-{{$domain->getContractId()}}" type="text"
-                               value="{{$domain->getContractNumber()}}" disabled></td>
-                    <td><input id="bill-number-{{$domain->getLastBillId()}}" type="text"
-                               value="{{$domain->getLastBillNumber()}}" disabled></td>
+                    <td class="align-middle">{!! $domain->getCustomer() !!}</td>
+                    <td class="align-middle text-center">{!! $domain->getTanssEnd() !!}</td>
+                    <td class="align-middle text-center">{!! $domain->getRrpproxyEnd() !!}</td>
+                    <td class="align-middle text-center">{!! $domain->getRrpproxyRenewal() !!}</td>
+                    <td class="align-middle text-center"><input id="contract-number-{{$domain->getContractId()}}"
+                                                                type="text"
+                                                                value="{{$domain->getContractNumber()}}" disabled></td>
+                    <td class="align-middle text-center"><input id="bill-number-{{$domain->getLastBillId()}}"
+                                                                type="text"
+                                                                value="{{$domain->getLastBillNumber()}}" disabled></td>
                     {{--TODO put modal here to ask the user if he is sure to change the number--}}
-                    <td>
+                    <td class="align-middle text-center">
                         @if(Auth::check())
                             <i class="fas fa-pencil-alt" role="button"
                                onclick="editValues([{{$domain->getContractId()}}, {{$domain->getLastBillId()}}])"></i>
@@ -115,8 +117,8 @@
 
                         @endif
                     </td>
-                    <td>{{$domain->getLastBillDate()}}</td>
-                    <td>
+                    <td class="align-middle text-center">{{$domain->getLastBillDate()}}</td>
+                    <td class="align-middle text-center">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
                                 data-target="#bill-number-modal-{{$domain->getKey()}}">erstellen
                         </button>

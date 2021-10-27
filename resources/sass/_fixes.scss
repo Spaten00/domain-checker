@@ -1,13 +1,19 @@
 .fullscreen {
     width: 100vw;
     height: 100vh;
-    padding-top: 76.22px;
-    //overflow: hidden;
+    padding-top: 55.4px;
+    //overflow-x: hidden;
 }
 
 .navbar {
     background-color: #666 !important;
+
+    .navbar-brand {
+        padding-top: 0;
+        padding-bottom: 0;
+    }
 }
+
 
 .alert {
     animation: fade 2s forwards;
@@ -46,7 +52,7 @@ tr:nth-child(odd) {
 thead {
     position: -webkit-sticky;
     position: sticky;
-    top: 76.2px;
+    top: 56.2px;
     z-index: 2;
 }
 

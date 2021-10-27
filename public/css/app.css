@@ -20269,11 +20269,15 @@ h3 {
 .fullscreen {
   width: 100vw;
   height: 100vh;
-  padding-top: 76.22px;
+  padding-top: 55.4px;
 }
 
 .navbar {
   background-color: #666 !important;
+}
+.navbar .navbar-brand {
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 .alert {
@@ -20318,7 +20322,7 @@ tr:nth-child(odd) {
 /* Fixed Headers */
 thead {
   position: sticky;
-  top: 76.2px;
+  top: 56.2px;
   z-index: 2;
 }
 
