@@ -299,7 +299,13 @@ class Domain extends Model
     public function getTanssEnd(): string
     {
         if ($this->tanssEntry) {
-            $returnString = Carbon::parse($this->tanssEntry->contract_end)->toDateString();
+            if ($this->tanssEntry->contract_end) {
+//                dd(Carbon::parse($this->tanssEntry->contract_end));
+                $returnString = Carbon::parse($this->tanssEntry->contract_end)->toDateString();
+            } else {
+                $returnString = "fehlt";
+            }
+//            dd($this->tanssEntry->contract_end);
 
             if ($this->tanssEntry->willExpireSoon() && !$this->tanssEntry->isExpired()) {
                 $returnString = '<span class="badge bg-warning">' . $returnString . '</span>';
@@ -310,7 +316,12 @@ class Domain extends Model
             return $returnString;
         }
 
+        if ($this->rrpproxyEntry && $this->hasRrpproxyExpired()) {
+            return "fehlt";
+        }
+
         return '<span class="badge bg-danger">fehlt</span>';
+//        return $this->tanssEntry->contract_end ?? '';
     }
 
     /**

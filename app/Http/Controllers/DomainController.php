@@ -50,7 +50,13 @@ class DomainController extends Controller
      */
     public function show(): View|Factory|Application
     {
-        return view('home')->with('domains', Domain::paginate(20)->withQueryString());
+        $domains = Domain::select(['domains.id', 'domains.name'])
+            ->leftJoin('tanss_entries', 'domains.id', '=', 'tanss_entries.domain_id')
+            ->orderBy('contract_end')
+//            ->toSql();
+            ->paginate(20)->withQueryString();
+//        dd($domains);
+        return view('home')->with('domains', $domains);
     }
 
     /**
