@@ -223,7 +223,7 @@ class Domain extends Model
             if (!$this->hasTanssExpired()) {
                 return ['badge bg-danger', 'RRPproxy fehlt'];
             }
-            return ['badge bg-success', 'OK'];
+            return ['badge bg-danger', 'Kein Ablaufdatum hinterlegt'];
         }
 
         if ($this->hasBothExpired()) {
