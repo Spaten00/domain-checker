@@ -15,6 +15,12 @@ $.ajaxSetup({
     }
 });
 
+// Every time a modal is shown, if it has an autofocus element, focus on it.
+$('.modal').on('shown.bs.modal', function () {
+    console.log("asd")
+    $(this).find('[autofocus]').focus();
+});
+
 if (document.getElementById('app')) {
     window.Vue = require('vue').default;
 

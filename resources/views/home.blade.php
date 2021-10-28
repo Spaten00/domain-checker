@@ -3,10 +3,11 @@
         <table class="table">
             <thead>
             <tr>
-                <th>Domain</th>
+                <th><a href="{{route('sort', 'domains.id')}}">Domain</a></th>
                 <th class="text-center">Status</th>
                 <th>Kunde</th>
-                <th class="text-center">Vertragsende TANSS</th>
+                <th class="text-center"><a href="{{route('sort', 'tanss_entries.contract_end')}}">Vertragsende TANSS</a>
+                </th>
                 <th class="text-center">Vertragsende RRPproxy</th>
                 <th class="text-center">Verlängerung RRPproxy</th>
                 <th class="text-center">Vertragsnummer</th>
@@ -36,7 +37,7 @@
                                         <div class="form-group row">
                                             <label for="bill_number"
                                                    class="col-sm-6 col-form-label">Rechnungsnummer:</label>
-                                            <input id="bill_number" type="text" name="bill_number">
+                                            <input id="bill_number" type="text" name="bill_number" autofocus>
                                         </div>
                                         <div class="form-group row">
                                             <label for="date" class="col-sm-6 col-form-label">Datum der
@@ -77,7 +78,7 @@
                                         <div class="form-group row">
                                             <label for="contract_number"
                                                    class="col-sm-6 col-form-label">Vertragsnummer:</label>
-                                            <input id="contract_number" type="text" name="contract_number">
+                                            <input id="contract_number" type="text" name="contract_number" autofocus>
                                         </div>
                                     </div>
                                     <div class="modal-footer">

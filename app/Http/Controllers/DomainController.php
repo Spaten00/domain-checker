@@ -46,18 +46,32 @@ class DomainController extends Controller
     /**
      * Returns all domains as a pagination query.
      *
+     * @param string $orderBy
      * @return Application|Factory|View
      */
-    public function show(): View|Factory|Application
+    public function show(string $sortBy = "domains.id"): View|Factory|Application
     {
         $domains = Domain::select(['domains.id', 'domains.name'])
             ->leftJoin('tanss_entries', 'domains.id', '=', 'tanss_entries.domain_id')
-            ->orderBy('contract_end')
-//            ->toSql();
+            ->orderBy($sortBy)
             ->paginate(20)->withQueryString();
-//        dd($domains);
         return view('home')->with('domains', $domains);
     }
+
+//    /**
+//     * Returns all domains as a pagination query.
+//     *
+//     * @param string $orderBy
+//     * @return Application|Factory|View
+//     */
+//    public function sortBy(string $sortBy = "domains.id"): View|Factory|Application
+//    {
+//        $domains = Domain::select(['domains.id', 'domains.name'])
+//            ->leftJoin('tanss_entries', 'domains.id', '=', 'tanss_entries.domain_id')
+//            ->orderBy($sortBy)
+//            ->paginate(20)->withQueryString();
+//        return view('home')->with('domains', $domains);
+//    }
 
     /**
      * Returns all domains with a TANNS-entry which will expire soon as a pagination query.

@@ -1895,6 +1895,11 @@ $.ajaxSetup({
   headers: {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
   }
+}); // Every time a modal is shown, if it has an autofocus element, focus on it.
+
+$('.modal').on('shown.bs.modal', function () {
+  console.log("asd");
+  $(this).find('[autofocus]').focus();
 });
 
 if (document.getElementById('app')) {

@@ -24,6 +24,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DomainController::class, 'show'])
     ->name('home');
 
+Route::get('/sort/{sortby}', [DomainController::class, 'show'])
+    ->name('sort');
+
+
 Route::get('/incomplete', [DomainController::class, 'showIncomplete'])
     ->name('domain.incomplete');
 
