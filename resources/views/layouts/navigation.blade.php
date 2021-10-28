@@ -45,29 +45,11 @@
             </li>
         </ul>
         <ul class="navbar-nav d-md-flex justify-content-center" style="min-width: 150px;">
+            <li class="nav-item text-center mx-2">
+                <a href="{{route('import')}}" class="btn btn-secondary">Daten-Import manuell starten</a>
+            </li>
             @if (\Auth::user())
-                <li class="nav-item text-center mx-2">
-                    {{--                    <a class="nav-link" href="{{ route('chat') }}">--}}
-                    {{--                        Chat--}}
-                    {{--                        @php--}}
-                    {{--                            $numberOfUnseenMessages = \Auth::user()->getNumberOfUnseenMessages()--}}
-                    {{--                        @endphp--}}
-                    {{--                        @if ($numberOfUnseenMessages > 0)--}}
-                    {{--                            <i class="fas fa-envelope-open-text d-md-inline"></i>--}}
-                    {{--                            <span--}}
-                    {{--                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">--}}
-                    {{--                                {{ $numberOfUnseenMessages }}--}}
-                    {{--                            <span class="d-none">unread messages</span>--}}
-                    {{--                        </span>--}}
-                    {{--                        @else--}}
-                    {{--                            <i class="fas fa-envelope d-md-inline"></i>--}}
-                    {{--                        @endif--}}
-                    {{--                    </a>--}}
-                </li>
-                <li class="nav-item text-center mx-2">
-                    {{--                    <a class="nav-link" href="{{ route('profile') }}">{{ \Auth::user()->name }} <i--}}
-                    {{--                            class="fa fa-user d-md-inline"></i></a>--}}
-                </li>
+
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <li class="nav-item text-center text-center mx-2">
@@ -81,7 +63,8 @@
                 </form>
             @else
                 <li class="nav-item text-center mx-2">
-                    <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-user"></i> <span>{{ __('Login') }}</span></a>
+                    <a class="nav-link" href="{{ route('login') }}"><i class="fas fa-user"></i>
+                        <span>{{ __('Login') }}</span></a>
                 </li>
             @endif
         </ul>

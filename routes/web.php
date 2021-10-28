@@ -3,6 +3,7 @@
 use App\Http\Controllers\BillController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DomainController;
+use App\Http\Controllers\ProvisionImport;
 use App\Models\Domain;
 use Illuminate\Support\Facades\Route;
 
@@ -27,6 +28,7 @@ Route::get('/', [DomainController::class, 'show'])
 Route::get('/sort/{sortby}', [DomainController::class, 'show'])
     ->name('sort');
 
+Route::get('/import', ProvisionImport::class)->name('import');
 
 Route::get('/incomplete', [DomainController::class, 'showIncomplete'])
     ->name('domain.incomplete');
