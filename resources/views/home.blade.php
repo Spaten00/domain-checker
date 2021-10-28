@@ -3,14 +3,21 @@
         <table class="table">
             <thead>
             <tr>
-                <th><a href="{{route('sort', 'domains.id')}}">Domain</a></th>
+                <th><a href="{{route('sort', 'domains.name')}}">Domain</a></th>
                 <th class="text-center">Status</th>
                 <th>Kunde</th>
-                <th class="text-center"><a href="{{route('sort', 'tanss_entries.contract_end')}}">Vertragsende TANSS</a>
+                <th class="text-center">
+                    <a href="{{route('sort', 'tanss_entries.contract_end')}}">Vertragsende TANSS</a>
                 </th>
-                <th class="text-center">Vertragsende RRPproxy</th>
-                <th class="text-center">Verlängerung RRPproxy</th>
-                <th class="text-center">Vertragsnummer</th>
+                <th class="text-center">
+                    <a href="{{route('sort', 'rrpproxy_entries.contract_end')}}">Vertragsende RRPproxy</a>
+                </th>
+                <th class="text-center">
+                    <a href="{{route('sort', 'rrpproxy_entries.contract_renewal')}}">Verlängerung RRPproxy</a>
+                </th>
+                <th class="text-center">
+                    <a href="{{route('sort', 'contracts.contract_number')}}">Vertragsnummer</a>
+                </th>
                 <th class="text-center">letzte Rechnungsnummer</th>
                 <th class="text-center">bearbeiten</th>
                 <th class="text-center">letzte Rechnung am</th>

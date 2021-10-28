@@ -38,8 +38,7 @@
             <li class="nav-item text-center mx-2">
                 <a href="{{ route('import') }}" class="btn btn-primary">Daten-Import manuell starten</a>
             </li>
-            @if (\Auth::user())
-
+            @if (Auth::user())
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf
                     <li class="nav-item text-center text-center mx-2">

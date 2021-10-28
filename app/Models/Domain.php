@@ -302,6 +302,7 @@ class Domain extends Model
             if ($this->tanssEntry->contract_end) {
                 $returnString = Carbon::parse($this->tanssEntry->contract_end)->toDateString();
             } else {
+//                self::dd("asd");
                 $returnString = "fehlt";
             }
 
@@ -310,6 +311,8 @@ class Domain extends Model
             } elseif ($this->rrpproxyEntry && $this->hasTanssExpired() && !$this->hasRrpproxyExpired()) {
                 $returnString = '<span class="badge bg-danger">' . $returnString . '</span>';
             }
+
+            return $returnString;
         }
 
         if ($this->rrpproxyEntry && $this->hasRrpproxyExpired()) {
