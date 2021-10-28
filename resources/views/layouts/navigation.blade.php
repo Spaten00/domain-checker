@@ -1,9 +1,4 @@
 <nav class="navbar navbar-expand-md navbar-dark fixed-top">
-    {{--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarMain"--}}
-    {{--            aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">--}}
-    {{--        <span class="navbar-toggler-icon"></span>--}}
-    {{--    </button>--}}
-
     <div class="collapse navbar-collapse d-md-flex justify-content-between align-items-center" id="navbarMain">
         <ul class="navbar-nav d-flex align-items-center">
             <li class="nav-item text-center">
@@ -28,7 +23,7 @@
                 </a>
             </li>
             <li class="nav-item text-center">
-                <form method="GET" action="{{route('domain.search')}}">
+                <form method="GET" action="{{ route('domain.search') }}">
                     @csrf
                     <div class="input-group">
                         <input type="text" class="form-control" name="searchString" placeholder="Suche nach">
@@ -38,15 +33,10 @@
                     </div>
                 </form>
             </li>
-            <li class="nav-item text-center">
-                {{--                <a href="{{ route('imprint') }}" class="nav-link mx-0 mx-lg-3">--}}
-                {{--                    <i class="fas fa-stamp"></i> <span>{{ __('navigation.imprint') }}</span>--}}
-                {{--                </a>--}}
-            </li>
         </ul>
         <ul class="navbar-nav d-md-flex justify-content-center" style="min-width: 150px;">
             <li class="nav-item text-center mx-2">
-                <a href="{{route('import')}}" class="btn btn-secondary">Daten-Import manuell starten</a>
+                <a href="{{ route('import') }}" class="btn btn-primary">Daten-Import manuell starten</a>
             </li>
             @if (\Auth::user())
 

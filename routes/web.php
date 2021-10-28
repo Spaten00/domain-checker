@@ -4,7 +4,6 @@ use App\Http\Controllers\BillController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\DomainController;
 use App\Http\Controllers\ProvisionImport;
-use App\Models\Domain;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,10 +16,6 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-//Route::get('/', function () {
-//    return view('home')->with('domains', Domain::paginate(20)->withQueryString());
-//})->name('home');
 
 Route::get('/', [DomainController::class, 'show'])
     ->name('home');
