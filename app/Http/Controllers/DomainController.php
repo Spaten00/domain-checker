@@ -46,37 +46,24 @@ class DomainController extends Controller
     /**
      * Returns all domains as a pagination query.
      *
-     * @param string $orderBy
+     * @param string $sortBy
      * @return Application|Factory|View
      */
     public function show(string $sortBy = "domains.name"): View|Factory|Application
     {
         $domains = Domain::select(['domains.id', 'domains.name'])
-//            ->leftJoin('tanss_entries', 'domains.id', '=', 'tanss_entries.domain_id')
-//            ->leftJoin('rrpproxy_entries', 'domains.id', '=', 'rrpproxy_entries.domain_id')
-//            ->leftJoin()
-
+            ->leftJoin('tanss_entries', 'domains.id', '=', 'tanss_entries.domain_id')
+            ->leftJoin('customers', 'customers.id', '=', 'tanss_entries.customer_id')
+            ->leftJoin('rrpproxy_entries', 'domains.id', '=', 'rrpproxy_entries.domain_id')
+            ->leftJoin('contract_domain', 'domains.id', '=', 'contract_domain.domain_id')
+            ->leftJoin('contracts', 'contracts.id', '=', 'contract_domain.contract_id')
+            ->leftJoin('bills', 'contracts.id', '=', 'bills.contract_id')
             ->orderBy($sortBy)
 //            ->toSql();
             ->paginate(20, ['domains.id', 'domains.name'])->withQueryString();
 //        dd($domains);
         return view('home')->with('domains', $domains);
     }
-
-//    /**
-//     * Returns all domains as a pagination query.
-//     *
-//     * @param string $orderBy
-//     * @return Application|Factory|View
-//     */
-//    public function sortBy(string $sortBy = "domains.id"): View|Factory|Application
-//    {
-//        $domains = Domain::select(['domains.id', 'domains.name'])
-//            ->leftJoin('tanss_entries', 'domains.id', '=', 'tanss_entries.domain_id')
-//            ->orderBy($sortBy)
-//            ->paginate(20)->withQueryString();
-//        return view('home')->with('domains', $domains);
-//    }
 
     /**
      * Returns all domains with a TANNS-entry which will expire soon as a pagination query.

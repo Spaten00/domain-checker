@@ -5,7 +5,9 @@
             <tr>
                 <th><a href="{{route('sort', 'domains.name')}}">Domain</a></th>
                 <th class="text-center">Status</th>
-                <th>Kunde</th>
+                <th>
+                    <a href="{{route('sort', 'customers.name')}}">Kunde</a>
+                </th>
                 <th class="text-center">
                     <a href="{{route('sort', 'tanss_entries.contract_end')}}">Vertragsende TANSS</a>
                 </th>
@@ -18,9 +20,13 @@
                 <th class="text-center">
                     <a href="{{route('sort', 'contracts.contract_number')}}">Vertragsnummer</a>
                 </th>
-                <th class="text-center">letzte Rechnungsnummer</th>
+                <th class="text-center">
+                    <a href="{{route('sort', 'bills.bill_number')}}">letzte Rechnungsnummer</a>
+                </th>
                 <th class="text-center">bearbeiten</th>
-                <th class="text-center">letzte Rechnung am</th>
+                <th class="text-center">
+                    <a href="{{route('sort', 'bills.date')}}">letzte Rechnung am</a>
+                </th>
                 <th class="text-center">neue Rechnung</th>
             </tr>
             </thead>
