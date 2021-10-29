@@ -20274,6 +20274,7 @@ h3 {
 
 .navbar {
   background-color: #666 !important;
+  border-bottom-color: black;
 }
 .navbar .navbar-brand {
   padding-top: 0;
@@ -20309,6 +20310,12 @@ thead {
   vertical-align: bottom;
   background-color: #666;
   color: #fff;
+  position: sticky;
+  top: 56.2px;
+  z-index: 2;
+}
+thead tr {
+  background: none !important;
 }
 thead a {
   text-decoration: none;
@@ -20325,13 +20332,6 @@ tr:nth-child(even) {
 
 tr:nth-child(odd) {
   background-color: rgba(255, 255, 255, 0.05);
-}
-
-/* Fixed Headers */
-thead {
-  position: sticky;
-  top: 56.2px;
-  z-index: 2;
 }
 
 .badge {
