@@ -20310,6 +20310,14 @@ thead {
   background-color: #666;
   color: #fff;
 }
+thead a {
+  text-decoration: none;
+  color: #fff;
+}
+thead a:hover {
+  color: #cfcfcf;
+  text-decoration: none;
+}
 
 tr:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.05);
