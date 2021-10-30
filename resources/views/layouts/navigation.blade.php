@@ -9,7 +9,12 @@
             </li>
             <li class="nav-item text-center">
                 <a href="{{ route('home') }}" class="nav-link mx-0 mx-lg-3">
-                    <i class="fas fa-list"></i> <span>Alle Domains</span>
+                    <i class="fas fa-globe"></i> <span>Alle Domains</span>
+                </a>
+            </li>
+            <li class="nav-item text-center">
+                <a href="{{ route('home') }}" class="nav-link mx-0 mx-lg-3">
+                    <i class="fas fa-list"></i> <span>Aktive Domains</span>
                 </a>
             </li>
             <li class="nav-item text-center">
