@@ -49,7 +49,7 @@ class DomainController extends Controller
      * @param string $sortBy
      * @return Application|Factory|View
      */
-    public function show(string $sortBy = "domains.name"): View|Factory|Application
+    public function show(string $sortBy = "domains.name", string $sortType = "asc"): View|Factory|Application
     {
         $domains = Domain::select(['domains.id', 'domains.name'])
             ->leftJoin('tanss_entries', 'domains.id', '=', 'tanss_entries.domain_id')
@@ -58,10 +58,8 @@ class DomainController extends Controller
             ->leftJoin('contract_domain', 'domains.id', '=', 'contract_domain.domain_id')
             ->leftJoin('contracts', 'contracts.id', '=', 'contract_domain.contract_id')
             ->leftJoin('bills', 'contracts.id', '=', 'bills.contract_id')
-            ->orderBy($sortBy)
-//            ->toSql();
+            ->orderBy($sortBy, $sortType)
             ->paginate(20, ['domains.id', 'domains.name'])->withQueryString();
-//        dd($domains);
         return view('home')->with('domains', $domains);
     }
 

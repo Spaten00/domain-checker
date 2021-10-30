@@ -3,29 +3,103 @@
         <table class="table">
             <thead>
             <tr>
-                <th><a href="{{route('sort', 'domains.name')}}">Domain</a></th>
+                <th>
+                    <a href="{{ Request::is('sort/domains.name/asc')
+                        ? route('sort', ['domains.name', 'desc'])
+                        : route('sort', ['domains.name', 'asc'])}}">
+                        Domain
+                        @if(Request::is('sort/domains.name/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/domains.name/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
+                </th>
                 <th class="text-center">Status</th>
                 <th>
-                    <a href="{{route('sort', 'customers.name')}}">Kunde</a>
+                    <a href="{{Request::is('sort/customers.name/asc')
+                        ? route('sort', ['customers.name', 'desc'])
+                        : route('sort', ['customers.name', 'asc'])}}">
+                        Kunde
+                        @if(Request::is('sort/customers.name/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/customers.name/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="text-center">
-                    <a href="{{route('sort', 'tanss_entries.contract_end')}}">Vertragsende TANSS</a>
+                    <a href="{{Request::is('sort/tanss_entries.contract_end/asc')
+                        ? route('sort', ['tanss_entries.contract_end', 'desc'])
+                        : route('sort', ['tanss_entries.contract_end', 'asc'])}}">
+                        Vertragsende TANSS
+                        @if(Request::is('sort/tanss_entries.contract_end/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/tanss_entries.contract_end/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="text-center">
-                    <a href="{{route('sort', 'rrpproxy_entries.contract_end')}}">Vertragsende RRPproxy</a>
+                    <a href="{{Request::is('sort/rrpproxy_entries.contract_end/asc')
+                        ? route('sort', ['rrpproxy_entries.contract_end', 'desc'])
+                        : route('sort', ['rrpproxy_entries.contract_end', 'asc'])}}">
+                        Vertragsende RRPproxy
+                        @if(Request::is('sort/rrpproxy_entries.contract_end/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/rrpproxy_entries.contract_end/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="text-center">
-                    <a href="{{route('sort', 'rrpproxy_entries.contract_renewal')}}">Verlängerung RRPproxy</a>
+                    <a href="{{Request::is('sort/rrpproxy_entries.contract_renewal/asc')
+                        ? route('sort', ['rrpproxy_entries.contract_renewal', 'desc'])
+                        : route('sort', ['rrpproxy_entries.contract_renewal', 'asc'])}}">
+                        Verlängerung RRPproxy
+                        @if(Request::is('sort/rrpproxy_entries.contract_renewal/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/rrpproxy_entries.contract_renewal/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="text-center">
-                    <a href="{{route('sort', 'contracts.contract_number')}}">Vertragsnummer</a>
+                    <a href="{{Request::is('sort/contracts.contract_number/asc')
+                        ? route('sort', ['contracts.contract_number', 'desc'])
+                        : route('sort', ['contracts.contract_number', 'asc'])}}">
+                        Vertragsnummer
+                        @if(Request::is('sort/contracts.contract_number/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/contracts.contract_number/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="text-center">
-                    <a href="{{route('sort', 'bills.bill_number')}}">letzte Rechnungsnummer</a>
+                    <a href="{{Request::is('sort/bills.bill_number/asc')
+                        ? route('sort', ['bills.bill_number', 'desc'])
+                        : route('sort', ['bills.bill_number', 'asc'])}}">
+                        letzte Rechnungsnummer
+                        @if(Request::is('sort/bills.bill_number/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/bills.bill_number/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="text-center">bearbeiten</th>
                 <th class="text-center">
-                    <a href="{{route('sort', 'bills.date')}}">letzte Rechnung am</a>
+                    <a href="{{Request::is('sort/bills.date/asc')
+                        ? route('sort', ['bills.date', 'desc'])
+                        : route('sort', ['bills.date', 'asc'])}}">
+                        letzte Rechnung am
+                        @if(Request::is('sort/bills.date/desc'))
+                            <i class="fas fa-sort-down"></i>
+                        @elseif(Request::is('sort/bills.date/asc'))
+                            <i class="fas fa-sort-up"></i>
+                        @endif
+                    </a>
                 </th>
                 <th class="text-center">neue Rechnung</th>
             </tr>

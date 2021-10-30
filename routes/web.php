@@ -20,8 +20,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [DomainController::class, 'show'])
     ->name('home');
 
-Route::get('/sort/{sortby}', [DomainController::class, 'show'])
+Route::get('/sort/{sortBy}/{sortType}', [DomainController::class, 'show'])
     ->name('sort');
+
+//Route::get('/sortdesc/{sortby}', [DomainController::class, 'showDesc'])
+//    ->name('sort.desc');
 
 Route::get('/import', ProvisionImport::class)->name('import');
 
