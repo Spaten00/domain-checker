@@ -47,6 +47,7 @@ class DomainController extends Controller
      * Returns all domains as a pagination query.
      *
      * @param string $sortBy
+     * @param string $sortType
      * @return Application|Factory|View
      */
     public function show(string $sortBy = "domains.name", string $sortType = "asc"): View|Factory|Application
@@ -64,11 +65,30 @@ class DomainController extends Controller
     }
 
     /**
+     *
+     * Returns all active domains as a pagination query, which are the domains with a running entry in
+     * TANSS or RRPproxy.
+     *
+     * @return Application|Factory|View
+     */
+    public function showActive(): View|Factory|Application
+    {
+        $domains = Domain::whereHas('tanssEntry', function (Builder $tanssExpired) {
+            $tanssExpired->where('contract_end', '>', now());
+        })->orWhereHas('rrpproxyEntry', function (Builder $rrpproxyExpired) {
+            $rrpproxyExpired->where('contract_end', '>', now());
+        })
+            ->paginate(20)->withQueryString();
+        return view('home')->with('domains', $domains);
+    }
+
+    /**
      * Returns all domains with a TANNS-entry which will expire soon as a pagination query.
      *
      * @return Application|Factory|View
      */
-    public function showExpiring(): View|Factory|Application
+    public
+    function showExpiring(): View|Factory|Application
     {
         $domains = Domain::whereHas('tanssEntry', function (Builder $query) {
             $query->where('contract_end', '<', now()->addDays(Entry::SOON))
@@ -87,7 +107,8 @@ class DomainController extends Controller
      *
      * @return Application|Factory|View
      */
-    public function showIncomplete(): View|Factory|Application
+    public
+    function showIncomplete(): View|Factory|Application
     {
         $domains = Domain::where(function (Builder $hasNoEntries) {
             $hasNoEntries->whereDoesntHave('tanssEntry')
@@ -125,7 +146,8 @@ class DomainController extends Controller
         return view('home')->with('domains', $domains);
     }
 
-    public function showSearch(Request $request)
+    public
+    function showSearch(Request $request)
     {
         $search = $request->searchString;
         $domains = Domain::where('name', 'like', '%' . $search . '%')
@@ -156,7 +178,8 @@ class DomainController extends Controller
      * @param Domain $domain
      * @return \Illuminate\Http\Response
      */
-    public function edit(Domain $domain)
+    public
+    function edit(Domain $domain)
     {
         //
     }
@@ -168,7 +191,8 @@ class DomainController extends Controller
      * @param Domain $domain
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Domain $domain)
+    public
+    function update(Request $request, Domain $domain)
     {
         //
     }
@@ -179,7 +203,8 @@ class DomainController extends Controller
      * @param Domain $domain
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Domain $domain)
+    public
+    function destroy(Domain $domain)
     {
         //
     }

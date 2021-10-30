@@ -23,10 +23,8 @@ Route::get('/', [DomainController::class, 'show'])
 Route::get('/sort/{sortBy}/{sortType}', [DomainController::class, 'show'])
     ->name('sort');
 
-//Route::get('/sortdesc/{sortby}', [DomainController::class, 'showDesc'])
-//    ->name('sort.desc');
-
-Route::get('/import', ProvisionImport::class)->name('import');
+Route::get('/active', [DomainController::class, 'showActive'])
+    ->name('domain.active');
 
 Route::get('/incomplete', [DomainController::class, 'showIncomplete'])
     ->name('domain.incomplete');
@@ -36,6 +34,8 @@ Route::get('/expiring', [DomainController::class, 'showExpiring'])
 
 Route::get('/search/', [DomainController::class, 'showSearch'])
     ->name('domain.search');
+
+Route::get('/import', ProvisionImport::class)->name('import');
 
 Route::middleware(['auth'])->group(function () {
     Route::post('create-bill', [BillController::class, 'store'])

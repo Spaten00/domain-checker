@@ -13,7 +13,7 @@
                 </a>
             </li>
             <li class="nav-item text-center">
-                <a href="{{ route('home') }}" class="nav-link mx-0 mx-lg-3">
+                <a href="{{ route('domain.active') }}" class="nav-link mx-0 mx-lg-3">
                     <i class="fas fa-list"></i> <span>Aktive Domains</span>
                 </a>
             </li>
