@@ -300,7 +300,7 @@ class Domain extends Model
     {
         if ($this->tanssEntry) {
             if ($this->tanssEntry->contract_end) {
-                $returnString = Carbon::parse($this->tanssEntry->contract_end)->toDateString();
+                $returnString = Carbon::parse($this->tanssEntry->contract_end)->format('d-m-Y');
             } else {
 //                self::dd("asd");
                 $returnString = "fehlt";
@@ -331,7 +331,7 @@ class Domain extends Model
     public function getRrpproxyEnd(): string
     {
         if ($this->rrpproxyEntry) {
-            return Carbon::parse($this->rrpproxyEntry->contract_end)->toDateString();
+            return Carbon::parse($this->rrpproxyEntry->contract_end)->format('d-m-Y');
         }
         return '<span class="badge bg-danger">fehlt</span>';
     }
@@ -345,7 +345,7 @@ class Domain extends Model
     public function getRrpproxyRenewal(): string
     {
         if ($this->rrpproxyEntry) {
-            return Carbon::parse($this->rrpproxyEntry->contract_renewal)->toDateString();
+            return Carbon::parse($this->rrpproxyEntry->contract_renewal)->format('d-m-Y');
         }
         return '<span class="badge bg-danger">fehlt</span>';
     }
@@ -413,7 +413,7 @@ class Domain extends Model
     public function getLastBillDate(): string
     {
         if ($this->hasBill()) {
-            return Carbon::parse($this->contracts->last()->bills->last()->date)->toDateString();
+            return Carbon::parse($this->contracts->last()->bills->last()->date)->format('d-m-Y');
         }
         return '';
     }
