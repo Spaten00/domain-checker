@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Carbon;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * App\Models\Bill
@@ -36,7 +38,7 @@ use Illuminate\Support\Carbon;
  */
 class Bill extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $table = 'bills';
 
@@ -50,6 +52,17 @@ class Bill extends Model
         'bill_number',
         'date',
     ];
+
+    /**
+     * Activity log.
+     *
+     * @return LogOptions
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['bill_number']);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

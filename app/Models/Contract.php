@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Carbon;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 /**
  * App\Models\Contract
@@ -45,7 +47,7 @@ use Illuminate\Support\Carbon;
  */
 class Contract extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $table = 'contracts';
 
@@ -58,6 +60,17 @@ class Contract extends Model
         'customer_id',
         'contract_number',
     ];
+
+    /**
+     * Activity log.
+     *
+     * @return LogOptions
+     */
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['contract_number']);
+    }
 
     /**
      * The attributes that should be hidden for serialization.
