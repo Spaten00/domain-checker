@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Bill;
 use App\Models\Contract;
 use App\Models\Customer;
 use App\Models\Domain;
@@ -80,5 +81,23 @@ class ContractTest extends TestCase
 
         $contract->hostings()->attach(Hosting::factory()->create());
         $this->assertEquals(2, $contract->hostings()->count());
+    }
+
+    /** @test */
+    public function a_contract_has_many_bills()
+    {
+        /** @var Customer $customer */
+        $customer = Customer::factory()->create();
+        /** @var Contract $contract */
+        $contract = Contract::factory()->create(['customer_id' => $customer->id]);
+        /** @var Bill $bills */
+        $bills = Bill::factory()->create();
+
+        $this->assertTrue($contract->bills->contains($bills));
+        $this->assertEquals(1, $contract->bills()->count());
+        $this->assertInstanceOf(Collection::class, $contract->bills);
+
+        Bill::factory()->create();
+        $this->assertEquals(2, $contract->bills()->count());
     }
 }
