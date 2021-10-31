@@ -118,7 +118,6 @@ class ImportTanssCommand extends Command
                 'tanssContractStart' => $entry->contract_duration_start,
                 'tanssContractEnd' => $entry->contract_duration_end,
             ];
-            // TODO just push into array, no need of key?
             $processedEntries[$rootDomain] = $attributes;
         }
         return $processedEntries;

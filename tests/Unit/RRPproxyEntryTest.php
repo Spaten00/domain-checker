@@ -67,4 +67,27 @@ class RRPproxyEntryTest extends TestCase
         $aliveEntry->contract_end = now()->addDays(31);
         self::assertFalse($aliveEntry->willExpireSoon());
     }
+
+    /** @test */
+    public function a_rrpproxy_entry_can_be_created()
+    {
+        $entry = [
+            'domain' => 'aks-service.de',
+            'rrpproxyContractStart' => '2013-07-20',
+            'rrpproxyContractEnd' => '2015-05-21',
+            'rrpproxyContractRenewal' => '2015-05-20',
+        ];
+        $domain = Domain::createDomain($entry['domain']);
+        $model = RrpproxyEntry::createRrpproxyEntry($entry, $domain);
+
+        $this->assertModelExists($model);
+        $this->assertEquals($model->id, RrpproxyEntry::first()->id);
+        $this->assertEquals($model->domain->id, RrpproxyEntry::first()->domain->id);
+    }
+
+    /** @test */
+    public function a_rrpproxy_entry_can_be_updated()
+    {
+
+    }
 }

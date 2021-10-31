@@ -37,7 +37,6 @@ class ImportRrpproxyCommand extends Command
      */
     public function handle(): void
     {
-        //TODO refactor code to be usable from tansscommand and rrpproxycommand
         $newFilePath = $this->importRrpproxyFile();
         $this->deleteOldFiles();
         $this->addNewEntriesToDatabase($newFilePath);

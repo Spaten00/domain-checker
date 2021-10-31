@@ -39,6 +39,7 @@ use Illuminate\Support\Carbon;
  * @property-read int|null $rrpproxy_entries_count
  * @property-read TanssEntry $tanssEntry
  * @property-read int|null $tanss_entries_count
+ * @property mixed $id
  */
 class Domain extends Model
 {

@@ -88,15 +88,23 @@ class TanssEntryTest extends TestCase
     /** @test */
     public function a_tanss_entry_can_be_created()
     {
-        $properties = [
-            "id" => "1",
-            "kdnr" => "100000",
-            "name" => "aks Service GmbH",
-            "domain" => "aks-service.de",
-            "provider_name" => "aks Service GmbH",
-            "contract_duration_start" => "2013-07-20",
-            "contract_duration_end" => "2015-05-21",
+        $entry = [
+            'externalId' => '1',
+            'customerId' => '100000',
+            'customerName' => 'aks Service GmbH',
+            'domain' => 'aks-service.de',
+            'providerName' => 'aks Service GmbH',
+            'tanssContractStart' => '2013-07-20',
+            'tanssContractEnd' => '2015-05-21',
         ];
+        $customer = Customer::createCustomer($entry['customerId'], $entry['customerName']);
+        $domain = Domain::createDomain($entry['domain']);
+        $model = TanssEntry::createTanssEntry($entry, $customer, $domain);
+
+        $this->assertModelExists($model);
+        $this->assertEquals($model->id, TanssEntry::first()->id);
+        $this->assertEquals($model->customer->id, TanssEntry::first()->customer->id);
+        $this->assertEquals($model->domain->id, TanssEntry::first()->domain->id);
 
     }
 
