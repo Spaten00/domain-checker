@@ -50,16 +50,5 @@ class UserSeeder extends Seeder
             'email_verified_at' => now(),
         ]);
 
-        // Florian Schmitz
-        User::create([
-            'group_id' => 2,
-            'first_name' => 'Tobias',
-            'last_name' => 'Braun',
-            'email' => 'tb@aks-service.de',
-            'password' => password_hash('12345678', 1),
-            'remember_token' => null,
-            'created_at' => now(),
-            'email_verified_at' => now(),
-        ]);
     }
 }

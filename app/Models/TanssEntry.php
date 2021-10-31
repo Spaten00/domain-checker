@@ -112,6 +112,7 @@ class TanssEntry extends Entry
     public static function createTanssEntry(array $entry, Customer $customer, Domain $domain): TanssEntry
     {
         $tanssEntry = self::where('external_id', '=', $entry['externalId'])->first();
+//        var_dump($tanssEntry);
         if (!$tanssEntry) {
             $tanssEntry = new TanssEntry;
             $tanssEntry->external_id = $entry['externalId'];
@@ -121,6 +122,7 @@ class TanssEntry extends Entry
             $tanssEntry->customer()->associate($customer);
             $tanssEntry->domain()->associate($domain);
             $tanssEntry->save();
+        } else {
         }
 
         // TODO function for updating entries

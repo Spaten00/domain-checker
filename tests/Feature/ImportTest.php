@@ -110,4 +110,31 @@ class ImportTest extends TestCase
         Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_03.json');
         Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_04.json');
     }
+
+//    public function existing_tanss_entries_can_be_updated()
+//    {
+//        Storage::fake('ftp');
+//        Storage::fake('local');
+//        Storage::disk('ftp')->put('/export/tanssexport.json',
+//            '[{
+//            "id":"1",
+//            "kdnr":"100000",
+//            "name":"aks Service GmbH",
+//            "domain":"aks-service.de",
+//            "provider_name":"aks Service GmbH",
+//            "contract_duration_start":"2013-07-20",
+//            "contract_duration_end":"2015-05-21"
+//            },
+//            {"id":"2",
+//            "kdnr":"100000",
+//            "name":"aks Service GmbH",
+//            "domain":"aks-service",
+//            "provider_name":"aks Service GmbH",
+//            "contract_duration_start":"0000-07-20",
+//            "contract_duration_end":"0000-00-00"
+//            }]');
+//
+//        Artisan::call('tanss:import');
+//
+//    }
 }
