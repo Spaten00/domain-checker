@@ -13,7 +13,7 @@ class UserTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function users_database_has_expected_columns()
+    public function users_table_has_expected_columns()
     {
         $expectedColumns = [
             'id',

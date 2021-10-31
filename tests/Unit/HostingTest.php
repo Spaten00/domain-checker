@@ -15,7 +15,7 @@ class HostingTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function hostings_database_has_expected_columns()
+    public function hostings_table_has_expected_columns()
     {
         $expectedColumns = [
             'id',

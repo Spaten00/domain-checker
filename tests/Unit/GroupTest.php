@@ -14,7 +14,7 @@ class GroupTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function groups_database_has_expected_columns()
+    public function groups_table_has_expected_columns()
     {
         $expectedColumns = [
             'id',

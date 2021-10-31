@@ -15,7 +15,7 @@ class DomainTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function domains_database_has_expected_columns()
+    public function domains_table_has_expected_columns()
     {
         $expectedColumns = [
             'id',

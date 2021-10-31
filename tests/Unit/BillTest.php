@@ -15,7 +15,7 @@ class BillTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function bills_database_has_expected_columns()
+    public function bills_table_has_expected_columns()
     {
         $expectedColumns = [
             'id',
@@ -40,7 +40,7 @@ class BillTest extends TestCase
         $contract = Contract::factory()->create(['customer_id' => $customer->id]);
         /** @var Bill $bill */
         $bill = Bill::factory()->create();
-        
+
         $this->assertEquals(1, $bill->contract()->count());
         $this->assertInstanceOf(Contract::class, $bill->contract);
     }

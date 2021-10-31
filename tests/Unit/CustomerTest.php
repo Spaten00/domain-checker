@@ -14,7 +14,7 @@ class CustomerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function customers_database_has_expected_columns()
+    public function customers_table_has_expected_columns()
     {
         $expectedColumns = [
             'id',

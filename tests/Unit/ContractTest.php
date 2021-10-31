@@ -17,7 +17,7 @@ class ContractTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function contract_database_has_expected_columns()
+    public function contract_table_has_expected_columns()
     {
         $expectedColumns = [
             'id',
