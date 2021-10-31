@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 use Eloquent;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -56,8 +57,12 @@ abstract class Entry extends Model
      */
     public static function getValidDate($dateToCheck): string|null
     {
-        if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
-            return $dateToCheck;
+        try {
+            if (Carbon::parse($dateToCheck) > Carbon::createFromTimestamp(0)) {
+                return $dateToCheck;
+            }
+        } catch (InvalidFormatException) {
+            return null;
         }
         return null;
     }
