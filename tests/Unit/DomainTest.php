@@ -144,17 +144,168 @@ class DomainTest extends TestCase
         /** @var Domain $domain */
         $domain = Domain::factory()->create();
         Customer::factory()->create();
-        /** @var TanssEntry $expiredEntry */
-        $expiredEntry = TanssEntry::factory()->create();
+        TanssEntry::factory()->create();
 
-        $expiredEntry->contract_end = "2015-12-09";
-        $expiredEntry->save();
-//        $this->assertTrue($domain->hasTanssExpired());
+        $domain->tanssEntry->contract_end = "2015-12-09";
+        $this->assertTrue($domain->hasTanssExpired());
 
-        $expiredEntry->contract_end = "2100-12-09";
-        $expiredEntry->save();
-//        dump($expiredEntry);
+        $domain->tanssEntry->contract_end = "2100-12-09";
         $this->assertFalse($domain->hasTanssExpired());
-        // TODO
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_its_rrpproxy_entry_is_expired()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        RrpproxyEntry::factory()->create();
+
+        $domain->rrpproxyEntry->contract_end = "2015-12-09";
+        $this->assertTrue($domain->hasRrpproxyExpired());
+
+        $domain->rrpproxyEntry->contract_end = "2100-12-09";
+        $this->assertFalse($domain->hasRrpproxyExpired());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_both_entries_are_expired()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+
+        $domain->tanssEntry->contract_end = "2015-12-09";
+        $domain->rrpproxyEntry->contract_end = "2015-12-09";
+        $this->assertTrue($domain->hasBothExpired());
+
+        $domain->tanssEntry->contract_end = "2100-12-09";
+        $this->assertFalse($domain->hasBothExpired());
+
+        $domain->rrpproxyEntry->contract_end = "2100-12-09";
+        $this->assertFalse($domain->hasBothExpired());
+
+        $domain->tanssEntry->contract_end = "2015-12-09";
+        $this->assertFalse($domain->hasBothExpired());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_either_entry_is_expired()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+
+        $domain->tanssEntry->contract_end = "2015-12-09";
+        $domain->rrpproxyEntry->contract_end = "2015-12-09";
+        $this->assertTrue($domain->hasEitherExpired());
+
+        $domain->tanssEntry->contract_end = "2100-12-09";
+        $this->assertTrue($domain->hasEitherExpired());
+
+        $domain->rrpproxyEntry->contract_end = "2100-12-09";
+        $this->assertFalse($domain->hasEitherExpired());
+
+        $domain->tanssEntry->contract_end = "2015-12-09";
+        $this->assertTrue($domain->hasEitherExpired());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_either_entry_will_expire_soon()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+
+        $domain->tanssEntry->contract_end = now()->addDay();
+        $domain->rrpproxyEntry->contract_end = now()->addDay();
+        $this->assertTrue($domain->hasEitherExpireSoon());
+
+        $domain->tanssEntry->contract_end = now()->addDays(30);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(30);
+        $this->assertTrue($domain->hasEitherExpireSoon());
+
+        $domain->tanssEntry->contract_end = now()->addDays(31);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(31);
+        $this->assertFalse($domain->hasEitherExpireSoon());
+
+        $domain->tanssEntry->contract_end = now()->addDays(5);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(31);
+        $this->assertTrue($domain->hasEitherExpireSoon());
+
+        $domain->tanssEntry->contract_end = now()->addDays(31);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(5);
+        $this->assertTrue($domain->hasEitherExpireSoon());
+    }
+
+    /** @test */
+    public function the_correct_class_and_text_is_returned()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $this->assertEquals(['badge bg-info', 'Keine Einträge'], $domain->getClassAndText());
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $rrpproxy = RrpproxyEntry::factory()->create();
+        $domain->rrpproxyEntry->contract_end = now()->addDays(200);
+        $this->assertEquals(['badge bg-danger', 'TANSS fehlt'], $domain->getClassAndText());
+
+        $domain->rrpproxyEntry->contract_end = now()->subDays(200);
+        $this->assertEquals(['badge bg-success', 'OK'], $domain->getClassAndText());
+        $rrpproxy->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        $tanssentry = TanssEntry::factory()->create();
+        $domain->tanssEntry->contract_end = now()->addDays(200);
+        $this->assertEquals(['badge bg-danger', 'RRPproxy fehlt'], $domain->getClassAndText());
+
+        $domain->tanssEntry->contract_end = now()->subDays(200);
+        $this->assertEquals(['badge bg-danger', 'Kein Ablaufdatum hinterlegt'], $domain->getClassAndText());
+        $tanssentry->delete();
+        $customer->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+        $domain->tanssEntry->contract_end = now()->subDays(200);
+        $domain->rrpproxyEntry->contract_end = now()->subDays(200);
+        $this->assertEquals(['badge bg-success', 'OK'], $domain->getClassAndText());
+
+        $domain->tanssEntry->contract_end = now()->addDays(200);
+        $domain->rrpproxyEntry->contract_end = now()->subDays(200);
+        $this->assertEquals(['badge bg-danger', 'Vertrag ausgelaufen'], $domain->getClassAndText());
+
+        $domain->tanssEntry->contract_end = now()->subDays(200);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(200);
+        $this->assertEquals(['badge bg-danger', 'Vertrag ausgelaufen'], $domain->getClassAndText());
+
+        $domain->tanssEntry->contract_end = now()->addDays(30);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(30);
+        $this->assertEquals(['badge bg-warning', 'Vertrag läuft aus'], $domain->getClassAndText());
+
+        $domain->tanssEntry->contract_end = now()->addDays(31);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(30);
+        $this->assertEquals(['badge bg-warning', 'Vertrag läuft aus'], $domain->getClassAndText());
+
+        $domain->tanssEntry->contract_end = now()->addDays(30);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(31);
+        $this->assertEquals(['badge bg-warning', 'Vertrag läuft aus'], $domain->getClassAndText());
+
+        $domain->tanssEntry->contract_end = now()->addDays(31);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(31);
+        $this->assertEquals(['badge bg-success', 'OK'], $domain->getClassAndText());
     }
 }

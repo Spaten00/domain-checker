@@ -167,7 +167,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasRrpproxyExpired(): bool
+    public function hasRrpproxyExpired(): bool
     {
         return $this->rrpproxyEntry->isExpired();
     }
@@ -177,7 +177,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasBothExpired(): bool
+    public function hasBothExpired(): bool
     {
         return $this->hasTanssExpired() && $this->hasRrpproxyExpired();
     }
@@ -187,7 +187,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasEitherExpired(): bool
+    public function hasEitherExpired(): bool
     {
         return $this->hasTanssExpired() || $this->hasRrpproxyExpired();
     }
@@ -197,7 +197,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasEitherExpireSoon(): bool
+    public function hasEitherExpireSoon(): bool
     {
         return $this->tanssEntry->willExpireSoon() || $this->rrpproxyEntry->willExpireSoon();
     }
@@ -207,7 +207,7 @@ class Domain extends Model
      *
      * @return array
      */
-    private function getClassAndText(): array
+    public function getClassAndText(): array
     {
         if ($this->hasNoEntries()) {
             return ['badge bg-info', 'Keine Einträge'];
