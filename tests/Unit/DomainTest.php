@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\Contract;
 use App\Models\Customer;
 use App\Models\Domain;
+use App\Models\TanssEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
 use Tests\TestCase;
@@ -53,7 +54,15 @@ class DomainTest extends TestCase
     /** @test */
     public function a_domain_has_one_tanss_entry()
     {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
 
+        $this->assertEquals($tanssEntry->id, $domain->tanssEntry->id);
+        $this->assertEquals(1, $domain->tanssEntry->count());
+        $this->assertInstanceOf(TanssEntry::class, $domain->tanssEntry);
     }
 
     /** @test */
