@@ -283,9 +283,12 @@ class Domain extends Model
      */
     public function getCustomer(): string
     {
-        // TODO dont return danger badge if already expired
         if ($this->hasCustomer()) {
             return $this->tanssEntry->customer->name;
+        }
+
+        if ($this->hasBothExpired()) {
+            return 'Kunde fehlt';
         }
         return '<span class="badge bg-danger">Kunde fehlt</span>';
     }
