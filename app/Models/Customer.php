@@ -32,6 +32,7 @@ use Illuminate\Support\Carbon;
  * @method static Builder|Customer whereUpdatedAt($value)
  * @mixin Eloquent
  * @property string $number
+ * @property mixed $tanssEntries
  * @method static Builder|Customer whereNumber($value)
  */
 class Customer extends Model
@@ -76,6 +77,15 @@ class Customer extends Model
         return $this->hasMany(Contract::class);
     }
 
+    /**
+     * Get TANSS-Entries for the customer.
+     *
+     * @return HasMany
+     */
+    public function tanssEntries(): HasMany
+    {
+        return $this->hasMany(TanssEntry::class);
+    }
     // OTHER METHODS
 
     /**
@@ -87,7 +97,7 @@ class Customer extends Model
      */
     public static function createCustomer(int $id, string $name): Customer
     {
-        $customer = Customer::find($id);
+        $customer = self::find($id);
         if (!$customer) {
             $customer = new Customer;
             $customer->id = $id;
