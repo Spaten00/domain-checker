@@ -5,6 +5,7 @@ namespace Tests\Unit;
 use App\Models\Contract;
 use App\Models\Customer;
 use App\Models\Domain;
+use App\Models\RrpproxyEntry;
 use App\Models\TanssEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
@@ -68,6 +69,13 @@ class DomainTest extends TestCase
     /** @test */
     public function a_domain_has_one_rrpproxy_entry()
     {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        /** @var RrpproxyEntry $rrpproxyEntry */
+        $rrpproxyEntry = RrpproxyEntry::factory()->create();
 
+        $this->assertEquals($rrpproxyEntry->id, $domain->rrpproxyEntry->id);
+        $this->assertEquals(1, $domain->rrpproxyEntry->count());
+        $this->assertInstanceOf(RrpproxyEntry::class, $domain->rrpproxyEntry);
     }
 }

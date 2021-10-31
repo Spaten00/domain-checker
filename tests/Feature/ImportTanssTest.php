@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 use League\Flysystem\ConnectionRuntimeException;
 use Tests\TestCase;
 
-class ImportTest extends TestCase
+class ImportTanssTest extends TestCase
 {
     use RefreshDatabase;
 

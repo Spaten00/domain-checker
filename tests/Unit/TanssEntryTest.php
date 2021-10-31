@@ -84,4 +84,25 @@ class TanssEntryTest extends TestCase
         $aliveEntry->contract_end = now()->addDays(31);
         self::assertFalse($aliveEntry->willExpireSoon());
     }
+
+    /** @test */
+    public function a_tanss_entry_can_be_created()
+    {
+        $properties = [
+            "id" => "1",
+            "kdnr" => "100000",
+            "name" => "aks Service GmbH",
+            "domain" => "aks-service.de",
+            "provider_name" => "aks Service GmbH",
+            "contract_duration_start" => "2013-07-20",
+            "contract_duration_end" => "2015-05-21",
+        ];
+
+    }
+
+    /** @test */
+    public function a_tanss_entry_can_be_updated()
+    {
+
+    }
 }

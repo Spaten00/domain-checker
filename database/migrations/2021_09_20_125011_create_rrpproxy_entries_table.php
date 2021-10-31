@@ -16,6 +16,7 @@ class CreateRrpproxyEntriesTable extends Migration
         Schema::create('rrpproxy_entries', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
 
             $table->unsignedBigInteger('domain_id');
 

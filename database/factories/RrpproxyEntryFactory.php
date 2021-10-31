@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Domain;
 use App\Models\RrpproxyEntry;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -22,7 +23,10 @@ class RrpproxyEntryFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'domain_id' => $this->faker->randomElement(Domain::all()->pluck('id')->toArray()),
+            'contract_start' => $this->faker->dateTime(),
+            'contract_end' => $this->faker->dateTime(),
+            'contract_renewal' => $this->faker->dateTime(),
         ];
     }
 }
