@@ -185,7 +185,6 @@
                 <tr>
                     <td class="align-middle">{{$domain->name}}</td>
                     <td class="align-middle text-center">{!! $domain->getStatusBadge() !!}</td>
-                    {{--TODO create method and check if is already expired--}}
                     <td class="align-middle">{!! $domain->getCustomer() !!}</td>
                     <td class="align-middle text-center">{!! $domain->getTanssEnd() !!}</td>
                     <td class="align-middle text-center">{!! $domain->getRrpproxyEnd() !!}</td>
@@ -196,13 +195,12 @@
                     <td class="align-middle text-center"><input id="bill-number-{{$domain->getLastBillId()}}"
                                                                 type="text"
                                                                 value="{{$domain->getLastBillNumber()}}" disabled></td>
-                    {{--TODO put modal here to ask the user if he is sure to change the number--}}
                     <td class="align-middle text-center">
                         @if(Auth::check())
                             <i class="fas fa-pencil-alt" role="button"
                                onclick="editValues([{{$domain->getContractId()}}, {{$domain->getLastBillId()}}])"></i>
-                        @else <a href="{{route('login')}}"><i class="fas fa-pencil-alt text-dark"></i></a>
-
+                        @else
+                            <a href="{{route('login')}}"><i class="fas fa-pencil-alt text-dark"></i></a>
                         @endif
                     </td>
                     <td class="align-middle text-center">{{$domain->getLastBillDate()}}</td>
