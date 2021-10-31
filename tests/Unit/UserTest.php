@@ -46,9 +46,4 @@ class UserTest extends TestCase
         $this->assertInstanceOf(Group::class, $user->group);
     }
 
-    /** @test */
-    public function a_user_can_be_deleted()
-    {
-        // TODO
-    }
 }
