@@ -58,7 +58,10 @@ class DomainController extends Controller
             ->leftJoin('rrpproxy_entries', 'domains.id', '=', 'rrpproxy_entries.domain_id')
             ->leftJoin('contract_domain', 'domains.id', '=', 'contract_domain.domain_id')
             ->leftJoin('contracts', 'contracts.id', '=', 'contract_domain.contract_id')
-            ->leftJoin('bills', 'contracts.id', '=', 'bills.contract_id')
+            ->leftJoin('bills', function ($leftJoin) {
+                $leftJoin->on('contracts.id', '=', 'bills.contract_id')
+                    ->where('bills.date');
+            })
             ->orderBy($sortBy, $sortType)
             ->paginate(20, ['domains.id', 'domains.name'])->withQueryString();
         return view('home')->with('domains', $domains);
