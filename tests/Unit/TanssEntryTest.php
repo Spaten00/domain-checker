@@ -2,13 +2,64 @@
 
 namespace Tests\Unit;
 
+use App\Models\Customer;
+use App\Models\Domain;
 use App\Models\TanssEntry;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\Schema;
+use Tests\TestCase;
 
 class TanssEntryTest extends TestCase
 {
     use RefreshDatabase;
+
+    /** @test */
+    public function tanss_entries_table_has_expected_columns()
+    {
+        $expectedColumns = [
+            'id',
+            'created_at',
+            'updated_at',
+            'deleted_at',
+            'domain_id',
+            'customer_id',
+            'external_id',
+            'provider_name',
+            'contract_start',
+            'contract_end',
+        ];
+        $this->assertTrue(Schema::hasColumns('tanss_entries', $expectedColumns));
+        // check that no other columns are created
+        $this->assertSame(Schema::getColumnListing('tanss_entries'), $expectedColumns);
+    }
+
+    /** @test */
+    public function a_tanss_entry_has_one_customer()
+    {
+        Domain::factory()->create();
+        /** @var Customer $customer */
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+
+        $this->assertEquals($customer->id, $tanssEntry->customer->id);
+        $this->assertEquals(1, $tanssEntry->customer->count());
+        $this->assertInstanceOf(Customer::class, $tanssEntry->customer);
+    }
+
+    /** @test */
+    public function a_tanss_entry_has_one_domain()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+
+        $this->assertEquals($domain->id, $tanssEntry->domain->id);
+        $this->assertEquals(1, $tanssEntry->domain->count());
+        $this->assertInstanceOf(Domain::class, $tanssEntry->domain);
+    }
 
     /** @test */
     public function it_can_be_checked_if_the_entry_is_expired()

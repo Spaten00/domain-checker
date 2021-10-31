@@ -55,7 +55,8 @@ class TanssEntry extends Entry
     {
         parent::__construct($attributes);
 
-        $this->mergeFillable(['external_id',
+        $this->mergeFillable([
+            'external_id',
             'customer_id',
             'tanss_number',
             'provider_name']);

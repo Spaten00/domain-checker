@@ -49,4 +49,16 @@ class DomainTest extends TestCase
         $this->assertEquals(2, $domain->contracts()->count());
 
     }
+
+    /** @test */
+    public function a_domain_has_one_tanss_entry()
+    {
+
+    }
+
+    /** @test */
+    public function a_domain_has_one_rrpproxy_entry()
+    {
+
+    }
 }
