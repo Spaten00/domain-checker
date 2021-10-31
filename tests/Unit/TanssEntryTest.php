@@ -66,11 +66,11 @@ class TanssEntryTest extends TestCase
     {
         $expiredEntry = new TanssEntry();
         $expiredEntry->contract_end = "2015-12-09";
-        self::assertTrue($expiredEntry->isExpired());
+        $this->assertTrue($expiredEntry->isExpired());
 
         $aliveEntry = new TanssEntry();
         $aliveEntry->contract_end = "2122-12-09";
-        self::assertFalse($aliveEntry->isExpired());
+        $this->assertFalse($aliveEntry->isExpired());
     }
 
     /** @test */
@@ -78,11 +78,11 @@ class TanssEntryTest extends TestCase
     {
         $expiringEntry = new TanssEntry();
         $expiringEntry->contract_end = now()->addDays(1);
-        self::assertTrue($expiringEntry->willExpireSoon());
+        $this->assertTrue($expiringEntry->willExpireSoon());
 
         $aliveEntry = new TanssEntry();
         $aliveEntry->contract_end = now()->addDays(31);
-        self::assertFalse($aliveEntry->willExpireSoon());
+        $this->assertFalse($aliveEntry->willExpireSoon());
     }
 
     /** @test */

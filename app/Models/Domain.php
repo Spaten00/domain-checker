@@ -127,7 +127,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasNoTanss(): bool
+    public function hasNoTanss(): bool
     {
         return !$this->tanssEntry;
     }
@@ -137,7 +137,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasNoRrpproxy(): bool
+    public function hasNoRrpproxy(): bool
     {
         return !$this->rrpproxyEntry;
     }
@@ -147,7 +147,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasNoEntries(): bool
+    public function hasNoEntries(): bool
     {
         return $this->hasNoTanss() && $this->hasNoRrpproxy();
     }
@@ -157,7 +157,7 @@ class Domain extends Model
      *
      * @return bool
      */
-    private function hasTanssExpired(): bool
+    public function hasTanssExpired(): bool
     {
         return $this->tanssEntry->isExpired();
     }
@@ -287,10 +287,10 @@ class Domain extends Model
         if ($this->hasCustomer()) {
             return $this->tanssEntry->customer->name;
         }
-
-        if ($this->hasBothExpired()) {
+        if (!$this->rrpproxyEntry && $this->hasBothExpired()) {
             return 'Kunde fehlt';
         }
+
         return '<span class="badge bg-danger">Kunde fehlt</span>';
     }
 

@@ -78,4 +78,83 @@ class DomainTest extends TestCase
         $this->assertEquals(1, $domain->rrpproxyEntry->count());
         $this->assertInstanceOf(RrpproxyEntry::class, $domain->rrpproxyEntry);
     }
+
+    /** @test */
+    public function a_domain_can_be_created()
+    {
+        $domain = Domain::createDomain('test.de');
+        $this->assertModelExists($domain);
+    }
+
+    /** @test */
+    public function a_domain_is_not_created_when_it_already_exists()
+    {
+        Domain::createDomain('test.de');
+        $this->assertEquals(1, Domain::all()->count());
+
+        Domain::createDomain('test.de');
+        $this->assertEquals(1, Domain::all()->count());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_a_tanss_entry_is_present()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        $this->assertFalse($domain->hasNoTanss());
+
+        /** @var Domain $newDomain */
+        $newDomain = Domain::factory()->create();
+        $this->assertTrue($newDomain->hasNoTanss());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_a_rrpproxy_entry_is_present()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        RrpproxyEntry::factory()->create();
+        $this->assertFalse($domain->hasNoRrpproxy());
+
+        /** @var Domain $newDomain */
+        $newDomain = Domain::factory()->create();
+        $this->assertTrue($newDomain->hasNoRrpproxy());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_no_entries_are_present()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+        $this->assertFalse($domain->hasNoEntries());
+
+        /** @var Domain $newDomain */
+        $newDomain = Domain::factory()->create();
+        $this->assertTrue($newDomain->hasNoEntries());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_its_tanss_entry_is_expired()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        /** @var TanssEntry $expiredEntry */
+        $expiredEntry = TanssEntry::factory()->create();
+
+        $expiredEntry->contract_end = "2015-12-09";
+        $expiredEntry->save();
+//        $this->assertTrue($domain->hasTanssExpired());
+
+        $expiredEntry->contract_end = "2100-12-09";
+        $expiredEntry->save();
+//        dump($expiredEntry);
+        $this->assertFalse($domain->hasTanssExpired());
+        // TODO
+    }
 }

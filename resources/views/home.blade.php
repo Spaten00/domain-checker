@@ -180,7 +180,6 @@
                         </div>
                     </div>
                 </div>
-
                 {{--Table data--}}
                 <tr>
                     <td class="align-middle">{{$domain->name}}</td>
@@ -189,12 +188,14 @@
                     <td class="align-middle text-center">{!! $domain->getTanssEnd() !!}</td>
                     <td class="align-middle text-center">{!! $domain->getRrpproxyEnd() !!}</td>
                     <td class="align-middle text-center">{!! $domain->getRrpproxyRenewal() !!}</td>
-                    <td class="align-middle text-center"><input id="contract-number-{{$domain->getContractId()}}"
-                                                                type="text"
-                                                                value="{{$domain->getContractNumber()}}" disabled></td>
-                    <td class="align-middle text-center"><input id="bill-number-{{$domain->getLastBillId()}}"
-                                                                type="text"
-                                                                value="{{$domain->getLastBillNumber()}}" disabled></td>
+                    <td class="align-middle text-center">
+                        <input id="contract-number-{{$domain->getContractId()}}"
+                               type="text"
+                               value="{{$domain->getContractNumber()}}" disabled></td>
+                    <td class="align-middle text-center">
+                        <input id="bill-number-{{$domain->getLastBillId()}}"
+                               type="text"
+                               value="{{$domain->getLastBillNumber()}}" disabled></td>
                     <td class="align-middle text-center">
                         @if(Auth::check())
                             <i class="fas fa-pencil-alt" role="button"
