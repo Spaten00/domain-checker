@@ -91,7 +91,7 @@ class ImportTanssCommand extends Command
         foreach ($processedEntries as $entry) {
             $customer = Customer::createCustomer($entry['customerId'], $entry['customerName']);
             $domain = Domain::createDomain($entry['domain']);
-            TanssEntry::createTanssEntry($entry, $customer, $domain);
+            TanssEntry::createOrUpdateTanssEntry($entry, $customer, $domain);
         }
     }
 

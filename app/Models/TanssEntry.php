@@ -110,23 +110,19 @@ class TanssEntry extends Entry
      * @param Domain $domain
      * @return TanssEntry
      */
-    public static function createTanssEntry(array $entry, Customer $customer, Domain $domain): TanssEntry
+    public static function createOrUpdateTanssEntry(array $entry, Customer $customer, Domain $domain): TanssEntry
     {
         $tanssEntry = self::where('external_id', '=', $entry['externalId'])->first();
-//        var_dump($tanssEntry);
         if (!$tanssEntry) {
             $tanssEntry = new TanssEntry;
-            $tanssEntry->external_id = $entry['externalId'];
-            $tanssEntry->provider_name = $entry['providerName'];
-            $tanssEntry->contract_start = self::getValidDate($entry['tanssContractStart']);
-            $tanssEntry->contract_end = self::getValidDate($entry['tanssContractEnd']);
-            $tanssEntry->customer()->associate($customer);
-            $tanssEntry->domain()->associate($domain);
-            $tanssEntry->save();
-        } else {
         }
-
-        // TODO function for updating entries
+        $tanssEntry->external_id = $entry['externalId'];
+        $tanssEntry->provider_name = $entry['providerName'];
+        $tanssEntry->contract_start = self::getValidDate($entry['tanssContractStart']);
+        $tanssEntry->contract_end = self::getValidDate($entry['tanssContractEnd']);
+        $tanssEntry->customer()->associate($customer);
+        $tanssEntry->domain()->associate($domain);
+        $tanssEntry->save();
 
         return $tanssEntry;
     }

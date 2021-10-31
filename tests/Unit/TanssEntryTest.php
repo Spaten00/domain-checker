@@ -99,7 +99,7 @@ class TanssEntryTest extends TestCase
         ];
         $customer = Customer::createCustomer($entry['customerId'], $entry['customerName']);
         $domain = Domain::createDomain($entry['domain']);
-        $model = TanssEntry::createTanssEntry($entry, $customer, $domain);
+        $model = TanssEntry::createOrUpdateTanssEntry($entry, $customer, $domain);
 
         $this->assertModelExists($model);
         $this->assertEquals($model->id, TanssEntry::first()->id);
@@ -111,6 +111,40 @@ class TanssEntryTest extends TestCase
     /** @test */
     public function a_tanss_entry_can_be_updated()
     {
+        $entry = [
+            'externalId' => '1',
+            'customerId' => '100000',
+            'customerName' => 'aks Service GmbH',
+            'domain' => 'aks-service.de',
+            'providerName' => 'aks Service GmbH',
+            'tanssContractStart' => '2013-07-20',
+            'tanssContractEnd' => '2015-05-21',
+        ];
+        $customer = Customer::createCustomer($entry['customerId'], $entry['customerName']);
+        $domain = Domain::createDomain($entry['domain']);
+        $model = TanssEntry::createOrUpdateTanssEntry($entry, $customer, $domain);
 
+        $this->assertModelExists($model);
+        $this->assertEquals($model->id, TanssEntry::first()->id);
+        $this->assertEquals($model->customer->id, TanssEntry::first()->customer->id);
+        $this->assertEquals($model->domain->id, TanssEntry::first()->domain->id);
+
+        $newEntry = [
+            'externalId' => '1',
+            'customerId' => '100001',
+            'customerName' => 'test',
+            'domain' => 'test.de',
+            'providerName' => 'test',
+            'tanssContractStart' => '2020-07-20',
+            'tanssContractEnd' => '2020-05-21',
+        ];
+        $customer = Customer::createCustomer($newEntry['customerId'], $newEntry['customerName']);
+        $domain = Domain::createDomain($newEntry['domain']);
+        $model = TanssEntry::createOrUpdateTanssEntry($newEntry, $customer, $domain);
+
+        $this->assertModelExists($model);
+        $this->assertEquals($model->id, TanssEntry::first()->id);
+        $this->assertEquals($model->customer->id, TanssEntry::first()->customer->id);
+        $this->assertEquals($model->domain->id, TanssEntry::first()->domain->id);
     }
 }

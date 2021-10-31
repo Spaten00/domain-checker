@@ -80,7 +80,7 @@ class ImportRrpproxyCommand extends Command
 
         foreach ($processedEntries as $entry) {
             $domain = Domain::createDomain($entry['domain']);
-            RrpproxyEntry::createRrpproxyEntry($entry, $domain);
+            RrpproxyEntry::createOrUpdateRrpproxyEntry($entry, $domain);
         }
     }
 

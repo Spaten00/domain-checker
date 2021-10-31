@@ -79,7 +79,7 @@ class RrpproxyEntry extends Entry
     }
 
     // OTHER METHODS
-    public static function createRrpproxyEntry(array $entry, Domain $domain): RRPProxyEntry
+    public static function createOrUpdateRrpproxyEntry(array $entry, Domain $domain): RRPProxyEntry
     {
         $rrpproxyEntry = RRPProxyEntry::whereHas('domain', function (Builder $query) use ($entry) {
             $query->where('name', 'like', $entry['domain']);
@@ -87,14 +87,12 @@ class RrpproxyEntry extends Entry
 
         if (!$rrpproxyEntry) {
             $rrpproxyEntry = new RRPProxyEntry;
-            $rrpproxyEntry->contract_start = self::getValidDate($entry['rrpproxyContractStart']);
-            $rrpproxyEntry->contract_end = self::getValidDate($entry['rrpproxyContractEnd']);
-            $rrpproxyEntry->contract_renewal = self::getValidDate($entry['rrpproxyContractRenewal']);
-            $rrpproxyEntry->domain()->associate($domain);
-            $rrpproxyEntry->save();
         }
-
-        // TODO function for updating entries
+        $rrpproxyEntry->contract_start = self::getValidDate($entry['rrpproxyContractStart']);
+        $rrpproxyEntry->contract_end = self::getValidDate($entry['rrpproxyContractEnd']);
+        $rrpproxyEntry->contract_renewal = self::getValidDate($entry['rrpproxyContractRenewal']);
+        $rrpproxyEntry->domain()->associate($domain);
+        $rrpproxyEntry->save();
 
         return $rrpproxyEntry;
     }

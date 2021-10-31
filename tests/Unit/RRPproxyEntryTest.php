@@ -78,7 +78,7 @@ class RRPproxyEntryTest extends TestCase
             'rrpproxyContractRenewal' => '2015-05-20',
         ];
         $domain = Domain::createDomain($entry['domain']);
-        $model = RrpproxyEntry::createRrpproxyEntry($entry, $domain);
+        $model = RrpproxyEntry::createOrUpdateRrpproxyEntry($entry, $domain);
 
         $this->assertModelExists($model);
         $this->assertEquals($model->id, RrpproxyEntry::first()->id);
@@ -88,6 +88,29 @@ class RRPproxyEntryTest extends TestCase
     /** @test */
     public function a_rrpproxy_entry_can_be_updated()
     {
+        $entry = [
+            'domain' => 'aks-service.de',
+            'rrpproxyContractStart' => '2013-07-20',
+            'rrpproxyContractEnd' => '2015-05-21',
+            'rrpproxyContractRenewal' => '2015-05-20',
+        ];
+        $domain = Domain::createDomain($entry['domain']);
+        $model = RrpproxyEntry::createOrUpdateRrpproxyEntry($entry, $domain);
 
+        $this->assertModelExists($model);
+        $this->assertEquals($model->id, RrpproxyEntry::first()->id);
+        $this->assertEquals($model->domain->id, RrpproxyEntry::first()->domain->id);
+
+        $newEntry = [
+            'domain' => 'aks-service.de',
+            'rrpproxyContractStart' => '2020-07-20',
+            'rrpproxyContractEnd' => '2020-05-21',
+            'rrpproxyContractRenewal' => '2020-05-20',
+        ];
+        $domain = Domain::createDomain($newEntry['domain']);
+        $model = RrpproxyEntry::createOrUpdateRrpproxyEntry($newEntry, $domain);
+
+        $this->assertModelExists($model);
+        $this->assertEquals($model->id, RrpproxyEntry::first()->id);
     }
 }
