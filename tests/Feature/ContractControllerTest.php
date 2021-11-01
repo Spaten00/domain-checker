@@ -44,7 +44,7 @@ class ContractControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_should_fail_validation_when_creating_a_conctract_without_contract_number()
+    public function it_should_fail_validation_when_creating_a_contract_without_contract_number()
     {
         Group::factory()->create();
         /** @var User $user */
