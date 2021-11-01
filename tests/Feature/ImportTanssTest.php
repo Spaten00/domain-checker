@@ -59,7 +59,6 @@ class ImportTanssTest extends TestCase
             Storage::disk('local')->assertExists('log.txt');
             $this->assertEquals(now() . ': Verbindung zum Server konnte nicht hergestellt werden.', Storage::disk('local')->get('log.txt'));
         }
-
     }
 
     /** @test */
@@ -148,7 +147,7 @@ class ImportTanssTest extends TestCase
     }
 
     /** @test */
-    public function existing_tanss_entries_can_be_updated()
+    public function existing_entries_can_be_updated()
     {
         Storage::fake('ftp');
         Storage::fake('local');
