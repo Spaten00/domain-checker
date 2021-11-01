@@ -244,7 +244,7 @@ class DomainTest extends TestCase
     }
 
     /** @test */
-    public function the_correct_class_and_text_is_returned()
+    public function the_correct_class_and_text_for_the_badges_is_returned()
     {
         /** @var Domain $domain */
         $domain = Domain::factory()->create();
@@ -307,5 +307,71 @@ class DomainTest extends TestCase
         $domain->tanssEntry->contract_end = now()->addDays(31);
         $domain->rrpproxyEntry->contract_end = now()->addDays(31);
         $this->assertEquals(['badge bg-success', 'OK'], $domain->getClassAndText());
+    }
+
+    /** @test */
+    public function a_string_containing_html_to_create_a_badge_can_be_returned()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+
+        $domain->tanssEntry->contract_end = now()->addDays(31);
+        $domain->rrpproxyEntry->contract_end = now()->addDays(31);
+        $this->assertEquals('<span class="badge bg-success">OK</span>', $domain->getStatusBadge());
+    }
+
+    /** @test */
+    public function it_can_be_checked_if_the_domain_has_a_customer()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $this->assertFalse($domain->hasCustomer());
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        $this->assertTrue($domain->hasCustomer());
+    }
+
+    /** @test */
+    public function the_customer_id_can_be_returned()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        /** @var Customer $customer */
+        $customer = Customer::factory()->create();
+        $this->assertNotEquals($customer->id, $domain->getCustomerId());
+        $domain->delete();
+        $customer->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        /** @var Customer $customer */
+        $customer = Customer::factory()->create();
+        TanssEntry::factory()->create();
+        $this->assertEquals($customer->id, $domain->getCustomerId());
+    }
+
+    /** @test */
+    public function the_correct_string_with_the_name_of_the_customer_or_a_badge_can_be_returned()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        /** @var Customer $customer */
+        $customer = Customer::factory()->create();
+        $tanssEntry = TanssEntry::factory()->create();
+        $this->assertEquals($customer->name, $domain->getCustomer());
+        $tanssEntry->delete();
+        $domain->delete();
+        $customer->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $this->assertEquals('Kunde fehlt', $domain->getCustomer());
     }
 }

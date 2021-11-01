@@ -287,7 +287,8 @@ class Domain extends Model
         if ($this->hasCustomer()) {
             return $this->tanssEntry->customer->name;
         }
-        if (!$this->rrpproxyEntry && $this->hasBothExpired()) {
+
+        if ($this->hasNoEntries() || (!$this->rrpproxyEntry && $this->hasBothExpired())) {
             return 'Kunde fehlt';
         }
 

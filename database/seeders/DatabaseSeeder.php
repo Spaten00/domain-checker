@@ -29,10 +29,10 @@ class DatabaseSeeder extends Seeder
         // TODO delete factories before deploy
 //        Group::factory(10)->create();
 //        User::factory(10)->create();
-//        Customer::factory(10)->create();
-//        Contract::factory(10)->hasDomains()->create();
+        Customer::factory(10)->create();
+        Contract::factory(10)->hasDomains()->create();
 //        Bill::factory(10)->create();
-//        Domain::factory(10)->has(Contract::factory(5))->create();
+        Domain::factory(10)->has(Contract::factory(5))->create();
 //        Hosting::factory(10)->has(Contract::factory(5))->create();
 //        Contract::factory(10)->has(Domain::factory())->has(Hosting::factory())->create();
 
