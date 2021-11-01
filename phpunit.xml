@@ -29,6 +29,7 @@
             <file>app/Http/Controllers/Auth/RegisteredUserController.php</file>
             <file>app/Http/Controllers/Auth/ResetPasswordController.php</file>
             <file>app/Http/Controllers/Auth/VerificationController.php</file>
+            <file>app/Http/Controllers/ProvisionImport.php</file>
             <file>app/Providers/BroadcastServiceProvider.php</file>
         </exclude>
     </coverage>

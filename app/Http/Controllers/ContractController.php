@@ -11,26 +11,6 @@ use Illuminate\Http\Response;
 class ContractController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param StoreContractRequest $request
@@ -49,28 +29,6 @@ class ContractController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param Contract $contract
-     * @return Response
-     */
-    public function show(Contract $contract)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Contract $contract
-     * @return Response
-     */
-    public function edit(Contract $contract)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param Request $request
@@ -82,16 +40,5 @@ class ContractController extends Controller
         $contract->contract_number = $request->newNumber;
         $contract->save();
         return response("Vertragsnummer geändert. ");
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Contract $contract
-     * @return Response
-     */
-    public function destroy(Contract $contract)
-    {
-        //
     }
 }
