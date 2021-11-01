@@ -28,6 +28,7 @@ use Spatie\Activitylog\Traits\LogsActivity;
  * @property int $contract_id
  * @property string $bill_number
  * @property int $sent
+ * @property mixed $date
  * @method static Builder|Bill whereBillNumber($value)
  * @method static Builder|Bill whereContractId($value)
  * @method static Builder|Bill whereCreatedAt($value)

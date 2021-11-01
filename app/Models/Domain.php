@@ -288,7 +288,7 @@ class Domain extends Model
             return $this->tanssEntry->customer->name;
         }
 
-        if ($this->hasNoEntries() || (!$this->rrpproxyEntry && $this->hasBothExpired())) {
+        if ($this->hasNoEntries() || ($this->rrpproxyEntry && $this->hasRrpproxyExpired())) {
             return 'Kunde fehlt';
         }
 
@@ -307,7 +307,6 @@ class Domain extends Model
             if ($this->tanssEntry->contract_end) {
                 $returnString = Carbon::parse($this->tanssEntry->contract_end)->format('d-m-Y');
             } else {
-//                self::dd("asd");
                 $returnString = "fehlt";
             }
 
@@ -375,6 +374,11 @@ class Domain extends Model
         return $this->contracts->last()->id ?? '';
     }
 
+    /**
+     * Returns true if the domain has a contract.
+     *
+     * @return bool
+     */
     public function hasContract(): bool
     {
         return (bool)$this->contracts->last();
