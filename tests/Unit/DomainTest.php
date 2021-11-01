@@ -397,19 +397,149 @@ class DomainTest extends TestCase
     /** @test */
     public function the_correct_string_with_the_end_date_of_tanss_and_the_correct_badge_can_be_returned()
     {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $this->assertEquals('<span class="badge bg-danger">fehlt</span>', $domain->getTanssEnd());
+        $domain->delete();
 
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $rrpproxyEntry = RrpproxyEntry::factory()->create();
+        $domain->rrpproxyEntry->contract_end = now()->subDays(31);
+        $this->assertEquals('fehlt', $domain->getTanssEnd());
+        $rrpproxyEntry->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+        $tanssEntry->contract_end = now()->subDays(31);
+        $tanssEntry->save();
+        $this->assertEquals(Carbon::parse($tanssEntry->contract_end)->format('d-m-Y'), $domain->getTanssEnd());
+        $tanssEntry->delete();
+        $customer->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+        $tanssEntry->contract_end = null;
+        $tanssEntry->save();
+        $this->assertEquals('fehlt', $domain->getTanssEnd());
+        $tanssEntry->delete();
+        $customer->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+        $tanssEntry->contract_end = now()->addDays(31);
+        $tanssEntry->save();
+        $this->assertEquals(Carbon::parse($tanssEntry->contract_end)->format('d-m-Y'), $domain->getTanssEnd());
+        $tanssEntry->delete();
+        $customer->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+        $tanssEntry->contract_end = now()->addDays(30);
+        $tanssEntry->save();
+        $expected = '<span class="badge bg-warning">'
+            . Carbon::parse($tanssEntry->contract_end)->format('d-m-Y')
+            . '</span>';
+        $this->assertEquals($expected, $domain->getTanssEnd());
+        $tanssEntry->delete();
+        $customer->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+        $tanssEntry->contract_end = now()->addDays(100);
+        $tanssEntry->save();
+        /** @var RrpproxyEntry $rrpproxyEntry */
+        $rrpproxyEntry = RrpproxyEntry::factory()->create();
+        $rrpproxyEntry->contract_end = now()->addDays(100);
+        $rrpproxyEntry->save();
+        $this->assertEquals(Carbon::parse($tanssEntry->contract_end)->format('d-m-Y'), $domain->getTanssEnd());
+        $tanssEntry->delete();
+        $rrpproxyEntry->delete();
+        $customer->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+        $tanssEntry->contract_end = now()->subDays(100);
+        $tanssEntry->save();
+        /** @var RrpproxyEntry $rrpproxyEntry */
+        $rrpproxyEntry = RrpproxyEntry::factory()->create();
+        $rrpproxyEntry->contract_end = now()->subDays(100);
+        $rrpproxyEntry->save();
+        $this->assertEquals(Carbon::parse($tanssEntry->contract_end)->format('d-m-Y'), $domain->getTanssEnd());
+        $tanssEntry->delete();
+        $rrpproxyEntry->delete();
+        $customer->delete();
+        $domain->delete();
+
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $customer = Customer::factory()->create();
+        /** @var TanssEntry $tanssEntry */
+        $tanssEntry = TanssEntry::factory()->create();
+        $tanssEntry->contract_end = now()->subDays(30);
+        $tanssEntry->save();
+        /** @var RrpproxyEntry $rrpproxyEntry */
+        $rrpproxyEntry = RrpproxyEntry::factory()->create();
+        $rrpproxyEntry->contract_end = now()->addDays(100);
+        $rrpproxyEntry->save();
+        $expected = '<span class="badge bg-danger">'
+            . Carbon::parse($tanssEntry->contract_end)->format('d-m-Y')
+            . '</span>';
+        $this->assertEquals($expected, $domain->getTanssEnd());
     }
 
     /** @test */
     public function the_correct_string_with_the_end_date_of_rrpproxy_and_the_correct_badge_can_be_returned()
     {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $this->assertEquals('<span class="badge bg-danger">fehlt</span>', $domain->getRrpproxyEnd());
+        $domain->delete();
 
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        /** @var RrpproxyEntry $rrpproxyEntry */
+        $rrpproxyEntry = RrpproxyEntry::factory()->create();
+        $this->assertEquals(Carbon::parse($rrpproxyEntry->contract_end)->format('d-m-Y'), $domain->getRrpproxyEnd());
     }
 
     /** @test */
     public function the_correct_string_with_the_renewal_date_of_rrpproxy_and_the_correct_badge_can_be_returned()
     {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        $this->assertEquals('<span class="badge bg-danger">fehlt</span>', $domain->getRrpproxyRenewal());
+        $domain->delete();
 
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        /** @var RrpproxyEntry $rrpproxyEntry */
+        $rrpproxyEntry = RrpproxyEntry::factory()->create();
+        $this->assertEquals(Carbon::parse($rrpproxyEntry->contract_renewal)->format('d-m-Y'), $domain->getRrpproxyRenewal());
     }
 
     /** @test */
