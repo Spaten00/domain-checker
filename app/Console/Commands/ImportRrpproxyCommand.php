@@ -11,9 +11,9 @@ use League\Flysystem\ConnectionRuntimeException;
 
 class ImportRrpproxyCommand extends Command
 {
-    const FTP_FILE_PATH = '/export/rrpproxyexport.json';
-    const MAX_FILES = 5;
-    const RRPPROXYEXPORTS_FOLDER = '/rrpproxyexports/';
+    public const FTP_FILE_PATH = '/export/rrpproxyexport.json';
+    public const MAX_FILES = 5;
+    public const RRPPROXYEXPORTS_FOLDER = '/rrpproxyexports/';
 
     /**
      * The name and signature of the console command.

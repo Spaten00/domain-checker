@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\Domain;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
@@ -111,6 +112,37 @@ class ImportTanssTest extends TestCase
         Storage::disk('local')->assertExists('/tanssexports/tanssexport_2010_01_04.json');
     }
 
+    /** @test */
+    public function new_entries_will_be_added_to_the_database()
+    {
+        Storage::fake('ftp');
+        Storage::fake('local');
+        Storage::disk('ftp')->put('/export/tanssexport.json',
+            '[{
+            "id":"1",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service.de",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"2013-07-20",
+            "contract_duration_end":"2015-05-21"
+            },
+            {"id":"2",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"0000-07-20",
+            "contract_duration_end":"0000-00-00"
+            }]');
+        $domain = Domain::find(1);
+        $this->assertModelMissing($domain);
+        Artisan::call('tanss:import');
+        $this->assertModelExists(Domain::find(1));
+        $this->assertModelExists(Domain::find(2));
+    }
+
+//    /** @test */
 //    public function existing_tanss_entries_can_be_updated()
 //    {
 //        Storage::fake('ftp');
@@ -133,8 +165,6 @@ class ImportTanssTest extends TestCase
 //            "contract_duration_start":"0000-07-20",
 //            "contract_duration_end":"0000-00-00"
 //            }]');
-//
 //        Artisan::call('tanss:import');
-//
 //    }
 }

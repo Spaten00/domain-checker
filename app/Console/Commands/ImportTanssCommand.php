@@ -12,9 +12,9 @@ use League\Flysystem\ConnectionRuntimeException;
 
 class ImportTanssCommand extends Command
 {
-    const FTP_FILE_PATH = '/export/tanssexport.json';
-    const MAX_FILES = 5;
-    const TANSSEXPORTS_FOLDER = '/tanssexports/';
+    public const FTP_FILE_PATH = '/export/tanssexport.json';
+    public const MAX_FILES = 5;
+    public const TANSSEXPORTS_FOLDER = '/tanssexports/';
 
     /**
      * The name and signature of the console command.
