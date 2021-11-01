@@ -13,37 +13,6 @@ use Illuminate\Http\Request;
 class DomainController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Returns all domains as a pagination query.
      *
      * @param string $sortBy
@@ -90,8 +59,7 @@ class DomainController extends Controller
      *
      * @return Application|Factory|View
      */
-    public
-    function showExpiring(): View|Factory|Application
+    public function showExpiring(): View|Factory|Application
     {
         $domains = Domain::whereHas('tanssEntry', function (Builder $query) {
             $query->where('contract_end', '<', now()->addDays(Entry::SOON))
@@ -110,8 +78,7 @@ class DomainController extends Controller
      *
      * @return Application|Factory|View
      */
-    public
-    function showIncomplete(): View|Factory|Application
+    public function showIncomplete(): View|Factory|Application
     {
         $domains = Domain::where(function (Builder $hasNoEntries) {
             $hasNoEntries->whereDoesntHave('tanssEntry')
@@ -149,8 +116,7 @@ class DomainController extends Controller
         return view('home')->with('domains', $domains);
     }
 
-    public
-    function showSearch(Request $request)
+    public function showSearch(Request $request)
     {
         $search = $request->searchString;
         $domains = Domain::where('name', 'like', '%' . $search . '%')
@@ -173,42 +139,5 @@ class DomainController extends Controller
 //            })
             ->paginate(20)->withQueryString();
         return view('home')->with('domains', $domains);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Domain $domain
-     * @return \Illuminate\Http\Response
-     */
-    public
-    function edit(Domain $domain)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param Domain $domain
-     * @return \Illuminate\Http\Response
-     */
-    public
-    function update(Request $request, Domain $domain)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Domain $domain
-     * @return \Illuminate\Http\Response
-     */
-    public
-    function destroy(Domain $domain)
-    {
-        //
     }
 }
