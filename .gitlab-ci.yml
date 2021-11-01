@@ -17,7 +17,7 @@ install_composer:
 
   before_script:
     - apt-get update -yqq
-    - apt-get install zip unzip git -y
+    - apt-get install zip unzip git ext-zip -y
     - pecl install xdebug
     - docker-php-ext-enable xdebug
     - curl -sS https://getcomposer.org/installer | php
