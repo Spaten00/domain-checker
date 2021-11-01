@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Domain;
+use App\Models\TanssEntry;
 use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
@@ -130,41 +131,73 @@ class ImportTanssTest extends TestCase
             {"id":"2",
             "kdnr":"100000",
             "name":"aks Service GmbH",
-            "domain":"aks-service",
+            "domain":"aks-service.com",
             "provider_name":"aks Service GmbH",
             "contract_duration_start":"0000-07-20",
             "contract_duration_end":"0000-00-00"
             }]');
-        $domain = Domain::find(1);
-        $this->assertModelMissing($domain);
+        $this->assertDatabaseCount('domains', 0);
+        $this->assertDatabaseCount('tanss_entries', 0);
         Artisan::call('tanss:import');
         $this->assertModelExists(Domain::find(1));
         $this->assertModelExists(Domain::find(2));
+        $this->assertModelExists(TanssEntry::find(1));
+        $this->assertModelExists(TanssEntry::find(2));
+        $this->assertDatabaseCount('domains', 2);
+        $this->assertDatabaseCount('tanss_entries', 2);
     }
 
-//    /** @test */
-//    public function existing_tanss_entries_can_be_updated()
-//    {
-//        Storage::fake('ftp');
-//        Storage::fake('local');
-//        Storage::disk('ftp')->put('/export/tanssexport.json',
-//            '[{
-//            "id":"1",
-//            "kdnr":"100000",
-//            "name":"aks Service GmbH",
-//            "domain":"aks-service.de",
-//            "provider_name":"aks Service GmbH",
-//            "contract_duration_start":"2013-07-20",
-//            "contract_duration_end":"2015-05-21"
-//            },
-//            {"id":"2",
-//            "kdnr":"100000",
-//            "name":"aks Service GmbH",
-//            "domain":"aks-service",
-//            "provider_name":"aks Service GmbH",
-//            "contract_duration_start":"0000-07-20",
-//            "contract_duration_end":"0000-00-00"
-//            }]');
-//        Artisan::call('tanss:import');
-//    }
+    /** @test */
+    public function existing_tanss_entries_can_be_updated()
+    {
+        Storage::fake('ftp');
+        Storage::fake('local');
+        Storage::disk('ftp')->put('/export/tanssexport.json',
+            '[{
+            "id":"1",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service.de",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"2013-07-20",
+            "contract_duration_end":"2015-05-21"
+            },
+            {"id":"2",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service.com",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"0000-07-20",
+            "contract_duration_end":"0000-00-00"
+            }]');
+        Artisan::call('tanss:import');
+
+        $this->assertEquals('2015-05-21', TanssEntry::find(1)->contract_end);
+        $this->assertEquals(null, TanssEntry::find(2)->contract_end);
+        $this->assertEquals('aks-service.de', Domain::find(1)->name);
+
+        Storage::disk('ftp')->put('/export/tanssexport.json',
+            '[{
+            "id":"1",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service.info",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"2013-07-20",
+            "contract_duration_end":"2016-05-21"
+            },
+            {"id":"2",
+            "kdnr":"100000",
+            "name":"aks Service GmbH",
+            "domain":"aks-service.com",
+            "provider_name":"aks Service GmbH",
+            "contract_duration_start":"0000-07-20",
+            "contract_duration_end":"2020-10-15"
+            }]');
+        Artisan::call('tanss:import');
+
+        $this->assertEquals('2016-05-21', TanssEntry::find(1)->contract_end);
+        $this->assertEquals('2020-10-15', TanssEntry::find(2)->contract_end);
+        $this->assertEquals('aks-service.info', Domain::find(3)->name);
+    }
 }

@@ -79,6 +79,14 @@ class RrpproxyEntry extends Entry
     }
 
     // OTHER METHODS
+
+    /**
+     * Create a new RRPproxyEntry if it does not exist yet or update it.
+     *
+     * @param array $entry
+     * @param Domain $domain
+     * @return RrpproxyEntry
+     */
     public static function createOrUpdateRrpproxyEntry(array $entry, Domain $domain): RRPProxyEntry
     {
         $rrpproxyEntry = RRPProxyEntry::whereHas('domain', function (Builder $query) use ($entry) {

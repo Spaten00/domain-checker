@@ -103,7 +103,7 @@ class TanssEntry extends Entry
     // OTHER METHODS
 
     /**
-     * Create a new tanssEntry if it does not exist yet.
+     * Create a new tanssEntry if it does not exist yet or update it.
      *
      * @param array $entry
      * @param Customer $customer
