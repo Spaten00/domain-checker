@@ -135,7 +135,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Speichern</button>
+                                        <button type="submit" class="btn btn-primary" name="save">Speichern</button>
                                     </div>
                                     <input type="hidden" name="contract_id" value="{{$domain->getContractId()}}">
                                 </form>
@@ -171,7 +171,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Abbrechen
                                         </button>
-                                        <button type="submit" class="btn btn-primary">Speichern</button>
+                                        <button type="submit" class="btn btn-primary" name="save">Speichern</button>
                                     </div>
                                     <input type="hidden" name="customer_id" value="{{$domain->getCustomerId()}}">
                                     <input type="hidden" name="domain_id" value="{{$domain->getKey()}}">
@@ -198,7 +198,7 @@
                                value="{{$domain->getLastBillNumber()}}" disabled></td>
                     <td class="align-middle text-center">
                         @if(Auth::check())
-                            <i class="fas fa-pencil-alt" role="button"
+                            <i class="fas fa-pencil-alt" role="button" name="pencil{{$domain->getKey()}}"
                                onclick="editValues([{{$domain->getContractId()}}, {{$domain->getLastBillId()}}])"></i>
                         @else
                             <a href="{{route('login')}}"><i class="fas fa-pencil-alt text-dark"></i></a>
@@ -207,7 +207,9 @@
                     <td class="align-middle text-center">{{$domain->getLastBillDate()}}</td>
                     <td class="align-middle text-center">
                         <button type="button" class="btn btn-primary" data-toggle="modal"
-                                data-target="#bill-number-modal-{{$domain->getKey()}}">erstellen
+                                data-target="#bill-number-modal-{{$domain->getKey()}}"
+                                name="create{{$domain->getKey()}}">
+                            erstellen
                         </button>
                     </td>
                 </tr>
