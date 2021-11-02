@@ -43,6 +43,5 @@ class DatabaseSeeder extends Seeder
         Domain::factory()->create();
         Customer::factory()->create();
         TanssEntry::factory()->create();
-        RrpproxyEntry::factory()->create();
     }
 }
