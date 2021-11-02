@@ -53,13 +53,13 @@ class Login extends Page
         /** @var User $user */
         $user = User::factory()->create([
             'email' => 'tl@aks-service.de',
-            'password' => password_hash('12345678', 1),
+            'password' => password_hash('12345677', 1),
         ]);
-
         $browser->visit('/login')
             ->type('email', $user->email)
-            ->type('password', '12345678')
+            ->type('password', '12345677')
             ->press('login');
+
     }
 
 }

@@ -11,6 +11,14 @@ abstract class DuskTestCase extends BaseTestCase
 {
     use CreatesApplication;
 
+    protected function setUp(): void
+    {
+        parent::setUp();
+        foreach (static::$browsers as $browser) {
+            $browser->driver->manage()->deleteAllCookies();
+        }
+    }
+
     /**
      * Prepare for Dusk test execution.
      *
@@ -19,7 +27,7 @@ abstract class DuskTestCase extends BaseTestCase
      */
     public static function prepare()
     {
-        if (! static::runningInSail()) {
+        if (!static::runningInSail()) {
             static::startChromeDriver();
         }
     }
@@ -56,6 +64,6 @@ abstract class DuskTestCase extends BaseTestCase
     protected function hasHeadlessDisabled()
     {
         return isset($_SERVER['DUSK_HEADLESS_DISABLED']) ||
-               isset($_ENV['DUSK_HEADLESS_DISABLED']);
+            isset($_ENV['DUSK_HEADLESS_DISABLED']);
     }
 }

@@ -8,7 +8,6 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
 use Tests\Browser\Pages\Login;
 use Tests\DuskTestCase;
-use Throwable;
 
 class LoginTest extends DuskTestCase
 {
@@ -21,12 +20,12 @@ class LoginTest extends DuskTestCase
         /** @var User $user */
         $user = User::factory()->create([
             'email' => 'tl@aks-service.de',
-            'password' => password_hash('12345678', 1),
+            'password' => password_hash('12345677', 1),
         ]);
         $this->browse(function (Browser $browser) use ($user) {
             $browser->visit('/login')
                 ->type('email', $user->email)
-                ->type('password', '12345678')
+                ->type('password', '12345677')
                 ->press('login')
                 ->assertPathIs('/');
         });
@@ -38,7 +37,7 @@ class LoginTest extends DuskTestCase
         $this->browse(function (Browser $browser) {
             $browser->visit(new Login)
                 ->loginUser()
-                ->assertSee('Domains');
+                ->assertPathIs('/');
         });
     }
 }

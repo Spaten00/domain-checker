@@ -40,13 +40,9 @@ class DatabaseSeeder extends Seeder
 //        Domain::factory(10)->has(Contract::factory(5))->create();
 //        Hosting::factory(10)->has(Contract::factory(5))->create();
 //        Contract::factory(10)->has(Domain::factory())->has(Hosting::factory())->create();
-        $domain = Domain::factory()->create();
+        Domain::factory()->create();
         Customer::factory()->create();
         TanssEntry::factory()->create();
         RrpproxyEntry::factory()->create();
-        $contract = Contract::factory()->create();
-        Bill::factory()->create();
-
-        $domain->contracts()->attach($contract);
     }
 }
