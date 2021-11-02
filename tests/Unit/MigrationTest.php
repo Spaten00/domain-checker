@@ -24,16 +24,16 @@ class MigrationTest extends TestCase
         $this->assertTrue(Schema::hasTable('personal_access_tokens'));
         $this->assertTrue(Schema::hasTable('users'));
 
-//        Artisan::call('migrate:reset', ['--force' => true]);
+        Artisan::call('migrate:reset', ['--force' => true]);
 
-//        $this->assertNotTrue(Schema::hasTable('contracts'));
-//        $this->assertNotTrue(Schema::hasTable('customers'));
-//        $this->assertNotTrue(Schema::hasTable('domains'));
-//        $this->assertNotTrue(Schema::hasTable('failed_jobs'));
-//        $this->assertNotTrue(Schema::hasTable('groups'));
-//        $this->assertNotTrue(Schema::hasTable('hostings'));
-//        $this->assertNotTrue(Schema::hasTable('password_resets'));
-//        $this->assertNotTrue(Schema::hasTable('personal_access_tokens'));
-//        $this->assertNotTrue(Schema::hasTable('users'));
+        $this->assertNotTrue(Schema::hasTable('contracts'));
+        $this->assertNotTrue(Schema::hasTable('customers'));
+        $this->assertNotTrue(Schema::hasTable('domains'));
+        $this->assertNotTrue(Schema::hasTable('failed_jobs'));
+        $this->assertNotTrue(Schema::hasTable('groups'));
+        $this->assertNotTrue(Schema::hasTable('hostings'));
+        $this->assertNotTrue(Schema::hasTable('password_resets'));
+        $this->assertNotTrue(Schema::hasTable('personal_access_tokens'));
+        $this->assertNotTrue(Schema::hasTable('users'));
     }
 }

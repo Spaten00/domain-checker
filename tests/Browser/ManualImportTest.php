@@ -8,6 +8,8 @@ use Tests\DuskTestCase;
 
 class ManualImportTest extends DuskTestCase
 {
+    use DatabaseMigrations;
+
     /** @test */
     public function the_user_can_start_the_manual_import()
     {
