@@ -2,6 +2,7 @@
 
 namespace Tests\Browser;
 
+use App\Models\Bill;
 use App\Models\Contract;
 use App\Models\Customer;
 use App\Models\Domain;
@@ -51,7 +52,7 @@ class CreateAndUpdateTest extends DuskTestCase
     }
 
     /** @test */
-    public function the_user_can_create_a_new_bill()
+    public function the_user_can_create_new_bills()
     {
         /** @var Domain $domain */
         $domain = Domain::factory()->create();
@@ -67,7 +68,57 @@ class CreateAndUpdateTest extends DuskTestCase
                 ->waitForText('Speichern')
                 ->type('bill_number', '42235')
                 ->press('save')
+                ->assertSee('Eintrag wurde erstellt!')
+                ->press('create1')
+                ->waitForText('Speichern')
+                ->type('bill_number', '12345')
+                ->press('save')
                 ->assertSee('Eintrag wurde erstellt!');
+        });
+    }
+
+    /** @test */
+    public function the_user_can_update_the_contract_number()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+        $contract = Contract::factory()->create();
+        $domain->contracts()->attach($contract);
+        $this->browse(function (Browser $browser) {
+            $browser->visit(new Login())
+                ->loginUser()
+                ->click('tr td i')
+                ->type('#contract-number-1', '42')
+                ->click('tr td i')
+                ->waitForDialog()
+                ->acceptDialog()
+                ->assertInputValue('#contract-number-1', '42');
+        });
+    }
+
+    /** @test */
+    public function the_user_can_update_the_bill_number()
+    {
+        /** @var Domain $domain */
+        $domain = Domain::factory()->create();
+        Customer::factory()->create();
+        TanssEntry::factory()->create();
+        RrpproxyEntry::factory()->create();
+        $contract = Contract::factory()->create();
+        Bill::factory()->create();
+        $domain->contracts()->attach($contract);
+        $this->browse(function (Browser $browser) {
+            $browser->visit(new Login())
+                ->loginUser()
+                ->click('tr td i')
+                ->type('#bill-number-1', '42')
+                ->click('tr td i')
+                ->waitForDialog()
+                ->acceptDialog()
+                ->assertInputValue('#bill-number-1', '42');
         });
     }
 }
