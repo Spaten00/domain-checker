@@ -6,6 +6,7 @@ use App\Models\Group;
 use App\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Laravel\Dusk\Browser;
+use Tests\Browser\Pages\Login;
 use Tests\DuskTestCase;
 use Throwable;
 
@@ -28,6 +29,16 @@ class LoginTest extends DuskTestCase
                 ->type('password', '12345678')
                 ->press('login')
                 ->assertPathIs('/');
+        });
+    }
+
+    /** @test */
+    public function a_user_can_log_in_with_a_page()
+    {
+        $this->browse(function (Browser $browser) {
+            $browser->visit(new Login)
+                ->loginUser()
+                ->assertSee('Domains');
         });
     }
 }
