@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         // TODO delete factories before deploy
 //        Group::factory(10)->create();
 //        User::factory(10)->create();
-//        Domain::factory()->create();
+        Domain::factory(500)->create();
 //        Customer::factory()->create();
 //        TanssEntry::factory()->create();
 //        RrpproxyEntry::factory()->create();
@@ -40,8 +40,7 @@ class DatabaseSeeder extends Seeder
 //        Domain::factory(10)->has(Contract::factory(5))->create();
 //        Hosting::factory(10)->has(Contract::factory(5))->create();
 //        Contract::factory(10)->has(Domain::factory())->has(Hosting::factory())->create();
-        Domain::factory(50)->create(['name' => 'a-test']);
-        Domain::factory()->create(['name' => 'b-test']);
+//        Domain::factory()->has(TanssEntry::factory()->forCustomer())->create();
 //        Customer::factory()->create();
 //        TanssEntry::factory()->create();
 //        RrpproxyEntry::factory()->create();

@@ -6,7 +6,8 @@
                 <th>
                     <a href="{{ Request::is('sort/domains.name/asc')
                         ? route('sort', ['domains.name', 'desc'])
-                        : route('sort', ['domains.name', 'asc'])}}">
+                        : route('sort', ['domains.name', 'asc'])}}"
+                       id="domain">
                         Domain
                         @if(Request::is('sort/domains.name/desc'))
                             <i class="fas fa-sort-down"></i>
@@ -19,7 +20,8 @@
                 <th>
                     <a href="{{Request::is('sort/customers.name/asc')
                         ? route('sort', ['customers.name', 'desc'])
-                        : route('sort', ['customers.name', 'asc'])}}">
+                        : route('sort', ['customers.name', 'asc'])}}"
+                       id="customer">
                         Kunde
                         @if(Request::is('sort/customers.name/desc'))
                             <i class="fas fa-sort-down"></i>
@@ -31,7 +33,8 @@
                 <th class="text-center">
                     <a href="{{Request::is('sort/tanss_entries.contract_end/asc')
                         ? route('sort', ['tanss_entries.contract_end', 'desc'])
-                        : route('sort', ['tanss_entries.contract_end', 'asc'])}}">
+                        : route('sort', ['tanss_entries.contract_end', 'asc'])}}"
+                       id="tanss-contract-end">
                         Vertragsende TANSS
                         @if(Request::is('sort/tanss_entries.contract_end/desc'))
                             <i class="fas fa-sort-down"></i>
@@ -43,7 +46,8 @@
                 <th class="text-center">
                     <a href="{{Request::is('sort/rrpproxy_entries.contract_end/asc')
                         ? route('sort', ['rrpproxy_entries.contract_end', 'desc'])
-                        : route('sort', ['rrpproxy_entries.contract_end', 'asc'])}}">
+                        : route('sort', ['rrpproxy_entries.contract_end', 'asc'])}}"
+                       id="rrpproxy-contract-end">
                         Vertragsende RRPproxy
                         @if(Request::is('sort/rrpproxy_entries.contract_end/desc'))
                             <i class="fas fa-sort-down"></i>
@@ -55,7 +59,8 @@
                 <th class="text-center">
                     <a href="{{Request::is('sort/rrpproxy_entries.contract_renewal/asc')
                         ? route('sort', ['rrpproxy_entries.contract_renewal', 'desc'])
-                        : route('sort', ['rrpproxy_entries.contract_renewal', 'asc'])}}">
+                        : route('sort', ['rrpproxy_entries.contract_renewal', 'asc'])}}"
+                       id="rrpproxy-contract-renewal">
                         Verlängerung RRPproxy
                         @if(Request::is('sort/rrpproxy_entries.contract_renewal/desc'))
                             <i class="fas fa-sort-down"></i>
@@ -67,7 +72,8 @@
                 <th class="text-center">
                     <a href="{{Request::is('sort/contracts.contract_number/asc')
                         ? route('sort', ['contracts.contract_number', 'desc'])
-                        : route('sort', ['contracts.contract_number', 'asc'])}}">
+                        : route('sort', ['contracts.contract_number', 'asc'])}}"
+                       id="contract-number">
                         Vertragsnummer
                         @if(Request::is('sort/contracts.contract_number/desc'))
                             <i class="fas fa-sort-down"></i>
@@ -79,7 +85,8 @@
                 <th class="text-center">
                     <a href="{{Request::is('sort/bills.bill_number/asc')
                         ? route('sort', ['bills.bill_number', 'desc'])
-                        : route('sort', ['bills.bill_number', 'asc'])}}">
+                        : route('sort', ['bills.bill_number', 'asc'])}}"
+                       id="bill-number">
                         letzte Rechnungsnummer
                         @if(Request::is('sort/bills.bill_number/desc'))
                             <i class="fas fa-sort-down"></i>
@@ -92,7 +99,8 @@
                 <th class="text-center">
                     <a href="{{Request::is('sort/bills.date/asc')
                         ? route('sort', ['bills.date', 'desc'])
-                        : route('sort', ['bills.date', 'asc'])}}">
+                        : route('sort', ['bills.date', 'asc'])}}"
+                    id="last-bill-date">
                         letzte Rechnung am
                         @if(Request::is('sort/bills.date/desc'))
                             <i class="fas fa-sort-down"></i>
