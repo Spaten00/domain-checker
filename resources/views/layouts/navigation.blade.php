@@ -33,7 +33,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" name="searchString" placeholder="Suche nach">
                         <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                            <button class="btn btn-primary" type="submit" name="searchButton"><i class="fas fa-search"></i></button>
                         </div>
                     </div>
                 </form>

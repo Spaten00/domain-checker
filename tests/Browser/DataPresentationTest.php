@@ -38,4 +38,19 @@ class DataPresentationTest extends DuskTestCase
                 ->assertSee('OK');
         });
     }
+
+    /** @test */
+    public function the_user_can_use_the_search_bar()
+    {
+        Domain::factory(50)->create(['name' => 'a-test']);
+        Domain::factory()->create(['name' => 'b-test']);
+        $this->browse(function (Browser $browser) {
+            $browser->visit('/')
+                ->assertSee('a-test')
+                ->assertDontSee('b-test')
+                ->type('searchString', 'b-test')
+                ->press('searchButton')
+                ->assertSee('b-test');
+        });
+    }
 }
