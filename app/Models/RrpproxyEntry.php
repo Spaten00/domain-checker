@@ -87,9 +87,9 @@ class RrpproxyEntry extends Entry
      * @param Domain $domain
      * @return RrpproxyEntry
      */
-    public static function createOrUpdateRrpproxyEntry(array $entry, Domain $domain): RRPProxyEntry
+    public static function createOrUpdateRrpproxyEntry(array $entry, Domain $domain): RrpproxyEntry
     {
-        $rrpproxyEntry = RRPProxyEntry::whereHas('domain', function (Builder $query) use ($entry) {
+        $rrpproxyEntry = self::whereHas('domain', function (Builder $query) use ($entry) {
             $query->where('name', 'like', $entry['domain']);
         })->first();
 
