@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         // TODO delete factories before deploy
 //        Group::factory(10)->create();
 //        User::factory(10)->create();
-        Domain::factory(500)->create();
+//        Domain::factory(500)->create();
 //        Customer::factory()->create();
 //        TanssEntry::factory()->create();
 //        RrpproxyEntry::factory()->create();

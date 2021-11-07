@@ -126,10 +126,10 @@ class ImportTanssCommand extends Command
     /**
      * Cleans the domain name and gives it back as a string.
      *
-     * @param $uncleanDomainName
+     * @param string $uncleanDomainName
      * @return string
      */
-    private function getRootDomain($uncleanDomainName): string
+    private function getRootDomain(string $uncleanDomainName): string
     {
         $prefixExploded = explode('//', trim($uncleanDomainName));
         $fqdn = trim(end($prefixExploded));
