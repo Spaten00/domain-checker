@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor
+    configVersion="3"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://www.phpdoc.org"
+    xsi:noNamespaceSchemaLocation="https://docs.phpdoc.org/latest/phpdoc.xsd"
+>
+    <paths>
+        <output>.phpdoc/build/api</output>
+        <cache>.phpdoc/build/cache</cache>
+    </paths>
+    <version number="3.0.0">
+        <api>
+            <source dsn="/home/ludwig/www/domain-checker">
+                <path>/app</path>
+                <path>/database</path>
+                <path>/routes</path>
+                <path>/tests</path>
+            </source>
+        </api>
+    </version>
+</phpdocumentor>
